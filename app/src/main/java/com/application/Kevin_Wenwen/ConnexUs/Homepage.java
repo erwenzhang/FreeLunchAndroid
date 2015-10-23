@@ -29,8 +29,8 @@ import android.widget.Toast;
 public class Homepage extends ActionBarActivity implements
         ConnectionCallbacks, OnConnectionFailedListener, View.OnClickListener {
 
-    private static final String TAG = "android-demo-login";
-    final int RQS_GooglePlayServices = 1;
+    private static final String TAG = "ConnexUs-login";
+    //final int RQS_GooglePlayServices = 1;
     private static final int STATE_DEFAULT = 0;
     private static final int STATE_SIGN_IN = 1;
     private static final int STATE_IN_PROGRESS = 2;
@@ -67,6 +67,8 @@ public class Homepage extends ActionBarActivity implements
     // Used to store the error code most recently returned by Google Play services
     // until the user clicks 'sign in'.
     private int mSignInError;
+    public static boolean login = false;
+    public final static String EXTRA_MESSAGE = "com.homepage.MESSAGE";
 
     // Used to determine if we should ask for a server auth code when connecting the
     // GoogleApiClient.  False by default so that this sample can be used without configuring
@@ -225,6 +227,7 @@ public class Homepage extends ActionBarActivity implements
     public void onConnected(Bundle connectionHint) {
         // Reaching onConnected means we consider the user signed in.
         Log.i(TAG, "onConnected");
+        Homepage.login = true;
 
         // Update the user interface to reflect that the user is signed in.
         mSignInButton.setEnabled(false);
@@ -357,6 +360,7 @@ public class Homepage extends ActionBarActivity implements
                 if (!mGoogleApiClient.isConnecting()) {
                     // If Google Play services resolved the issue with a dialog then
                     // onStart is not called so we need to re-attempt connection here.
+                  //  Log.i("Wenwen","88");
                     mGoogleApiClient.connect();
                 }
                 break;
@@ -365,6 +369,7 @@ public class Homepage extends ActionBarActivity implements
 
     private void onSignedOut() {
         // Update the UI to reflect that the user is signed out.
+        Homepage.login = false;
         mSignInButton.setEnabled(true);
         mSignOutButton.setEnabled(false);
         mRevokeButton.setEnabled(false);
@@ -389,6 +394,8 @@ public class Homepage extends ActionBarActivity implements
 
     public void viewAllImages(View view){
         Intent intent= new Intent(this, DisplayImages.class);
+        //if(Homepage.login)
+        intent.putExtra(EXTRA_MESSAGE,Homepage.email);
         startActivity(intent);
     }
 

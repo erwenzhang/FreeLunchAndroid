@@ -2,6 +2,7 @@ package com.application.Kevin_Wenwen.ConnexUs;
 import android.app.Dialog;
 import android.content.Context;
 
+import android.content.Intent;
 import android.os.Bundle;
 //import android.support.v7.app.AppCompatActivity;
 import android.support.v7.app.ActionBarActivity;
@@ -11,6 +12,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.Toast;
@@ -26,51 +28,73 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 
+
+
+
 public class DisplayImages extends ActionBarActivity {
     Context context = this;
     private String TAG  = "Display Images";
+    private String email;
+    public final static String EXTRA_MESSAGE = "com.displayimages.MESSAGE";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_display_images);
 
-        final String request_url = "http://aptandroiddemo.appspot.com/viewAllPhotos";
-     //  final String request_url = "http://connexus2-1095.appspot.com/viewallstreams";
+
+        Button my_subscribe  = (Button) findViewById(R.id.my_subscribe);
+
+        Intent intent = getIntent();
+        email = intent.getStringExtra(Homepage.EXTRA_MESSAGE);
+        if(email != null){
+            my_subscribe.setEnabled(true);
+            Log.d("wenwen passing msg", email);
+        }
+
+        else {
+            my_subscribe.setEnabled(false);
+          //  Log.d("wenwen passing msg", " failed");
+        }
+      //  final String request_url = "http://aptandroiddemo.appspot.com/viewAllPhotos";
+      final String request_url = "http://connexus2-1095.appspot.com/viewAllPhotos";
         AsyncHttpClient httpClient = new AsyncHttpClient();
         httpClient.get(request_url, new AsyncHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, byte[] response) {
-                final ArrayList<String> imageURLs = new ArrayList<String>();
-                final ArrayList<String> imageCaps = new ArrayList<String>();
+                final ArrayList<String> coverURLs = new ArrayList<String>();
+                final ArrayList<String> streamURLs = new ArrayList<String>();
                 try {
                     JSONObject jObject = new JSONObject(new String(response));
-                    JSONArray displayImages = jObject.getJSONArray("displayImages");
-                    JSONArray displayCaption = jObject.getJSONArray("imageCaptionList");
-                    Log.d("TAG", "!!");
-                    for(int i=0;i<displayImages.length();i++) {
+                    JSONArray displayCovers = jObject.getJSONArray("displayCovers");
+                    JSONArray streamUrlList = jObject.getJSONArray("streamUrlList");
+                   // Log.d("wenwen TAG", "json successful");
+                    for(int i=0;i<displayCovers.length();i++) {
 
-                        imageURLs.add(displayImages.getString(i));
-                        imageCaps.add(displayCaption.getString(i));
-                        System.out.println(displayImages.getString(i));
+                        coverURLs.add(displayCovers.getString(i));
+                        streamURLs.add(streamUrlList.getString(i));
+                        System.out.println(displayCovers.getString(i));
                     }
                     GridView gridview = (GridView) findViewById(R.id.gridview);
-                    gridview.setAdapter(new ImageAdapter(context,imageURLs));
+                    gridview.setAdapter(new ImageAdapter(context,coverURLs));
                     gridview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                         @Override
                         public void onItemClick(AdapterView<?> parent, View v,
                                                 int position, long id) {
 
-                            Toast.makeText(context, imageCaps.get(position), Toast.LENGTH_SHORT).show();
+                            Toast.makeText(context, streamURLs.get(position), Toast.LENGTH_SHORT).show();
 
-                            Dialog imageDialog = new Dialog(context);
-                            imageDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-                            imageDialog.setContentView(R.layout.thumbnail);
-                            ImageView image = (ImageView) imageDialog.findViewById(R.id.thumbnail_IMAGEVIEW);
+                           // Intent intent= new Intent(this,viewSingleStream.class,streamURLs.get(position), );
+                         //   startActivity(intent);
 
-                            Picasso.with(context).load(imageURLs.get(position)).into(image);
+                            //Dialog imageDialog = new Dialog(context);
+                         //   imageDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+                           // imageDialog.setContentView(R.layout.thumbnail);
+                            //ImageView image = (ImageView) imageDialog.findViewById(R.id.thumbnail_IMAGEVIEW);
 
-                            imageDialog.show();
+                           // Picasso.with(context).load(coverURLs.get(position)).into(image);
+
+                         //   imageDialog.show();
                         }
                     });
                 }
@@ -105,5 +129,11 @@ public class DisplayImages extends ActionBarActivity {
             return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    public void mySubscribeStreams(View v ){
+        Intent intent= new Intent(this, DisplayMySubscribe.class);
+        intent.putExtra(EXTRA_MESSAGE,email);
+        startActivity(intent);
     }
 }

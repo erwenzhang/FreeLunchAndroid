@@ -1,29 +1,75 @@
-<LinearLayout
+<RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:layout_gravity="center_horizontal"
     tools:context="com.application.Kevin_Wenwen.ConnexUs.DisplayImages">
 
-    <TextView
-        android:text="@string/imagePage"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:textSize="40sp"
-        android:paddingBottom = "40sp"
-        />
 
-    <GridView xmlns:android="http://schemas.android.com/apk/res/android"
-        android:id="@+id/gridview"
+        <TextView
+            android:text="@string/app_name"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:textSize="40sp"
+            android:paddingBottom = "40sp"
+            android:id="@+id/name"
+            />
+    <EditText
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:id="@+id/search_bar"
+        android:layout_below="@id/name"
+        android:layout_alignParentLeft="true"
+        android:layout_toLeftOf="@+id/near_by" />
+
+    <ImageButton
+        android:layout_width="96dp"
+        android:layout_height="wrap_content"
+        android:id="@+id/near_by"
+        android:src="@drawable/ic_place_black_24dp"
+        android:layout_below="@id/name"
+        android:layout_alignParentRight="true" />
+
+    <Button
+        android:layout_width="90dp"
+        android:layout_height="wrap_content"
+        android:text="Search"
+        android:layout_below="@id/search_bar"
+        android:id="@+id/search_button"
+        android:onClick="startSearch"/>
+
+        <GridView xmlns:android="http://schemas.android.com/apk/res/android"
+            android:id="@+id/gridview"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:columnWidth="90dp"
+            android:numColumns="4"
+            android:verticalSpacing="10dp"
+            android:horizontalSpacing="10dp"
+            android:stretchMode="columnWidth"
+            android:gravity="center"
+            android:layout_below="@id/search_button"
+
+            />
+
+    <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:columnWidth="90dp"
-        android:numColumns="4"
-        android:verticalSpacing="10dp"
-        android:horizontalSpacing="10dp"
-        android:stretchMode="columnWidth"
-        android:gravity="center"
-        />
-</LinearLayout>
+        android:text="My Subscribed Streams"
+        android:layout_below="@id/gridview"
+        android:id="@+id/my_subscribe"
+        android:onClick="mySubscribeStreams"/>
+
+
+
+
+
+
+
+
+
+
+</RelativeLayout>

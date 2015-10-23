@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.GridView;
 import com.squareup.picasso.Picasso;
+import android.util.Log;
 
 import java.util.ArrayList;
 
@@ -37,13 +38,16 @@ public class ImageAdapter extends BaseAdapter {
         ImageView imageView;
         if (convertView == null) {  // if it's not recycled, initialize some attributes
             imageView = new ImageView(mContext);
-            imageView.setLayoutParams(new GridView.LayoutParams(250, 250));
+            imageView.setLayoutParams(new GridView.LayoutParams(150, 150));
             imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
         } else {
             imageView = (ImageView) convertView;
         }
-
-        Picasso.with(mContext).load(imageURLs.get(position)).into(imageView);
+       Log.d("wenwen" ,"imageadapter");
+        Log.isLoggable("wenwen",position)   ;
+        System.out.println(position);
+        System.out.println(imageURLs.get(position));
+        Picasso.with(mContext).load(imageURLs.get(position)).placeholder(R.drawable.placeholder_square).into(imageView);
         return imageView;
     }
 
