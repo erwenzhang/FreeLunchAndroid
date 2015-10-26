@@ -5,6 +5,10 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.location.Location;
+import com.google.android.gms.location.LocationListener;
+import com.google.android.gms.location.LocationListener;
+import com.google.android.gms.location.LocationRequest;
 import android.net.Uri;
 import android.provider.MediaStore;
 import android.support.v7.app.ActionBarActivity;
@@ -33,7 +37,7 @@ import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 
 
-public class ImageUpload extends ActionBarActivity {
+public class ImageUpload extends ActionBarActivity implements LocationListener{
     public final static String EXTRA_MESSAGE = "MESSAGE IN";
     private static final int PICK_IMAGE = 1;
     private String email;
@@ -96,6 +100,14 @@ public class ImageUpload extends ActionBarActivity {
         }
         return super.onOptionsItemSelected(item);
     }
+    public void onLocationChanged(Location location) {
+        System.out.print("Location changes wenwen");
+        System.out.print(location.toString());
+        locationLong = String.valueOf(location.getLongitude());
+        locationLat = String.valueOf(location.getLatitude());
+
+    }
+
 
 
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {

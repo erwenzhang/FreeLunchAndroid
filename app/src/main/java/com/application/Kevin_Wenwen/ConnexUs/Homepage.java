@@ -107,8 +107,8 @@ public class Homepage extends ActionBarActivity implements
     private TextView mStatus;
 
     //location variable
-    private String mLatitudeText = null;
-    private String mLongitudeText = null;
+    private String mLatitudeText = "0";
+    private String mLongitudeText = "0";
     //private LocationClient mLocationClient;
     private LocationRequest mLocationRequest;
     private Location mLastLocation;
@@ -149,6 +149,8 @@ public class Homepage extends ActionBarActivity implements
     public void onLocationChanged(Location location) {
         System.out.print("Location wenwen");
         System.out.print(location.toString());
+        mLongitudeText = String.valueOf(location.getLongitude());
+        mLatitudeText = String.valueOf(location.getLatitude());
 
     }
 

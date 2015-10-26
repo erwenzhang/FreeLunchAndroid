@@ -13,6 +13,7 @@ import android.view.View;
 import android.view.Window;
 import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.Toast;
@@ -162,6 +163,19 @@ public class DisplayImages extends ActionBarActivity {
     public void mySubscribeStreams(View v ){
         Intent intent= new Intent(this, DisplayMySubscribe.class);
         intent.putExtra(EXTRA_MESSAGE,email);
+        startActivity(intent);
+    }
+
+    public void startSearch(View v){
+        Intent intent = new Intent(this,Search.class);
+        EditText text = (EditText) findViewById(R.id.search_bar);
+        String search_item = text.getText().toString();
+        String[] msg_out = new String[4];
+        msg_out[0] = email;
+        msg_out[1] = search_item;
+        msg_out[2] = msg[1];
+        msg_out[3] = msg[2];
+        intent.putExtra(EXTRA_MESSAGE,msg_out);
         startActivity(intent);
     }
 

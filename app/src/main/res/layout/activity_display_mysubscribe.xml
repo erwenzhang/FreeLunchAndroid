@@ -1,14 +1,18 @@
-<FrameLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
-    android:id="@+id/framelayout" >
+
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     tools:context="com.application.Kevin_Wenwen.ConnexUs.DisplayMySubscribe">
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:scrollbars="vertical">
+        <LinearLayout
+            android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
     <TextView
         android:text="@string/app_name"
         android:layout_width="fill_parent"
@@ -30,6 +34,6 @@
         android:stretchMode="columnWidth"
         android:gravity="center"
         />
-
+    </LinearLayout>
+    </ScrollView>
 </LinearLayout>
-</FrameLayout>

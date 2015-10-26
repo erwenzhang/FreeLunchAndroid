@@ -38,6 +38,7 @@ import java.util.ArrayList;
 public class viewSingleStream extends ActionBarActivity {
     private String TAG  = "Display Subscribes";
     public final static String EXTRA_MESSAGE = "MESSAGE IN";
+    // to mark which image has been displayed
     private int location = 0;
     private int pre_location = 0;
 
@@ -73,7 +74,7 @@ public class viewSingleStream extends ActionBarActivity {
         nameofStream = msg[1];
         locationLat = msg[2];
         locationLong = msg[3];
-        Log.d("LocationLat ", locationLat);
+       Log.d("LocationLat ", locationLat);
         Log.d("locationLong",locationLong);
 
         //stream_name.setTextColor();
@@ -88,6 +89,7 @@ public class viewSingleStream extends ActionBarActivity {
         final String request_url = "http://blobstore-1107.appspot.com/viewSingleStream";
         AsyncHttpClient httpClient = new AsyncHttpClient();
         RequestParams params = new RequestParams();
+        params.put("email",email);
         params.put("stream_name",msg[1]);
 
         httpClient.get(request_url, params, new AsyncHttpResponseHandler() {
@@ -106,23 +108,30 @@ public class viewSingleStream extends ActionBarActivity {
                     //Log.i("email",email.split("@",2)[0]);
                     //System.out.println(stream_author.toLowerCase().getClass().getName());
                     //System.out.println(email.split("@",2)[0].getClass().getName());
-                    if (email.split("@",2)[0].equals(stream_author.toLowerCase()) ){
+                    if(email!=null){
+                        if (email.split("@",2)[0].equals(stream_author.toLowerCase()) ){
                         upload.setEnabled(true);
                      //   Log.d("Upload ability","OK!!");
+                     }
+                        else{
+                            upload.setEnabled(false);
+                            //   Log.d("Upload ability", "not OK!!");
+                        }
                     }
                     else{
                         upload.setEnabled(false);
                      //   Log.d("Upload ability", "not OK!!");
                     }
                     //  JSONArray streamUrlList = jObject.getJSONArray("streamUrlList");
-                    Log.d("wenwen singlesteam 1 ", "json successful");
+                    Log.d("display"," length");
+                    System.out.print(displayImages.length());
                     System.out.println(displayImages.length());
                     for (int i = 0; i < displayImages.length() && i < 16; i++) {
 
                         imageURLs.add(displayImages.getString(i));
                         //   streamURLs.add(streamUrlList.getString(i));
                         captionList.add(caption.getString(i));
-                        System.out.println(displayImages.getString(i));
+                        //System.out.println(displayImages.getString(i));
                         location = i + 1;
                     }
 

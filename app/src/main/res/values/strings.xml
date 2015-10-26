@@ -8,7 +8,7 @@
     <string name="uploadImage">Upload Image</string>
     <string name="upload_hint">Add a caption for photo</string>
     <string name="choose_from_library">Choose From Library</string>
-    <string name="title_activity_display_images">DisplayImages</string>
+    <string name="title_activity_display_images">View All Streams</string>
     <string name="imagePage">View Streams</string>
     <string name="uploadImageActivity"> Upload an Image</string>
     <string name="title_activity_image_upload">ImageUpload</string>
@@ -21,6 +21,8 @@
     <string name="circles_title">Visible circles:</string>
     <string name="sign_out_button_name">Sign out</string>
     <string name="revoke_access_button_name">Revoke</string>
+
+    <string name="search">Search</string>
 
     <string name="status_sign_in_required">Sign-in required</string>
     <string name="status_sign_in_error">Error signing in: %s</string>
