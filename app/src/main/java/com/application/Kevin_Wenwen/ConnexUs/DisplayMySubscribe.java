@@ -17,6 +17,8 @@ import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import android.graphics.Bitmap;
+
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
@@ -44,36 +46,43 @@ public class DisplayMySubscribe extends ActionBarActivity {
         email = intent.getStringExtra(DisplayImages.EXTRA_MESSAGE);
 
 
-        final String request_url = "http://connexus2-1095.appspot.com/mySubscribe";
+        final String request_url = "http://blobstore-1107.appspot.com/mySubscribe";
         AsyncHttpClient httpClient = new AsyncHttpClient();
         RequestParams params = new RequestParams();
         params.put("email", email);
 
-        httpClient.post(request_url,params, new AsyncHttpResponseHandler() {
+        httpClient.post(request_url, params, new AsyncHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, byte[] response) {
                 final ArrayList<String> imageURLs = new ArrayList<String>();
-                //   final ArrayList<String> streamURLs = new ArrayList<String>();
+                final ArrayList<String> captionList = new ArrayList<String>();
                 try {
                     JSONObject jObject = new JSONObject(new String(response));
                     JSONArray displayImages = jObject.getJSONArray("displayImages");
-                    //  JSONArray streamUrlList = jObject.getJSONArray("streamUrlList");
+                    JSONArray caption = jObject.getJSONArray("caption");
                     Log.d("wenwen! ", "json successful");
                     for (int i = 0; i < displayImages.length(); i++) {
 
                         imageURLs.add(displayImages.getString(i));
-                        //   streamURLs.add(streamUrlList.getString(i));
+                        captionList.add(caption.getString(i));
                         System.out.println(displayImages.getString(i));
                     }
+                    //  imageURLs.add("http://lh3.googleusercontent.com/eG4Xx4zEiekHQneAbeViCOhCdZZL76j1p01gvCJUNZlZ7DQcnLQo5w4IFyHaG8sWffMstj795u4W9fUEikinAouQ4ZM");
+                    // imageURLs.add("http://blobstore-1107.appspot.com/view_photo/AMIfv96rR9yu2cYNdPeYB4clwpZKQ3sfVL10KGMKkkhONEuIDqm8F3BKY0pCKgL69VOGMIIGczMt3ODyBE4L4DktWTYIZcmY4jdE0QntqzeOQLdUm_WlgcN9EQQpUpocX2CH196RDGRCCfcFDDB57qrWZQLeoLgHyoe09UuX38UxpRevY_fE03E");
+                    //  imageURLs.add("http://blobstore-1107.appspot.com/view_photo/AMIfv94eNMqZTxyEIrPnZrPK-vJ2aAUXOL5DEhXc-7wbTQayahyPBGklLn1CyABgyN0LIMARtj33k4Ib-QkQHAnQiaLUbnqApoydfpZ5Vt_tIVd5Gex5v4pb8_8AAJWD114mUpBD5Ck8x3pybwphYBsX66cSnaOFYPMMBArD4AmICVbbro6jC2o");
+                    // imageURLs.add("http://aptmini3.appspot.com/view_photo/AMIfv97fab0PppGNVymma0HtTZA1oSd2RN7wH8XWeZqPnLCVQTV0q1ucMQJGMVnU7fPIuyHhbbTzf8USHu0hYSo20tJN8KeEfMaNCLwCa5X5rMFMwORUPRFIWur9h38oppodVsr1-Ifublk37Zc4B8b6fiM_-Nd_1w");
+                    //imageURLs.add("http://blobstore-1107.appspot.com/view_photo/AMIfv94yxPpaChAyE2FcZfMdvwl7bgvTMkcX-YMQAJVoOUXjg5apF1GzX6K57v1NgVTgx7lM2VEg2tlF4NRgBSnkHVRBbNFslzJGJ_4HviqIDFTdY0y4l_Be9VJf1faJHlBr0Spar-us-vbHtVoeARcKLbQBX5a--ehkp2-HgVKyBktGVMS4mKw");
+                    //        imageURLs.add("http://lh3.googleusercontent.com/eG4Xx4zEiekHQneAbeViCOhCdZZL76j1p01gvCJUNZlZ7DQcnLQo5w4IFyHaG8sWffMstj795u4W9fUEikinAouQ4ZM");
+
                     GridView gridview = (GridView) findViewById(R.id.gridview);
-      //              if (imageURLs.size()>0){
+                    //              if (imageURLs.size()>0){
                     gridview.setAdapter(new ImageAdapter(context, imageURLs));
                     gridview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                         @Override
                         public void onItemClick(AdapterView<?> parent, View v,
                                                 int position, long id) {
 
-                            Toast.makeText(context, imageURLs.get(position), Toast.LENGTH_SHORT).show();
+                            Toast.makeText(context, captionList.get(position), Toast.LENGTH_SHORT).show();
 
                             // Intent intent= new Intent(this,viewSingleStream.class,streamURLs.get(position), );
                             //   startActivity(intent);
@@ -87,7 +96,7 @@ public class DisplayMySubscribe extends ActionBarActivity {
                             imageDialog.show();
                         }
                     });
-             //   }
+                    //   }
                 } catch (JSONException j) {
                     System.out.println("JSON Error");
                 }

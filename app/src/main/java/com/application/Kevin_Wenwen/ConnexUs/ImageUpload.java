@@ -18,6 +18,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.loopj.android.http.AsyncHttpClient;
@@ -33,14 +34,34 @@ import java.io.ByteArrayOutputStream;
 
 
 public class ImageUpload extends ActionBarActivity {
+    public final static String EXTRA_MESSAGE = "MESSAGE IN";
     private static final int PICK_IMAGE = 1;
+    private String email;
+    private String stream_name;
+    private String locationLat;
+    private String locationLong;
+    private String[] msg;
     Context context = this;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_image_upload);
 
+        Intent intent = getIntent();
+        msg = intent.getStringArrayExtra(DisplayImages.EXTRA_MESSAGE);
+        //System.out.println("MSG from a single stream");
+       // System.out.println(msg[2]);
+       // System.out.println(msg[3]);
+        email = msg[0];
+        stream_name = msg[1];
+        locationLat = msg[2];
+        locationLong = msg[3];
+
         // Choose image from library
+        TextView uploadTo = (TextView) findViewById(R.id.uploadTo);
+        uploadTo.setText("Stream: "+stream_name);
+        uploadTo.setTextSize(30);
+
         Button chooseFromLibraryButton = (Button) findViewById(R.id.choose_from_library);
         chooseFromLibraryButton.setOnClickListener(
                 new View.OnClickListener() {
@@ -130,10 +151,11 @@ public class ImageUpload extends ActionBarActivity {
 
     private void getUploadURL(final byte[] encodedImage, final String photoCaption){
         AsyncHttpClient httpClient = new AsyncHttpClient();
-        String request_url="http://aptandroiddemo.appspot.com/getUploadURL";
-        System.out.println(request_url);
+        String request_url="http://blobstore-1107.appspot.com/getUploadURL";
+        //System.out.println(request_url);
         httpClient.get(request_url, new AsyncHttpResponseHandler() {
             String upload_url;
+
             @Override
             public void onSuccess(int statusCode, Header[] headers, byte[] response) {
 
@@ -143,8 +165,7 @@ public class ImageUpload extends ActionBarActivity {
                     upload_url = jObject.getString("upload_url");
                     postToServer(encodedImage, photoCaption, upload_url);
 
-                }
-                catch(JSONException j){
+                } catch (JSONException j) {
                     System.out.println("JSON Error");
                 }
             }
@@ -157,27 +178,36 @@ public class ImageUpload extends ActionBarActivity {
     }
 
     private void postToServer(byte[] encodedImage,String photoCaption, String upload_url){
-        System.out.println(upload_url);
+
         RequestParams params = new RequestParams();
         params.put("file",new ByteArrayInputStream(encodedImage));
         params.put("photoCaption",photoCaption);
+        params.put("email",email);
+        params.put("stream_name",stream_name);
+        params.put("locationLat",locationLat);
+        params.put("locationLong",locationLong);
+        System.out.println(locationLat);
+
         AsyncHttpClient client = new AsyncHttpClient();
         client.post(upload_url, params, new AsyncHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, byte[] response) {
                 Log.w("async", "success!!!!");
                 Toast.makeText(context, "Upload Successful", Toast.LENGTH_SHORT).show();
+
+                Intent intent = new Intent(context, viewSingleStream.class);
+                intent.putExtra(EXTRA_MESSAGE,msg);
+                startActivity(intent);
+
+
             }
+
             @Override
             public void onFailure(int statusCode, Header[] headers, byte[] errorResponse, Throwable e) {
-                Log.e("Posting_to_blob","There was a problem in retrieving the url : " + e.toString());
+                Log.e("Posting_to_blob", "There was a problem in retrieving the url : " + e.toString());
             }
         });
     }
 
-    public void viewAllImages(View view){
-        Intent intent= new Intent(this, DisplayImages.class);
 
-        startActivity(intent);
-    }
 }

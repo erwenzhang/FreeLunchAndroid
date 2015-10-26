@@ -1,0 +1,72 @@
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:id="@+id/framelayout" >
+
+
+<RelativeLayout
+xmlns:android="http://schemas.android.com/apk/res/android"
+xmlns:tools="http://schemas.android.com/tools"
+android:layout_width="match_parent"
+android:layout_height="match_parent"
+android:orientation="vertical"
+android:layout_gravity="center_horizontal"
+tools:context="com.application.Kevin_Wenwen.ConnexUs.viewSingleStream">
+<TextView
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:gravity="center"
+    android:textSize="40sp"
+    android:paddingBottom = "40sp"
+    android:id="@+id/name"
+    />
+
+
+<GridView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/gridview"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:columnWidth="90dp"
+    android:numColumns="4"
+    android:verticalSpacing="10dp"
+    android:horizontalSpacing="10dp"
+    android:stretchMode="columnWidth"
+    android:gravity="center"
+    android:layout_below="@id/name"
+
+    />
+
+    <Button
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:text="More pictures"
+        android:layout_below="@id/gridview"
+        android:id="@+id/morePictures" />
+<Button
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:text="Upload an image"
+    android:layout_below="@id/morePictures"
+    android:id="@+id/upload"
+    android:onClick="imageUpload"/>
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Streams"
+        android:layout_below="@id/upload"
+        android:id="@+id/streams"
+        android:onClick="viewAllImages"/>
+
+
+
+
+
+
+
+
+
+
+</RelativeLayout>
+    </FrameLayout>

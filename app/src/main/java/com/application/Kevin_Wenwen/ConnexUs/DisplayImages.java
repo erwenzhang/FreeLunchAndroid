@@ -16,6 +16,10 @@ import android.widget.Button;
 import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.Toast;
+import android.app.FragmentManager;
+import android.app.FragmentTransaction;
+import android.content.res.Configuration;
+import android.view.WindowManager;
 
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
@@ -35,18 +39,34 @@ public class DisplayImages extends ActionBarActivity {
     Context context = this;
     private String TAG  = "Display Images";
     private String email;
-    public final static String EXTRA_MESSAGE = "com.displayimages.MESSAGE";
+    private String[] msg;
+    public final static String EXTRA_MESSAGE = "MESSAGE IN";
+    public final static String EXTRA_MESSAGE1 = "com.displayimages.MESSAGE";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_display_images);
 
+        //Bundle bundle=new Bundle();
+      //  bundle.putString("email",email);
+
+      //  FragmentManager fragmentManager = getFragmentManager();
+     //   FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+     //   DisplayMySubscribe mysubscribe = new DisplayMySubscribe();
+      //  mysubscribe.setArguments(bundle);
+      //  fragmentTransaction.replace(android.R.id.content,mysubscribe);
+      //  fragmentTransaction.commit();
+
 
         Button my_subscribe  = (Button) findViewById(R.id.my_subscribe);
 
         Intent intent = getIntent();
-        email = intent.getStringExtra(Homepage.EXTRA_MESSAGE);
+        intent.getClass();
+       // String source = intent.getStringExtra("From");
+        msg = intent.getStringArrayExtra(EXTRA_MESSAGE);
+        email = msg[0];
+
         if(email != null){
             my_subscribe.setEnabled(true);
             Log.d("wenwen passing msg", email);
@@ -57,22 +77,22 @@ public class DisplayImages extends ActionBarActivity {
           //  Log.d("wenwen passing msg", " failed");
         }
       //  final String request_url = "http://aptandroiddemo.appspot.com/viewAllPhotos";
-      final String request_url = "http://connexus2-1095.appspot.com/viewAllPhotos";
+      final String request_url = "http://blobstore-1107.appspot.com/viewAllPhotos";
         AsyncHttpClient httpClient = new AsyncHttpClient();
         httpClient.get(request_url, new AsyncHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, byte[] response) {
                 final ArrayList<String> coverURLs = new ArrayList<String>();
-                final ArrayList<String> streamURLs = new ArrayList<String>();
+                final ArrayList<String> streams = new ArrayList<String>();
                 try {
                     JSONObject jObject = new JSONObject(new String(response));
                     JSONArray displayCovers = jObject.getJSONArray("displayCovers");
-                    JSONArray streamUrlList = jObject.getJSONArray("streamUrlList");
+                    JSONArray streamList = jObject.getJSONArray("streamList");
                    // Log.d("wenwen TAG", "json successful");
                     for(int i=0;i<displayCovers.length();i++) {
 
                         coverURLs.add(displayCovers.getString(i));
-                        streamURLs.add(streamUrlList.getString(i));
+                        streams.add(streamList.getString(i));
                         System.out.println(displayCovers.getString(i));
                     }
                     GridView gridview = (GridView) findViewById(R.id.gridview);
@@ -82,10 +102,18 @@ public class DisplayImages extends ActionBarActivity {
                         public void onItemClick(AdapterView<?> parent, View v,
                                                 int position, long id) {
 
-                            Toast.makeText(context, streamURLs.get(position), Toast.LENGTH_SHORT).show();
+                         //    Toast.makeText(context, streamURLs.get(position), Toast.LENGTH_SHORT).show();
 
-                           // Intent intent= new Intent(this,viewSingleStream.class,streamURLs.get(position), );
-                         //   startActivity(intent);
+                            Intent intent= new Intent(context,viewSingleStream.class);
+                            String[] msg_out = new String[4];
+                            msg_out[0] = email;
+                            msg_out[1] = streams.get(position);
+                            msg_out[2] = msg[1];
+                            msg_out[3] = msg[2];
+
+                           // intent.putExtra(EXTRA_MESSAGE,)
+                            intent.putExtra( EXTRA_MESSAGE,msg_out);
+                            startActivity(intent);
 
                             //Dialog imageDialog = new Dialog(context);
                          //   imageDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
@@ -136,4 +164,6 @@ public class DisplayImages extends ActionBarActivity {
         intent.putExtra(EXTRA_MESSAGE,email);
         startActivity(intent);
     }
+
+
 }

@@ -3,7 +3,25 @@ package com.application.Kevin_Wenwen.ConnexUs;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.SignInButton;
 import com.google.android.gms.common.api.GoogleApiClient;
-//import com.google.android.gms.common.GooglePlayServicesClient;
+import com.google.android.gms.common.GooglePlayServicesClient;
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.GooglePlayServicesClient;
+import com.google.android.gms.common.GooglePlayServicesUtil;
+
+import android.location.Location;
+import android.app.Activity;
+import android.os.Bundle;
+import android.util.Log;
+import android.widget.TextView;
+
+
+import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.location.LocationListener;
+import com.google.android.gms.location.LocationRequest;
+import com.google.android.gms.location.LocationClient;
+import  com.google.android.gms.location.LocationServices;
+
+//import com.google.android.gms.location.LocationClient;
 import com.google.android.gms.common.api.GoogleApiClient.ConnectionCallbacks;
 import com.google.android.gms.common.api.GoogleApiClient.OnConnectionFailedListener;
 import com.google.android.gms.plus.Plus;
@@ -14,6 +32,7 @@ import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentSender.SendIntentException;
+import android.location.*;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
@@ -27,7 +46,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 public class Homepage extends ActionBarActivity implements
-        ConnectionCallbacks, OnConnectionFailedListener, View.OnClickListener {
+        ConnectionCallbacks, OnConnectionFailedListener, View.OnClickListener,
+        LocationListener{
 
     private static final String TAG = "ConnexUs-login";
     //final int RQS_GooglePlayServices = 1;
@@ -68,7 +88,7 @@ public class Homepage extends ActionBarActivity implements
     // until the user clicks 'sign in'.
     private int mSignInError;
     public static boolean login = false;
-    public final static String EXTRA_MESSAGE = "com.homepage.MESSAGE";
+    public final static String EXTRA_MESSAGE = "MESSAGE IN";
 
     // Used to determine if we should ask for a server auth code when connecting the
     // GoogleApiClient.  False by default so that this sample can be used without configuring
@@ -86,6 +106,13 @@ public class Homepage extends ActionBarActivity implements
     private Button mRevokeButton;
     private TextView mStatus;
 
+    //location variable
+    private String mLatitudeText = null;
+    private String mLongitudeText = null;
+    //private LocationClient mLocationClient;
+    private LocationRequest mLocationRequest;
+    private Location mLastLocation;
+
     Context context = this;
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -97,7 +124,7 @@ public class Homepage extends ActionBarActivity implements
         mRevokeButton = (Button) findViewById(R.id.revoke_access_button);
         mStatus = (TextView) findViewById(R.id.sign_in_status);
 
-        setGooglePlusButtonText(mSignInButton, "Sign in  Wenwen       ");
+        setGooglePlusButtonText(mSignInButton, "Sign in        ");
 
         // Button listeners
         mSignInButton.setOnClickListener(this);
@@ -111,6 +138,18 @@ public class Homepage extends ActionBarActivity implements
 
 
         mGoogleApiClient = buildGoogleApiClient();
+
+      /*  if (servicesConnected()) {
+            mLocationClient = new LocationClient(this,this,this);
+
+        }*/
+
+    }
+
+    public void onLocationChanged(Location location) {
+        System.out.print("Location wenwen");
+        System.out.print(location.toString());
+
     }
 
     private void setGooglePlusButtonText(SignInButton signInButton, String buttonText) {
@@ -135,6 +174,7 @@ public class Homepage extends ActionBarActivity implements
                 .addConnectionCallbacks(this)
                 .addOnConnectionFailedListener(this)
                 .addApi(Plus.API, Plus.PlusOptions.builder().build())
+                .addApi(LocationServices.API)
                 .addScope(Plus.SCOPE_PLUS_LOGIN)
                 .build();
     }
@@ -234,6 +274,22 @@ public class Homepage extends ActionBarActivity implements
         mSignOutButton.setEnabled(true);
         mRevokeButton.setEnabled(true);
 
+        //location_api
+        mLocationRequest = LocationRequest.create();
+        mLocationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
+        mLocationRequest.setInterval(1000);
+        LocationServices.FusedLocationApi.requestLocationUpdates(
+                mGoogleApiClient, mLocationRequest, this);
+
+
+        mLastLocation = LocationServices.FusedLocationApi.getLastLocation(
+              mGoogleApiClient);
+        if (mLastLocation != null) {
+            mLatitudeText = String.valueOf(mLastLocation.getLatitude());
+            mLongitudeText = String.valueOf(mLastLocation.getLongitude());
+        }
+
+
         // Retrieve some profile information to personalize our app for the user.
         final Person currentUser = Plus.PeopleApi.getCurrentPerson(mGoogleApiClient);
         email = Plus.AccountApi.getAccountName(mGoogleApiClient);
@@ -244,7 +300,7 @@ public class Homepage extends ActionBarActivity implements
 
         mStatus.setText(email + " is currently Signed In");
 
-        Button uploadButton = (Button) findViewById(R.id.open_image_upload_page);
+        /* Button uploadButton = (Button) findViewById(R.id.open_image_upload_page);
         uploadButton.setClickable(true);
 
         uploadButton.setOnClickListener(
@@ -255,7 +311,7 @@ public class Homepage extends ActionBarActivity implements
                         startActivity(intent);
                     }
                 }
-        );
+        );*/
     }
 
     /* onConnectionFailed is called when our Activity could not connect to Google
@@ -270,7 +326,7 @@ public class Homepage extends ActionBarActivity implements
  //       Log.i("WENWEN0", "IS Available "
    //             + GooglePlayServicesUtil.isGooglePlayServicesAvailable(getApplicationContext()));
         Log.i(TAG, "onConnectionFailed: ConnectionResult.getErrorCode() = "
-               + result.getErrorCode());
+                + result.getErrorCode());
        // GooglePlayServicesUtil.getErrorDialog(resultCode,this,RQS_GooglePlayServices ).show();
 
         if (result.getErrorCode() == ConnectionResult.API_UNAVAILABLE) {
@@ -375,8 +431,8 @@ public class Homepage extends ActionBarActivity implements
         mRevokeButton.setEnabled(false);
 
         mStatus.setText("Signed out");
-        Button uploadButton = (Button) findViewById(R.id.open_image_upload_page);
-        uploadButton.setClickable(false);
+      //  Button uploadButton = (Button) findViewById(R.id.open_image_upload_page);
+      //  uploadButton.setClickable(false);
 
         if (imageView != null) {
             ((ViewGroup) imageView.getParent()).removeView(imageView);
@@ -392,10 +448,40 @@ public class Homepage extends ActionBarActivity implements
         mGoogleApiClient.connect();
     }
 
+    private boolean servicesConnected() {
+        // Check that Google Play services is available
+        int resultCode =
+                GooglePlayServicesUtil.
+                        isGooglePlayServicesAvailable(this);
+        // If Google Play services is available
+        if (ConnectionResult.SUCCESS == resultCode) {
+            // In debug mode, log the status
+            Log.d("Location Updates",
+                    "Google Play services is available.");
+            // Continue
+            return true;
+            // Google Play services was not available for some reason.
+            // resultCode holds the error code.
+        } else {
+            System.out.println("CONNECTION FAILED");
+
+            return false;
+        }
+    }
+
+
     public void viewAllImages(View view){
         Intent intent= new Intent(this, DisplayImages.class);
+        Log.d("WENWENWENWEN","msg send");
         //if(Homepage.login)
-        intent.putExtra(EXTRA_MESSAGE,Homepage.email);
+        String[] msg = new String[3];
+
+        System.out.print(Homepage.email);
+        Log.d("WENWENWENWEN", "msg send 2");
+        msg[0] = Homepage.email;
+        msg[1] = mLatitudeText;
+        msg[2] = mLongitudeText;
+        intent.putExtra(EXTRA_MESSAGE,msg);
         startActivity(intent);
     }
 
