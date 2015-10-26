@@ -256,6 +256,8 @@ public class viewSingleStream extends ActionBarActivity {
         msg[1] = nameofStream;
         msg[2] = locationLat;
         msg[3] = locationLong;*/
+        Log.d("WENWENWENWENtoupload", msg[2]);
+        Log.d("WENWENWENWEN to upload", msg[3]);
 
         intent.putExtra(EXTRA_MESSAGE,msg);
 

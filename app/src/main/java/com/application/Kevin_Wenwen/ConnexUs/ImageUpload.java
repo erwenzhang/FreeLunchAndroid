@@ -42,8 +42,8 @@ public class ImageUpload extends ActionBarActivity implements LocationListener{
     private static final int PICK_IMAGE = 1;
     private String email;
     private String stream_name;
-    private String locationLat;
-    private String locationLong;
+    private String locationLat = "0";
+    private String locationLong = "0";
     private String[] msg;
     Context context = this;
     @Override
@@ -101,7 +101,7 @@ public class ImageUpload extends ActionBarActivity implements LocationListener{
         return super.onOptionsItemSelected(item);
     }
     public void onLocationChanged(Location location) {
-        System.out.print("Location changes wenwen");
+        System.out.print("Location changes wenwen!!");
         System.out.print(location.toString());
         locationLong = String.valueOf(location.getLongitude());
         locationLat = String.valueOf(location.getLatitude());
@@ -198,7 +198,9 @@ public class ImageUpload extends ActionBarActivity implements LocationListener{
         params.put("stream_name",stream_name);
         params.put("locationLat",locationLat);
         params.put("locationLong",locationLong);
+        Log.d("LocationLatLo", "lO");
         System.out.println(locationLat);
+        System.out.println(locationLong);
 
         AsyncHttpClient client = new AsyncHttpClient();
         client.post(upload_url, params, new AsyncHttpResponseHandler() {

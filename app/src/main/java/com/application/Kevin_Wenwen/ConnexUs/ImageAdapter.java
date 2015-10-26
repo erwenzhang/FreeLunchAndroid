@@ -3,6 +3,8 @@ package com.application.Kevin_Wenwen.ConnexUs;
 
 import android.app.ProgressDialog;
 import android.os.AsyncTask;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.BaseAdapter;
 import android.content.Context;
 import android.view.View;
@@ -64,6 +66,9 @@ public class ImageAdapter extends BaseAdapter {
         new DownloadImageTask(imageView).execute(imageURLs.get(position));
 
        // Picasso.with(mContext).load(imageURLs.get(position)).placeholder(R.drawable.placeholder_square).into(imageView);
+      //  ImageView spaceshipImage = (ImageView) findViewById(R.id.spaceshipImage);
+        Animation hyperspaceJumpAnimation = AnimationUtils.loadAnimation(context, R.anim.hyperspace_jump);
+        imageView.startAnimation(hyperspaceJumpAnimation);
         return imageView;
 
     }
