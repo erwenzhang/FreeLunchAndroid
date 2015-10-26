@@ -110,7 +110,7 @@ public class Homepage extends ActionBarActivity implements
     private String mLatitudeText = "0";
     private String mLongitudeText = "0";
     //private LocationClient mLocationClient;
-    private LocationRequest mLocationRequest;
+    //private LocationRequest mLocationRequest;
     private Location mLastLocation;
 
     Context context = this;
@@ -277,11 +277,11 @@ public class Homepage extends ActionBarActivity implements
         mRevokeButton.setEnabled(true);
 
         //location_api
-        mLocationRequest = LocationRequest.create();
-        mLocationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
-        mLocationRequest.setInterval(1000);
-        LocationServices.FusedLocationApi.requestLocationUpdates(
-                mGoogleApiClient, mLocationRequest, this);
+     //   mLocationRequest = LocationRequest.create();
+   //     mLocationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
+       // mLocationRequest.setInterval(1000);
+      //  LocationServices.FusedLocationApi.requestLocationUpdates(
+        //        mGoogleApiClient, mLocationRequest, this);
 
 
         mLastLocation = LocationServices.FusedLocationApi.getLastLocation(

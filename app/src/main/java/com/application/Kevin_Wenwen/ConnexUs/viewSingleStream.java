@@ -74,8 +74,8 @@ public class viewSingleStream extends ActionBarActivity {
         nameofStream = msg[1];
         locationLat = msg[2];
         locationLong = msg[3];
-       Log.d("LocationLat ", locationLat);
-        Log.d("locationLong",locationLong);
+        //Log.d("WENWENWENWEN", locationLat);
+        //Log.d("WENWENWENWENfromsearc",locationLong);
 
         //stream_name.setTextColor();
         stream_name.setTextSize(30);

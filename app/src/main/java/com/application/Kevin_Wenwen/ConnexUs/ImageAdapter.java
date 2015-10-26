@@ -66,9 +66,9 @@ public class ImageAdapter extends BaseAdapter {
         new DownloadImageTask(imageView).execute(imageURLs.get(position));
 
        // Picasso.with(mContext).load(imageURLs.get(position)).placeholder(R.drawable.placeholder_square).into(imageView);
-      //  ImageView spaceshipImage = (ImageView) findViewById(R.id.spaceshipImage);
-        Animation hyperspaceJumpAnimation = AnimationUtils.loadAnimation(context, R.anim.hyperspace_jump);
-        imageView.startAnimation(hyperspaceJumpAnimation);
+
+      //  Animation hyperspaceJumpAnimation = AnimationUtils.loadAnimation(this, R.anim.hyperspace_jump);
+        //imageView.startAnimation(hyperspaceJumpAnimation);
         return imageView;
 
     }
