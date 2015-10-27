@@ -50,7 +50,7 @@ public class ImageAdapter extends BaseAdapter {
 
         if (convertView == null) {  // if it's not recycled, initialize some attributes
             imageView = new ImageView(mContext);
-            imageView.setLayoutParams(new GridView.LayoutParams(170, 120));
+            imageView.setLayoutParams(new GridView.LayoutParams(170, 160));
             imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
         } else {
             imageView = (ImageView) convertView;
@@ -63,9 +63,9 @@ public class ImageAdapter extends BaseAdapter {
         //String tmp_url = ;
 
        //  URL url = new URL(imageURLs.get(position));
-        new DownloadImageTask(imageView).execute(imageURLs.get(position));
+     //   new DownloadImageTask(imageView).execute(imageURLs.get(position));
 
-       // Picasso.with(mContext).load(imageURLs.get(position)).placeholder(R.drawable.placeholder_square).into(imageView);
+        Picasso.with(mContext).load(imageURLs.get(position)).placeholder(R.drawable.placeholder_square).into(imageView);
 
       //  Animation hyperspaceJumpAnimation = AnimationUtils.loadAnimation(this, R.anim.hyperspace_jump);
         //imageView.startAnimation(hyperspaceJumpAnimation);
