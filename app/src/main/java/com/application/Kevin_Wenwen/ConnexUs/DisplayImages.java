@@ -185,7 +185,7 @@ public class DisplayImages extends ActionBarActivity {
 
     public void viewNearbyPhotos(View view){
         Intent intent = new Intent(this, NearbyPhotos.class);
-        intent.putExtra("indexes","0_15");
+        intent.putExtra("indexes", "0_15");
         startActivity(intent);
     }
 

@@ -95,14 +95,11 @@ public class NearbyPhotos extends FragmentActivity implements
     }
     private boolean servicesConnected() {
         // Check that Google Play services is available
-        int resultCode =
-                GooglePlayServicesUtil.
-                        isGooglePlayServicesAvailable(this);
+        int resultCode = GooglePlayServicesUtil.isGooglePlayServicesAvailable(this);
         // If Google Play services is available
         if (ConnectionResult.SUCCESS == resultCode) {
             // In debug mode, log the status
-            Log.d("Location Updates",
-                    "Google Play services is available.");
+            Log.d("Location Updates", "Google Play services is available.");
             // Continue
             return true;
             // Google Play services was not available for some reason.
@@ -118,8 +115,7 @@ public class NearbyPhotos extends FragmentActivity implements
             // If Google Play services can provide an error dialog
             if (errorDialog != null) {
                 // Create a new DialogFragment for the error dialog
-                ErrorDialogFragment errorFragment =
-                        new ErrorDialogFragment();
+                ErrorDialogFragment errorFragment = new ErrorDialogFragment();
                 // Set the dialog in the DialogFragment
                 errorFragment.setDialog(errorDialog);
                 // Show the error dialog in the DialogFragment
@@ -172,7 +168,7 @@ public class NearbyPhotos extends FragmentActivity implements
         //Toast.makeText(this, "Connected", Toast.LENGTH_SHORT).show();
         indexes = getIntent().getStringExtra("indexes");
         String location=mLocationClient.getLastLocation().getLatitude()+"_"+mLocationClient.getLastLocation().getLongitude();
-        final String request_url = "http://blobstore-1107.appspot.com/andViewNearbyPhotos/"+indexes+"/"+location;
+        final String request_url = "http://blobstore-1107.appspot.com/andViewNearbyPhotos/" + indexes + "/" + location;
         final Button more_nearby_photos = (Button)findViewById(R.id.more_nearby_photos);
 
         httpClient.get(request_url, new AsyncHttpResponseHandler() {
@@ -208,7 +204,7 @@ public class NearbyPhotos extends FragmentActivity implements
                     GridView gridview = (GridView) findViewById(R.id.gridview);
 
                     // fill the images with their urls
-                    gridview.setAdapter(new ImageAdapter(context,imageURLs));
+                    gridview.setAdapter(new ImageAdapter(context, imageURLs));
 
                     // click to display distance
                     gridview.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
