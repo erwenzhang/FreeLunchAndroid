@@ -66,6 +66,7 @@ public class ImageUpload extends ActionBarActivity implements GoogleApiClient.Co
 
     public final static String EXTRA_MESSAGE = "MESSAGE IN";
     private static final int PICK_IMAGE = 1;
+    private static final int USE_CAMERA = 2;
     private String email;
     private String stream_name;
     private String locationLat = "0";
@@ -267,6 +268,19 @@ public class ImageUpload extends ActionBarActivity implements GoogleApiClient.Co
         }*/
     }
 
+    public void useCamera(View view){
+        Intent cameraIntent = new Intent(context, CameraActivity.class);
+        //String[] msg_out = new String[4];
+        //msg_out = msg;
+        /*msg[0] = email;
+        msg[1] = nameofStream;
+        msg[2] = locationLat;
+        msg[3] = locationLong;*/
+
+        cameraIntent.putExtra(EXTRA_MESSAGE, msg);
+        startActivityForResult(cameraIntent, USE_CAMERA);
+    }
+
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == PICK_IMAGE && data != null && data.getData() != null) {
@@ -284,6 +298,45 @@ public class ImageUpload extends ActionBarActivity implements GoogleApiClient.Co
             String imageFilePath = cursor.getString(columnIndex);
             cursor.close();
 
+            // Bitmap imaged created and show thumbnail
+
+            ImageView imgView = (ImageView) findViewById(R.id.thumbnail);
+            final Bitmap bitmapImage = BitmapFactory.decodeFile(imageFilePath);
+            imgView.setImageBitmap(bitmapImage);
+
+            // Enable the upload button once image has been uploaded
+
+            Button uploadButton = (Button) findViewById(R.id.upload_to_server);
+            uploadButton.setClickable(true);
+
+            uploadButton.setOnClickListener(
+                    new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+
+                            // Get photo caption
+
+                            EditText text = (EditText) findViewById(R.id.upload_message);
+                            String photoCaption = text.getText().toString();
+
+                            ByteArrayOutputStream baos = new ByteArrayOutputStream();
+                            bitmapImage.compress(Bitmap.CompressFormat.JPEG, 50, baos);
+                            byte[] b = baos.toByteArray();
+                            byte[] encodedImage = Base64.encode(b, Base64.DEFAULT);
+                            String encodedImageStr = encodedImage.toString();
+
+                            getUploadURL(b, photoCaption);
+                        }
+                    }
+            );
+        } else if (requestCode == USE_CAMERA && resultCode == RESULT_OK && data != null      /*&& data.getData() != null*/) {
+
+            String imageFilePath;
+            String[] msg_from_camera = data.getStringArrayExtra(EXTRA_MESSAGE);
+            imageFilePath = msg_from_camera[1];
+            Log.d("TAGTAGTAG upload",msg[0]);
+            Log.d("TAGTAGTAG upload",msg[1]);
+            
             // Bitmap imaged created and show thumbnail
 
             ImageView imgView = (ImageView) findViewById(R.id.thumbnail);
