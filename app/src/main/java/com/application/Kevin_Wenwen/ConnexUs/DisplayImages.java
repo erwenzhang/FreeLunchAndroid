@@ -58,7 +58,7 @@ public class DisplayImages extends ActionBarActivity {
       //  mysubscribe.setArguments(bundle);
       //  fragmentTransaction.replace(android.R.id.content,mysubscribe);
       //  fragmentTransaction.commit();
-
+        Log.d("WENWENresulte ","back1");
 
         Button my_subscribe  = (Button) findViewById(R.id.my_subscribe);
 
@@ -66,6 +66,7 @@ public class DisplayImages extends ActionBarActivity {
         intent.getClass();
        // String source = intent.getStringExtra("From");
         msg = intent.getStringArrayExtra(EXTRA_MESSAGE);
+
         email = msg[0];
 
         if(email != null){
@@ -109,10 +110,10 @@ public class DisplayImages extends ActionBarActivity {
                             String[] msg_out = new String[4];
                             msg_out[0] = email;
                             msg_out[1] = streams.get(position);
-                            msg_out[2] = msg[1];
-                            msg_out[3] = msg[2];
-                            Log.d("WENWENWENWEN to single", msg_out[2]);
-                            Log.d("WENWENWENWEN to single", msg_out[3]);
+                            //msg_out[2] = msg[1];
+                          //  msg_out[3] = msg[2];
+                        //    Log.d("WENWENWENWEN to single", msg_out[2]);
+                        //    Log.d("WENWENWENWEN to single", msg_out[3]);
 
                            // intent.putExtra(EXTRA_MESSAGE,)
                             intent.putExtra( EXTRA_MESSAGE,msg_out);
@@ -175,10 +176,10 @@ public class DisplayImages extends ActionBarActivity {
         String[] msg_out = new String[4];
         msg_out[0] = email;
         msg_out[1] = search_item;
-        msg_out[2] = msg[1];
-        msg_out[3] = msg[2];
-        Log.d("WENWENWENWEN to search", msg_out[2]);
-        Log.d("WENWENWENWEN to search", msg_out[3]);
+     //   msg_out[2] = msg[1];
+    //    msg_out[3] = msg[2];
+    //    Log.d("WENWENWENWEN to search", msg_out[2]);
+    //    Log.d("WENWENWENWEN to search", msg_out[3]);
         intent.putExtra(EXTRA_MESSAGE,msg_out);
         startActivity(intent);
     }

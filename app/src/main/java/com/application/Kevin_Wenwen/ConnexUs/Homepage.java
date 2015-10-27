@@ -487,8 +487,8 @@ public class Homepage extends ActionBarActivity implements
         //System.out.print(mLongitudeText);
 
         msg[0] = Homepage.email;
-        msg[1] = mLatitudeText;
-        msg[2] = mLongitudeText;
+     //   msg[1] = mLatitudeText;
+     //   msg[2] = mLongitudeText;
 
         intent.putExtra(EXTRA_MESSAGE, msg);
 

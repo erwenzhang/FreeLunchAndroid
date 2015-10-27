@@ -96,8 +96,8 @@ public class Search extends ActionBarActivity {
                             String[] msg_out = new String[4];
                             msg_out[0] = email;
                             msg_out[1] = streams.get(position);
-                            msg_out[2] = msg[2];
-                            msg_out[3] = msg[3];
+                         //   msg_out[2] = msg[2];
+                         //   msg_out[3] = msg[3];
                             intent.putExtra(EXTRA_MESSAGE,msg_out);
                             startActivity(intent);
 
@@ -142,8 +142,8 @@ public class Search extends ActionBarActivity {
                                             String[] msg_out = new String[4];
                                             msg_out[0] = email;
                                             msg_out[1] = streams.get(position);
-                                            msg_out[2] = msg[1];
-                                            msg_out[3] = msg[2];
+                                          //  msg_out[2] = msg[1];
+                                          //  msg_out[3] = msg[2];
                                             intent.putExtra(EXTRA_MESSAGE,msg_out);
                                             startActivity(intent);
 
@@ -198,8 +198,8 @@ public class Search extends ActionBarActivity {
         String[] msg_out = new String[4];
         msg_out[0] = email;
         msg_out[1] = search_item;
-        msg_out[2] = msg[1];
-        msg_out[3] = msg[2];
+      //  msg_out[2] = msg[1];
+      //  msg_out[3] = msg[2];
         intent.putExtra(EXTRA_MESSAGE,msg_out);
         startActivity(intent);
 

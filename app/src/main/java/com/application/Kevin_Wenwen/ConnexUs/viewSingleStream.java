@@ -72,8 +72,8 @@ public class viewSingleStream extends ActionBarActivity {
         email = msg[0];
         stream_name.setText(msg[1]);
         nameofStream = msg[1];
-        locationLat = msg[2];
-        locationLong = msg[3];
+       // locationLat = msg[2];
+       // locationLong = msg[3];
         //Log.d("WENWENWENWEN", locationLat);
         //Log.d("WENWENWENWENfromsearc",locationLong);
 
@@ -256,8 +256,8 @@ public class viewSingleStream extends ActionBarActivity {
         msg[1] = nameofStream;
         msg[2] = locationLat;
         msg[3] = locationLong;*/
-        Log.d("WENWENWENWENtoupload", msg[2]);
-        Log.d("WENWENWENWEN to upload", msg[3]);
+       // Log.d("WENWENWENWENtoupload", msg[2]);
+      //  Log.d("WENWENWENWEN to upload", msg[3]);
 
         intent.putExtra(EXTRA_MESSAGE,msg);
 
@@ -269,8 +269,8 @@ public class viewSingleStream extends ActionBarActivity {
         //if(Homepage.login)
         String[] msg_out = new String[3];
         msg_out[0] = email;
-        msg_out[1] = locationLat;
-        msg_out[2] = locationLong;
+      //  msg_out[1] = locationLat;
+      //  msg_out[2] = locationLong;
         intent.putExtra(EXTRA_MESSAGE,msg_out);
         startActivity(intent);
     }

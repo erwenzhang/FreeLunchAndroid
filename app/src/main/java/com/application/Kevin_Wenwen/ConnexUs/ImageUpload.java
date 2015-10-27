@@ -334,8 +334,8 @@ public class ImageUpload extends ActionBarActivity implements GoogleApiClient.Co
             String imageFilePath;
             String[] msg_from_camera = data.getStringArrayExtra(EXTRA_MESSAGE);
             imageFilePath = msg_from_camera[1];
-            Log.d("TAGTAGTAG upload",msg[0]);
-            Log.d("TAGTAGTAG upload",msg[1]);
+            Log.d("TAGTAGTAG upload",msg_from_camera[0]);
+            Log.d("TAGTAGTAG upload",msg_from_camera[1]);
             
             // Bitmap imaged created and show thumbnail
 
@@ -369,6 +369,13 @@ public class ImageUpload extends ActionBarActivity implements GoogleApiClient.Co
                     }
             );
         }
+        else {
+            Log.d("WENWENresulte ","back");
+            Intent intent = new Intent(context,DisplayImages.class);
+            intent.putExtra(EXTRA_MESSAGE,msg);
+            startActivity(intent);
+        }
+
     }
 
     private void getUploadURL(final byte[] encodedImage, final String photoCaption){
