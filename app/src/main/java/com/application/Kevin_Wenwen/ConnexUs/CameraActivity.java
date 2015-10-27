@@ -83,7 +83,7 @@ public class CameraActivity extends Activity {
         //         }
         // );
 
-        Button button_streams = (Button)findViewById(R.id.button_streams);
+     /*  Button button_streams = (Button)findViewById(R.id.button_streams);
         button_streams.setOnClickListener(
                 new View.OnClickListener() {
                     @Override
@@ -92,7 +92,7 @@ public class CameraActivity extends Activity {
 
                     }
                 }
-        );
+        );*/
     }
     /** A safe way to get an instance of the Camera object. */
     public static Camera getCameraInstance(){
@@ -152,20 +152,23 @@ public class CameraActivity extends Activity {
         if (mCamera != null) {
             // Call stopPreview() to stop updating the preview surface.
             mPreview.getHolder().removeCallback(mPreview);
+            Log.d("Cameracamerea", "streams1");
             // Important: Call release() to release the camera for use by other
             // applications. Applications should release the camera immediately
             // during onPause() and re-open() it during onResume()).
             mCamera.release();
             mCamera = null;
         }
+        Log.d("Cameracamerea","streams2");
         Intent returnIntent = new Intent();
-//        String streamName = getIntent().getStringExtra("streamName");
-//        String streamID = getIntent().getStringExtra("streamID");
-//        returnIntent.putExtra("streamName",streamName);
-//        returnIntent.putExtra("streamID",streamID);
-//        returnIntent.putExtra("imageFile",imageFile);
-//        setResult(RESULT_OK,returnIntent);
-//        finish();
+       // String[] msg_out = new String[3];
+        //msg_out[0] = "camera";
+   //     returnIntent.putExtra(EXTRA_MESSAGE,msg_out);
+
+        setResult(RESULT_CANCELED, returnIntent);
+        finish();
+
+
 
     }
 
