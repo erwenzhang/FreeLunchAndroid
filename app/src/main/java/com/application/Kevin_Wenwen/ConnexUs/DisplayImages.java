@@ -70,12 +70,14 @@ public class DisplayImages extends ActionBarActivity {
         email = msg[0];
 
         if(email != null){
-            my_subscribe.setEnabled(true);
+            my_subscribe.setVisibility(View.VISIBLE);
+            // my_subscribe.setEnabled(true);
             Log.d("wenwen passing msg", email);
         }
 
         else {
-            my_subscribe.setEnabled(false);
+            my_subscribe.setVisibility(View.GONE);
+            // my_subscribe.setEnabled(false);
           //  Log.d("wenwen passing msg", " failed");
         }
       //  final String request_url = "http://aptandroiddemo.appspot.com/viewAllPhotos";
