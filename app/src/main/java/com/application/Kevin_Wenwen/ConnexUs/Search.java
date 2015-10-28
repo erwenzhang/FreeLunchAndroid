@@ -61,7 +61,7 @@ public class Search extends ActionBarActivity {
 
 
 
-        final String request_url = "http://blobstore-1107.appspot.com/search";
+        final String request_url = "http://mini3-test1.appspot.com/search";
         AsyncHttpClient httpClient = new AsyncHttpClient();
         RequestParams params = new RequestParams();
         params.put("search_item", search_item);

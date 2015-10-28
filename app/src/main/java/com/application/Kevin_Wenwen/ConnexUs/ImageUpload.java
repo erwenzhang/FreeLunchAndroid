@@ -336,7 +336,7 @@ public class ImageUpload extends ActionBarActivity implements GoogleApiClient.Co
             imageFilePath = msg_from_camera[1];
             Log.d("TAGTAGTAG upload",msg_from_camera[0]);
             Log.d("TAGTAGTAG upload",msg_from_camera[1]);
-            
+
             // Bitmap imaged created and show thumbnail
 
             ImageView imgView = (ImageView) findViewById(R.id.thumbnail);
@@ -380,7 +380,7 @@ public class ImageUpload extends ActionBarActivity implements GoogleApiClient.Co
 
     private void getUploadURL(final byte[] encodedImage, final String photoCaption){
         AsyncHttpClient httpClient = new AsyncHttpClient();
-        String request_url="http://blobstore-1107.appspot.com/getUploadURL";
+        String request_url="http://mini3-test1.appspot.com/getUploadURL";
         //System.out.println(request_url);
         httpClient.get(request_url, new AsyncHttpResponseHandler() {
             String upload_url;

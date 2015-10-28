@@ -43,6 +43,8 @@ public class NearbyPhotos extends FragmentActivity implements
     private String TAG  = "NearbyPhotos";
     public static String indexes;
     Context context = this;
+    public final static String EXTRA_MESSAGE = "MESSAGE IN";
+    private String email = null;
     // Global constants
     /*
      * Define a request code to send to Google Play services
@@ -167,39 +169,61 @@ public class NearbyPhotos extends FragmentActivity implements
         // Display the connection status
         //Toast.makeText(this, "Connected", Toast.LENGTH_SHORT).show();
         indexes = getIntent().getStringExtra("indexes");
+        email = getIntent().getStringExtra(EXTRA_MESSAGE);
+
         String location=mLocationClient.getLastLocation().getLatitude()+"_"+mLocationClient.getLastLocation().getLongitude();
-        final String request_url = "http://blobstore-1107.appspot.com/andViewNearbyPhotos/" + indexes + "/" + location;
+        final String request_url = "http://mini3-test1.appspot.com/androidViewNearbyPhotos/" + indexes + "/" + location;
         final Button more_nearby_photos = (Button)findViewById(R.id.more_nearby_photos);
 
         httpClient.get(request_url, new AsyncHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, byte[] response) {
                 final ArrayList<String> imageURLs = new ArrayList<String>();
-                final ArrayList<String> streamIDs = new ArrayList<String>();
-                final ArrayList<String> streamNames = new ArrayList<String>();
+                final ArrayList<String> streams = new ArrayList<String>();
                 final ArrayList<String> strDistances = new ArrayList<String>();
                 final String morePhotos;
                 try {
                     JSONObject jObject = new JSONObject(new String(response));
-                    JSONArray allPhotos = jObject.getJSONArray("allPhotos");
+                    JSONArray displayImageObjs = jObject.getJSONArray("displayImageObjs");
                     morePhotos = jObject.getString("morePhotos");
                     if (morePhotos.equals("True")){
                         more_nearby_photos.setVisibility(View.VISIBLE);
                     }
-
                     indexes = jObject.getString("indexURL");
-                    for(int i = 0; i < allPhotos.length(); i++) {
-                        String photoInfo = allPhotos.getString(i);
-                        JSONObject jObject2 = new JSONObject(photoInfo);
-                        String strDistance = jObject2.getString("strDistance");
-                        strDistances.add(strDistance);
-                        String photoServingURL = jObject2.getString("photoServingURL");
-                        imageURLs.add(photoServingURL);
-                        String streamIDNum = jObject2.getString("streamID");
-                        streamIDs.add(streamIDNum);
-                        String streamName = jObject2.getString("streamName");
-                        streamNames.add(streamName);
+
+                    for(int i = 0; i < displayImageObjs.length(); i++) {
+                        JSONObject jPhotoObject = new JSONObject(displayImageObjs.getString(i));
+
+                        imageURLs.add(jPhotoObject.getString("photoServingURL"));
+                        streams.add(jPhotoObject.getString("streamName"));
+                        strDistances.add(jPhotoObject.getString("strDistance"));
                     }
+
+                // final ArrayList<String> imageURLs = new ArrayList<String>();
+                // final ArrayList<String> streamIDs = new ArrayList<String>();
+                // final ArrayList<String> streamNames = new ArrayList<String>();
+                // final ArrayList<String> strDistances = new ArrayList<String>();
+                // final String morePhotos;
+                // try {
+                    // JSONObject jObject = new JSONObject(new String(response));
+                    // // JSONArray allPhotos = jObject.getJSONArray("allPhotos");
+                    // morePhotos = jObject.getString("morePhotos");
+                    // if (morePhotos.equals("True")){
+                    //     more_nearby_photos.setVisibility(View.VISIBLE);
+                    // }
+
+                    // for(int i = 0; i < allPhotos.length(); i++) {
+                    //     String photoInfo = allPhotos.getString(i);
+                    //     JSONObject jObject2 = new JSONObject(photoInfo);
+                    //     String strDistance = jObject2.getString("strDistance");
+                    //     strDistances.add(strDistance);
+                    //     String photoServingURL = jObject2.getString("photoServingURL");
+                    //     imageURLs.add(photoServingURL);
+                    //     String streamIDNum = jObject2.getString("streamID");
+                    //     streamIDs.add(streamIDNum);
+                    //     String streamName = jObject2.getString("streamName");
+                    //     streamNames.add(streamName);
+                    // }
 
                     GridView gridview = (GridView) findViewById(R.id.gridview);
 
@@ -222,10 +246,17 @@ public class NearbyPhotos extends FragmentActivity implements
                         @Override
                         public void onItemClick(AdapterView<?> parent, View v,
                                                 int position, long id) {
-                            Intent intent= new Intent(NearbyPhotos.this, viewSingleStream.class);
+                            // Intent intent= new Intent(NearbyPhotos.this, viewSingleStream.class);
+                            Intent intent= new Intent(context, viewSingleStream.class);
+
                             // intent.putExtra("position",position);
                             // intent.putExtra("streamName",streamNames.get(position));
                             // intent.putExtra("streamID",streamIDs.get(position));
+                            // startActivity(intent);
+                            String[] msg_out = new String[4];
+                            msg_out[0] = email;
+                            msg_out[1] = streams.get(position);
+                            intent.putExtra(EXTRA_MESSAGE, msg_out);
                             startActivity(intent);
 
                         }
@@ -320,12 +351,16 @@ public class NearbyPhotos extends FragmentActivity implements
     //mCurrentLocation = mLocationClient.getLastLocation();
     public void viewAllStreams(View view){
         Intent intent = new Intent(this, DisplayImages.class);
+        String[] msg = new String[3];
+        msg[0] = Homepage.email;
+        intent.putExtra(EXTRA_MESSAGE, msg);
         startActivity(intent);
     }
 
     public void moreNearbyPhotos(View view){
         Intent intent = new Intent(this, NearbyPhotos.class);
         intent.putExtra("indexes", indexes);
+        intent.putExtra(EXTRA_MESSAGE, email);
         startActivity(intent);
     }
 }
