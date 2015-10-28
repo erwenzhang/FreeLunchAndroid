@@ -75,7 +75,7 @@ public class ImageUpload extends ActionBarActivity implements GoogleApiClient.Co
     private  LocationRequest mLocationRequest;
     private String[] msg;
     Context context = this;
-
+    private Button uploadButton;
 
     private GoogleApiClient mGoogleApiClient;
 
@@ -83,6 +83,8 @@ public class ImageUpload extends ActionBarActivity implements GoogleApiClient.Co
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_image_upload);
+        uploadButton = (Button) findViewById(R.id.upload_to_server);
+        uploadButton.setEnabled(false);
 
         Intent intent = getIntent();
         msg = intent.getStringArrayExtra(DisplayImages.EXTRA_MESSAGE);
@@ -283,6 +285,7 @@ public class ImageUpload extends ActionBarActivity implements GoogleApiClient.Co
 
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+        uploadButton.setEnabled(true);
         if (requestCode == PICK_IMAGE && data != null && data.getData() != null) {
             Uri selectedImage = data.getData();
 
@@ -326,8 +329,8 @@ public class ImageUpload extends ActionBarActivity implements GoogleApiClient.Co
 
             // Enable the upload button once image has been uploaded
 
-            Button uploadButton = (Button) findViewById(R.id.upload_to_server);
-            uploadButton.setClickable(true);
+            // Button uploadButton = (Button) findViewById(R.id.upload_to_server);
+            // uploadButton.setClickable(true);
 
             uploadButton.setOnClickListener(
                     new View.OnClickListener() {
@@ -365,8 +368,8 @@ public class ImageUpload extends ActionBarActivity implements GoogleApiClient.Co
 
             // Enable the upload button once image has been uploaded
 
-            Button uploadButton = (Button) findViewById(R.id.upload_to_server);
-            uploadButton.setClickable(true);
+
+            // uploadButton.setClickable(true);
 
             uploadButton.setOnClickListener(
                     new View.OnClickListener() {
