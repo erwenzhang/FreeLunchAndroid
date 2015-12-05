@@ -5,16 +5,16 @@
     android:layout_height="match_parent"
     android:scrollbars="vertical"
     android:fillViewport="true"
+
    >
 
-    <LinearLayout android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
+
 
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="@drawable/background"
         >
 
 
@@ -62,6 +62,8 @@
             android:verticalSpacing="10dp"
             android:horizontalSpacing="10dp"
             android:stretchMode="columnWidth"
+            android:fastScrollEnabled="true"
+            android:clipChildren="true"
             android:gravity="center"
             android:layout_below="@id/search_button"
 
@@ -85,6 +87,6 @@
 
 
 </RelativeLayout>
-    </LinearLayout>
+
 
 </ScrollView>

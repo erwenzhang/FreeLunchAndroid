@@ -1,4 +1,4 @@
-package com.application.Kevin_Wenwen.ConnexUs;
+package com.application.Kevin_Wenwen.FreeLunch;
 
 import android.app.PendingIntent;
 import android.content.Context;
@@ -11,11 +11,8 @@ import android.location.Location;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.LocationListener;
-import com.google.android.gms.location.LocationListener;
 import com.google.android.gms.location.LocationRequest;
 
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
 import android.net.Uri;
 import android.provider.MediaStore;
 import android.support.v7.app.ActionBarActivity;
@@ -48,7 +45,7 @@ import java.io.ByteArrayOutputStream;
 
 public class ImageUpload extends ActionBarActivity implements GoogleApiClient.ConnectionCallbacks,GoogleApiClient.OnConnectionFailedListener,
         LocationListener{
-    private static final String TAG = "ConnexUs-Upload";
+    private static final String TAG = "FreeLunch-Upload";
     //final int RQS_GooglePlayServices = 1;
     private static final int STATE_DEFAULT = 0;
     private static final int STATE_SIGN_IN = 1;
@@ -403,7 +400,8 @@ public class ImageUpload extends ActionBarActivity implements GoogleApiClient.Co
 
     private void getUploadURL(final byte[] encodedImage, final String photoCaption){
         AsyncHttpClient httpClient = new AsyncHttpClient();
-        String request_url="http://mini3-test1.appspot.com/getUploadURL";
+       // String request_url="http://mini3-test1.appspot.com/getUploadURL";
+        String request_url="http://blbbstore-1107.appspot.com/getUploadURL";
         //System.out.println(request_url);
         httpClient.get(request_url, new AsyncHttpResponseHandler() {
             String upload_url;

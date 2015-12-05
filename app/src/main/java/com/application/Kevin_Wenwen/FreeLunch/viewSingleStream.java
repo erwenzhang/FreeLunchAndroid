@@ -1,4 +1,4 @@
-package com.application.Kevin_Wenwen.ConnexUs;
+package com.application.Kevin_Wenwen.FreeLunch;
 import android.app.Dialog;
 import android.content.Context;
 
@@ -18,7 +18,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.android.gms.common.SignInButton;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
@@ -28,7 +27,6 @@ import org.apache.http.Header;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.json.JSONStringer;
 
 import java.util.ArrayList;
 
@@ -87,7 +85,8 @@ public class viewSingleStream extends ActionBarActivity {
 
 
 
-        final String request_url = "http://mini3-test1.appspot.com/viewSingleStream";
+        //final String request_url = "http://mini3-test1.appspot.com/viewSingleStream";
+        final String request_url = "http://blobstore-1107.appspot.com/viewSingleStream";
         AsyncHttpClient httpClient = new AsyncHttpClient();
         RequestParams params = new RequestParams();
         params.put("email",email);
@@ -142,7 +141,7 @@ public class viewSingleStream extends ActionBarActivity {
                     //  imageURLs.add("http://lh3.googleusercontent.com/eG4Xx4zEiekHQneAbeViCOhCdZZL76j1p01gvCJUNZlZ7DQcnLQo5w4IFyHaG8sWffMstj795u4W9fUEikinAouQ4ZM");
                     GridView gridview = (GridView) findViewById(R.id.gridview);
                     //              if (imageURLs.size()>0){
-                    gridview.setAdapter(new ImageAdapter(context, imageURLs));
+                    gridview.setAdapter(new ImageAdapter(context, imageURLs,captionList));
                     gridview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                         @Override
                         public void onItemClick(AdapterView<?> parent, View v,
@@ -196,7 +195,7 @@ public class viewSingleStream extends ActionBarActivity {
                                     //              if (imageURLs.size()>0){
                                     final ArrayList<String> subimgURLs = new ArrayList<String>(imageURLs.subList(pre_location,location));
                                     final ArrayList<String> subCaptions = new ArrayList<String>(captionList.subList(pre_location,location));
-                                    gridview.setAdapter(new ImageAdapter(context, subimgURLs));
+                                    gridview.setAdapter(new ImageAdapter(context, subimgURLs,subCaptions));
                                     gridview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                                         @Override
                                         public void onItemClick(AdapterView<?> parent, View v,

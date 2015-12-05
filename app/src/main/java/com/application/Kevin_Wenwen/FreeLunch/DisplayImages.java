@@ -1,5 +1,4 @@
-package com.application.Kevin_Wenwen.ConnexUs;
-import android.app.Dialog;
+package com.application.Kevin_Wenwen.FreeLunch;
 import android.content.Context;
 
 import android.content.Intent;
@@ -10,21 +9,13 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.Window;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.GridView;
-import android.widget.ImageView;
-import android.widget.Toast;
-import android.app.FragmentManager;
-import android.app.FragmentTransaction;
-import android.content.res.Configuration;
-import android.view.WindowManager;
 
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
-import com.squareup.picasso.Picasso;
 
 import org.apache.http.Header;
 import org.json.JSONArray;
@@ -81,7 +72,8 @@ public class DisplayImages extends ActionBarActivity {
           //  Log.d("wenwen passing msg", " failed");
         }
       //  final String request_url = "http://aptandroiddemo.appspot.com/viewAllPhotos";
-      final String request_url = "http://mini3-test1.appspot.com/viewAllPhotos";
+     // final String request_url = "http://mini3-test1.appspot.com/viewAllPhotos";
+        final String request_url = "http://blobstore-1107.appspot.com/viewAllPhotos";
         AsyncHttpClient httpClient = new AsyncHttpClient();
         httpClient.get(request_url, new AsyncHttpResponseHandler() {
             @Override
@@ -100,7 +92,7 @@ public class DisplayImages extends ActionBarActivity {
                         System.out.println(displayCovers.getString(i));
                     }
                     GridView gridview = (GridView) findViewById(R.id.gridview);
-                    gridview.setAdapter(new ImageAdapter(context,coverURLs));
+                    gridview.setAdapter(new ImageAdapter(context,coverURLs,streams));
                     gridview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                         @Override
                         public void onItemClick(AdapterView<?> parent, View v,

@@ -1,24 +1,17 @@
-package com.application.Kevin_Wenwen.ConnexUs;
+package com.application.Kevin_Wenwen.FreeLunch;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.SignInButton;
 import com.google.android.gms.common.api.GoogleApiClient;
-import com.google.android.gms.common.GooglePlayServicesClient;
-import com.google.android.gms.common.ConnectionResult;
-import com.google.android.gms.common.GooglePlayServicesClient;
 import com.google.android.gms.common.GooglePlayServicesUtil;
 
 import android.location.Location;
-import android.app.Activity;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.TextView;
 
 
-import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.LocationListener;
-import com.google.android.gms.location.LocationRequest;
-import com.google.android.gms.location.LocationClient;
 import  com.google.android.gms.location.LocationServices;
 
 //import com.google.android.gms.location.LocationClient;
@@ -26,30 +19,25 @@ import com.google.android.gms.common.api.GoogleApiClient.ConnectionCallbacks;
 import com.google.android.gms.common.api.GoogleApiClient.OnConnectionFailedListener;
 import com.google.android.gms.plus.Plus;
 import com.google.android.gms.plus.model.people.Person;
-import com.google.android.gms.common.GooglePlayServicesUtil;
 
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentSender.SendIntentException;
-import android.location.*;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
-import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
-import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.TextView;
 import android.widget.Toast;
 
 public class Homepage extends ActionBarActivity implements
         ConnectionCallbacks, OnConnectionFailedListener, View.OnClickListener,
         LocationListener{
 
-    private static final String TAG = "ConnexUs-login";
+    private static final String TAG = "FreeLunch-login";
     //final int RQS_GooglePlayServices = 1;
     private static final int STATE_DEFAULT = 0;
     private static final int STATE_SIGN_IN = 1;

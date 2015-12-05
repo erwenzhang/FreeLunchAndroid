@@ -1,4 +1,4 @@
-package com.application.Kevin_Wenwen.ConnexUs;
+package com.application.Kevin_Wenwen.FreeLunch;
 import android.app.Dialog;
 import android.content.Context;
 
@@ -12,12 +12,9 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
 import android.widget.AdapterView;
-import android.widget.Button;
 import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.Toast;
-
-import android.graphics.Bitmap;
 
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
@@ -46,7 +43,8 @@ public class DisplayMySubscribe extends ActionBarActivity {
         email = intent.getStringExtra(DisplayImages.EXTRA_MESSAGE);
 
 
-        final String request_url = "http://mini3-test1.appspot.com/mySubscribe";
+       // final String request_url = "http://mini3-test1.appspot.com/mySubscribe";
+        final String request_url = "http://blobstore-1107.appspot.com/mySubscribe";
         AsyncHttpClient httpClient = new AsyncHttpClient();
         RequestParams params = new RequestParams();
         params.put("email", email);
@@ -76,7 +74,7 @@ public class DisplayMySubscribe extends ActionBarActivity {
 
                     GridView gridview = (GridView) findViewById(R.id.gridview);
                     //              if (imageURLs.size()>0){
-                    gridview.setAdapter(new ImageAdapter(context, imageURLs));
+                    gridview.setAdapter(new ImageAdapter(context, imageURLs,captionList));
                     gridview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                         @Override
                         public void onItemClick(AdapterView<?> parent, View v,

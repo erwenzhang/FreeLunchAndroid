@@ -1,4 +1,4 @@
-package com.application.Kevin_Wenwen.ConnexUs;
+package com.application.Kevin_Wenwen.FreeLunch;
 
 import android.app.Application;
 import android.test.ApplicationTestCase;

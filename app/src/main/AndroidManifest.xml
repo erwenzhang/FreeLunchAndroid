@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.application.Kevin_Wenwen.ConnexUs" >
+    package="com.application.Kevin_Wenwen.FreeLunch" >
 
     <!-- Permissions -->
 
@@ -22,7 +22,7 @@
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
         <activity
-            android:name="com.application.Kevin_Wenwen.ConnexUs.Homepage"
+            android:name="com.application.Kevin_Wenwen.FreeLunch.Homepage"
             android:label="@string/app_name" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -31,39 +31,30 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="com.application.Kevin_Wenwen.ConnexUs.DisplayImages"
+            android:name="com.application.Kevin_Wenwen.FreeLunch.DisplayImages"
             android:label="@string/title_activity_display_images" >
         </activity>
         <activity
-            android:name="com.application.Kevin_Wenwen.ConnexUs.ImageUpload"
+            android:name="com.application.Kevin_Wenwen.FreeLunch.ImageUpload"
             android:label="@string/title_activity_image_upload" >
         </activity>
         <activity
-            android:name="com.application.Kevin_Wenwen.ConnexUs.DisplayMySubscribe"
+            android:name="com.application.Kevin_Wenwen.FreeLunch.DisplayMySubscribe"
             android:label="@string/title_activity_display_mysubscribe" >
         </activity>
 
         <activity
-            android:name="com.application.Kevin_Wenwen.ConnexUs.viewSingleStream"
+            android:name="com.application.Kevin_Wenwen.FreeLunch.viewSingleStream"
             android:label="@string/title_activity_view_singlestream" >
         </activity>
 
         <activity
-            android:name="com.application.Kevin_Wenwen.ConnexUs.Search"
+            android:name="com.application.Kevin_Wenwen.FreeLunch.Search"
             android:label="Search Results" >
         </activity>
 
 
         <meta-data android:name="com.google.android.gms.version" android:value="@integer/google_play_services_version" />
-        <activity
-            android:name=".CameraActivity"
-            android:label="@string/title_activity_camera"
-            android:screenOrientation="portrait" >
-        </activity>
-        <activity
-            android:name=".NearbyPhotos"
-            android:label="@string/title_activity_nearby_photos" >
-        </activity>
     </application>
 
 </manifest>

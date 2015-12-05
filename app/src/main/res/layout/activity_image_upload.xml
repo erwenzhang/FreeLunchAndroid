@@ -5,7 +5,7 @@
     android:layout_height="fill_parent"
     android:scrollbars="vertical"
     android:fillViewport="true"
-    tools:context="com.application.Kevin_Wenwen.ConnexUs.ImageUpload"
+    tools:context="com.application.Kevin_Wenwen.FreeLunch.ImageUpload"
     >
 
     <LinearLayout

@@ -1,35 +1,36 @@
-package com.application.Kevin_Wenwen.ConnexUs;
+package com.application.Kevin_Wenwen.FreeLunch;
 
 
-import android.app.ProgressDialog;
 import android.os.AsyncTask;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
+import android.view.LayoutInflater;
 import android.widget.BaseAdapter;
 import android.content.Context;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.GridView;
-import com.squareup.picasso.Picasso;
+
 import android.util.Log;
 import android.graphics.BitmapFactory;
 import android.graphics.Bitmap;
+import android.widget.TextView;
 
-import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
-import java.net.URL;
-import java.net.MalformedURLException;
 
 
 public class ImageAdapter extends BaseAdapter {
     private Context mContext;
     private ArrayList<String> imageURLs;
+    private ArrayList<String> stream_list;
+    private static LayoutInflater inflater=null;
 
-    public ImageAdapter(Context c, ArrayList<String> imageURLs) {
+    public ImageAdapter(Context c, ArrayList<String> imageURLs, ArrayList<String> stream_list) {
         mContext = c;
         this.imageURLs = imageURLs;
+        this.stream_list = stream_list;
+        inflater = ( LayoutInflater )mContext.
+                getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     }
 
     public int getCount() {
@@ -46,14 +47,18 @@ public class ImageAdapter extends BaseAdapter {
 
     // create a new ImageView for each item referenced by the Adapter
     public View getView(int position, View convertView, ViewGroup parent) {
+        View grid;
         ImageView imageView;
+        TextView stream_name;
+
 
         if (convertView == null) {  // if it's not recycled, initialize some attributes
-            imageView = new ImageView(mContext);
-            imageView.setLayoutParams(new GridView.LayoutParams(170, 160));
-            imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
+            grid = inflater.inflate(R.layout.grid_item,null);
+         //   imageView = new ImageView(mContext);
+           // imageView.setLayoutParams(new GridView.LayoutParams(170, 160));
+            //imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
         } else {
-            imageView = (ImageView) convertView;
+            grid = convertView;
         }
         Log.d("wenwen", "imageadapter");
         //Log.isLoggable("wenwen", position);
@@ -63,13 +68,19 @@ public class ImageAdapter extends BaseAdapter {
         //String tmp_url = ;
 
        //  URL url = new URL(imageURLs.get(position));
-     //   new DownloadImageTask(imageView).execute(imageURLs.get(position));
 
-        Picasso.with(mContext).load(imageURLs.get(position)).placeholder(R.drawable.placeholder_square).into(imageView);
+        stream_name = (TextView)grid.findViewById(R.id.stream_name);
+        stream_name.setText(stream_list.get(position));
+
+        imageView = (ImageView)grid.findViewById(R.id.image);
+        imageView.setLayoutParams(new GridView.LayoutParams(170, 160));
+        imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
+        new DownloadImageTask(imageView).execute(imageURLs.get(position));
+     //   Picasso.with(mContext).load(imageURLs.get(position)).placeholder(R.drawable.placeholder_square).into(imageView);
 
       //  Animation hyperspaceJumpAnimation = AnimationUtils.loadAnimation(this, R.anim.hyperspace_jump);
         //imageView.startAnimation(hyperspaceJumpAnimation);
-        return imageView;
+        return grid;
 
     }
 
