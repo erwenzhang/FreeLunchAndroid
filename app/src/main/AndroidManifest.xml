@@ -22,7 +22,7 @@
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
         <activity
-            android:name="com.application.Kevin_Wenwen.FreeLunch.Homepage"
+            android:name="com.application.Kevin_Wenwen.FreeLunch.DisplayAllEvents"
             android:label="@string/app_name" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -31,30 +31,17 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="com.application.Kevin_Wenwen.FreeLunch.DisplayImages"
-            android:label="@string/title_activity_display_images" >
-        </activity>
-        <activity
-            android:name="com.application.Kevin_Wenwen.FreeLunch.ImageUpload"
-            android:label="@string/title_activity_image_upload" >
-        </activity>
-        <activity
-            android:name="com.application.Kevin_Wenwen.FreeLunch.DisplayMySubscribe"
-            android:label="@string/title_activity_display_mysubscribe" >
+            android:name="com.application.Kevin_Wenwen.FreeLunch.DisplayOneEvent"
+            android:label="view one event" >
         </activity>
 
-        <activity
-            android:name="com.application.Kevin_Wenwen.FreeLunch.viewSingleStream"
-            android:label="@string/title_activity_view_singlestream" >
-        </activity>
 
-        <activity
-            android:name="com.application.Kevin_Wenwen.FreeLunch.Search"
-            android:label="Search Results" >
-        </activity>
 
 
         <meta-data android:name="com.google.android.gms.version" android:value="@integer/google_play_services_version" />
+        <meta-data
+            android:name="io.fabric.ApiKey"
+            android:value="198bfa557f36984dee37eb844e451c9976402917" />
     </application>
 
 </manifest>

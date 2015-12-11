@@ -267,18 +267,18 @@ public class ImageUpload extends ActionBarActivity implements GoogleApiClient.Co
         }*/
     }
 
-    public void useCamera(View view){
-        Intent cameraIntent = new Intent(context, CameraActivity.class);
-        //String[] msg_out = new String[4];
-        //msg_out = msg;
-        /*msg[0] = email;
-        msg[1] = nameofStream;
-        msg[2] = locationLat;
-        msg[3] = locationLong;*/
-
-        cameraIntent.putExtra(EXTRA_MESSAGE, msg);
-        startActivityForResult(cameraIntent, USE_CAMERA);
-    }
+//    public void useCamera(View view){
+//        Intent cameraIntent = new Intent(context, CameraActivity.class);
+//        //String[] msg_out = new String[4];
+//        //msg_out = msg;
+//        /*msg[0] = email;
+//        msg[1] = nameofStream;
+//        msg[2] = locationLat;
+//        msg[3] = locationLong;*/
+//
+//        cameraIntent.putExtra(EXTRA_MESSAGE, msg);
+//        startActivityForResult(cameraIntent, USE_CAMERA);
+//    }
 
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);

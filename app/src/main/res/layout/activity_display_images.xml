@@ -36,14 +36,14 @@
         android:layout_alignParentLeft="true"
         android:layout_toLeftOf="@+id/near_by" />
 
-    <ImageButton
-        android:layout_width="96dp"
-        android:layout_height="wrap_content"
-        android:id="@+id/near_by"
-        android:src="@drawable/ic_place_black_24dp"
-        android:layout_below="@id/name"
-        android:layout_alignParentRight="true"
-        android:onClick="viewNearbyPhotos" />
+    <!--<ImageButton-->
+        <!--android:layout_width="96dp"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:id="@+id/near_by"-->
+        <!--android:src="@drawable/ic_place_black_24dp"-->
+        <!--android:layout_below="@id/name"-->
+        <!--android:layout_alignParentRight="true"-->
+        <!--android:onClick="viewNearbyPhotos" />-->
 
     <Button
         android:layout_width="90dp"
@@ -69,13 +69,13 @@
 
             />
 
-    <Button
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="My Subscribed Streams"
-        android:layout_below="@id/gridview"
-        android:id="@+id/my_subscribe"
-        android:onClick="mySubscribeStreams"/>
+    <!--<Button-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:text="My Subscribed Streams"-->
+        <!--android:layout_below="@id/gridview"-->
+        <!--android:id="@+id/my_subscribe"-->
+        <!--android:onClick="mySubscribeStreams"/>-->
 
 
 
