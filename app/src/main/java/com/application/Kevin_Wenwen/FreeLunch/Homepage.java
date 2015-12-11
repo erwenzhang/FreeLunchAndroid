@@ -9,8 +9,15 @@ import android.location.Location;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.TextView;
+import android.os.Bundle;
+import android.view.View;
+import android.support.v4.view.GravityCompat;
+import android.support.v4.widget.DrawerLayout;
 
 
+import android.view.Menu;
+import android.view.MenuItem;
+import android.view.MenuInflater;
 import com.google.android.gms.location.LocationListener;
 import  com.google.android.gms.location.LocationServices;
 
@@ -20,8 +27,32 @@ import com.google.android.gms.common.api.GoogleApiClient.OnConnectionFailedListe
 import com.google.android.gms.plus.Plus;
 import com.google.android.gms.plus.model.people.Person;
 
+import java.util.Locale;
+
+import android.app.Activity;
+import android.app.Fragment;
+import android.app.FragmentManager;
+import android.app.SearchManager;
+import android.content.Intent;
+import android.content.res.Configuration;
+import android.os.Bundle;
+import android.support.v4.app.ActionBarDrawerToggle;
+import android.support.v4.view.GravityCompat;
+import android.support.v4.widget.DrawerLayout;
+import android.view.LayoutInflater;
+import android.view.Menu;
+
+import android.view.MenuItem;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.ImageView;
+import android.widget.ListView;
+import android.widget.Toast;
 import android.app.PendingIntent;
 import android.content.Context;
+import android.app.Activity;
 import android.content.Intent;
 import android.content.IntentSender.SendIntentException;
 import android.net.ConnectivityManager;
@@ -32,9 +63,24 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Toast;
+import android.app.Activity;
+import android.support.v7.app.ActionBarActivity;
+import android.support.v7.app.ActionBar;
+import android.content.Context;
+import android.os.Build;
+import android.os.Bundle;
+import android.view.Gravity;
+import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuItem;
+import android.view.View;
+import android.view.ViewGroup;
+import android.support.v4.widget.DrawerLayout;
+import android.widget.ArrayAdapter;
+import android.widget.TextView;
 
-public class Homepage extends ActionBarActivity implements
-        ConnectionCallbacks, OnConnectionFailedListener, View.OnClickListener,
+public class Homepage extends Activity implements
+        ConnectionCallbacks, OnConnectionFailedListener,View.OnClickListener,
         LocationListener{
 
     private static final String TAG = "FreeLunch-login";
@@ -100,16 +146,14 @@ public class Homepage extends ActionBarActivity implements
     //private LocationClient mLocationClient;
     //private LocationRequest mLocationRequest;
     private Location mLastLocation;
-
+    private String[] msg;
     Context context = this;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_homepage);
-
+        
         mSignInButton = (SignInButton) findViewById(R.id.sign_in_button);
-        mSignOutButton = (Button) findViewById(R.id.sign_out_button);
-        mRevokeButton = (Button) findViewById(R.id.revoke_access_button);
         mStatus = (TextView) findViewById(R.id.sign_in_status);
 
         setGooglePlusButtonText(mSignInButton, "Sign in        ");
@@ -122,8 +166,8 @@ public class Homepage extends ActionBarActivity implements
         if (savedInstanceState != null) {
             mSignInProgress = savedInstanceState
                     .getInt(SAVED_PROGRESS, STATE_DEFAULT);
-        }
 
+        }
 
         mGoogleApiClient = buildGoogleApiClient();
 
@@ -133,6 +177,9 @@ public class Homepage extends ActionBarActivity implements
         }*/
 
     }
+    
+   
+  
 
     public void onLocationChanged(Location location) {
         Log.d("Location wenwen", location.toString());
@@ -172,16 +219,18 @@ public class Homepage extends ActionBarActivity implements
     @Override
     protected void onStart() {
         super.onStart();
-        mGoogleApiClient.connect();
+    //    mGoogleApiClient.connect();
+
     }
 
     @Override
     protected void onStop() {
         super.onStop();
 
-        if (mGoogleApiClient.isConnected()) {
-            mGoogleApiClient.disconnect();
-        }
+//      if (mGoogleApiClient.isConnected()) {
+//          Plus.AccountApi.clearDefaultAccount(mGoogleApiClient);
+//           mGoogleApiClient.disconnect();
+//        }
     }
 
     @Override
@@ -197,7 +246,7 @@ public class Homepage extends ActionBarActivity implements
         return netInfo != null && netInfo.isConnectedOrConnecting();
     }
 
-    @Override
+
     public void onClick(View v) {
         if (!mGoogleApiClient.isConnecting()) {
             // We only process button clicks when GoogleApiClient is not transitioning
@@ -213,32 +262,36 @@ public class Homepage extends ActionBarActivity implements
                 case R.id.sign_in_button:
                    resolveSignInError();
                     break;
-                case R.id.sign_out_button:
-                    // We clear the default account on sign out so that Google Play
-                    // services will not return an onConnected callback without user
-                    // interaction.
-                    Plus.AccountApi.clearDefaultAccount(mGoogleApiClient);
-                    mGoogleApiClient.disconnect();
-                    mGoogleApiClient.connect();
-                    email = null;
-                    Toast.makeText(getApplicationContext(), "You are now signed out", Toast.LENGTH_SHORT).show();
-                    login_msg_shown = false;
-                    break;
-                case R.id.revoke_access_button:
-                    // After we revoke permissions for the user with a GoogleApiClient
-                    // instance, we must discard it and create a new one.
-                    Plus.AccountApi.clearDefaultAccount(mGoogleApiClient);
-                    // Our sample has caches no user data from Google+, however we
-                    // would normally register a callback on revokeAccessAndDisconnect
-                    // to delete user data so that we comply with Google developer
-                    // policies.
-                    Plus.AccountApi.revokeAccessAndDisconnect(mGoogleApiClient);
-                    mGoogleApiClient = buildGoogleApiClient();
-                    mGoogleApiClient.connect();
-                    email = null;
-                    Toast.makeText(getApplicationContext(), "You've just revoked Connexus to access your basic account info.", Toast.LENGTH_LONG).show();
-                    login_msg_shown = false;
-                    break;
+//                case R.id.sign_out_button:
+//                    // We clear the default account on sign out so that Google Play
+//                    // services will not return an onConnected callback without user
+//                    // interaction.
+//                    Plus.AccountApi.clearDefaultAccount(mGoogleApiClient);
+//                    mGoogleApiClient.disconnect();
+//                    mGoogleApiClient.connect();
+//                    //Homepage.login = true;
+//                    Log.i(TAG, "2222");
+//                    email = null;
+//                    Toast.makeText(getApplicationContext(), "You are now signed out", Toast.LENGTH_SHORT).show();
+//                    login_msg_shown = false;
+//                    break;
+//                case R.id.revoke_access_button:
+//                    // After we revoke permissions for the user with a GoogleApiClient
+//                    // instance, we must discard it and create a new one.
+//                    Plus.AccountApi.clearDefaultAccount(mGoogleApiClient);
+//                    // Our sample has caches no user data from Google+, however we
+//                    // would normally register a callback on revokeAccessAndDisconnect
+//                    // to delete user data so that we comply with Google developer
+//                    // policies.
+//                    Plus.AccountApi.revokeAccessAndDisconnect(mGoogleApiClient);
+//                    mGoogleApiClient = buildGoogleApiClient();
+//                    mGoogleApiClient.connect();
+////                    Homepage.login = true;
+////                    Log.i(TAG, "33333");
+//                    email = null;
+//                    Toast.makeText(getApplicationContext(), "You've just revoked Connexus to access your basic account info.", Toast.LENGTH_LONG).show();
+//                    login_msg_shown = false;
+//                    break;
             }
         }
     }
@@ -256,8 +309,8 @@ public class Homepage extends ActionBarActivity implements
     @Override
     public void onConnected(Bundle connectionHint) {
         // Reaching onConnected means we consider the user signed in.
-        Log.i(TAG, "onConnected");
-        Homepage.login = true;
+        Log.i(TAG, "onConnected 1");
+
 
         // Update the user interface to reflect that the user is signed in.
         mSignInButton.setEnabled(false);
@@ -291,19 +344,27 @@ public class Homepage extends ActionBarActivity implements
 
         mStatus.setText(email + " is currently Signed In");
 
-        /* Button uploadButton = (Button) findViewById(R.id.open_image_upload_page);
-        uploadButton.setClickable(true);
 
-        uploadButton.setOnClickListener(
-                new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        Intent intent= new Intent(context, ImageUpload.class);
-                        startActivity(intent);
-                    }
-                }
-        );*/
+     //   msg[1] = mLatitudeText;
+     //   msg[2] = mLongitudeText;
+//        System.out.println(Homepage.login);
+//        if(Homepage.login) {
+            Intent intent= new Intent(this, Events.class);
+
+            //if(Homepage.login)
+            String[] msg = new String[3];
+            //  System.out.print(Homepage.email);
+            //System.out.print(mLatitudeText);
+            //System.out.print(mLongitudeText);
+
+            msg[0] = Homepage.email;
+            intent.putExtra(EXTRA_MESSAGE, msg);
+
+        startActivityForResult(intent,STATE_SIGN_IN);
+       // }
+
     }
+
 
     /* onConnectionFailed is called when our Activity could not connect to Google
      * Play services.  onConnectionFailed indicates that the user needs to select
@@ -362,7 +423,7 @@ public class Homepage extends ActionBarActivity implements
             // resolve an error.  For example if the user needs to
             // select an account to sign in with, or if they need to consent
             // to the permissions your app is requesting.
-            Log.d("WENWEN1","2" );
+            // Log.d("WENWEN1","2" );
             try {
                 // Send the pending intent that we stored on the most recent
                 // OnConnectionFailed callback.  This will allow the user to
@@ -371,6 +432,8 @@ public class Homepage extends ActionBarActivity implements
                 mSignInProgress = STATE_IN_PROGRESS;
                 startIntentSenderForResult(mSignInIntent.getIntentSender(),
                         RC_SIGN_IN, null, 0, 0, 0);
+                mGoogleApiClient.connect();
+                Log.d("WENWEN1", "1");
             } catch (SendIntentException e) {
                 Log.i(TAG, "Sign in intent could not be sent: "
                         + e.getLocalizedMessage());
@@ -378,14 +441,18 @@ public class Homepage extends ActionBarActivity implements
                 // get an updated ConnectionResult.
                 mSignInProgress = STATE_SIGN_IN;
                 mGoogleApiClient.connect();
+//                Homepage.login = true;
+//                Log.i(TAG, "444444");
             }
         } else {
+            mGoogleApiClient.connect();
+
             // Google Play services wasn't able to provide an intent for some
             // error types, so we show the default Google Play services error
             // dialog which may still start an intent on our behalf if the
             // user can resolve the issue.
             //showDialog(DIALOG_PLAY_SERVICES_ERROR);
-            Log.d("WENWEN1","22" );
+           //  Log.d("WENWEN1","22" );
         }
     }
 
@@ -407,16 +474,35 @@ public class Homepage extends ActionBarActivity implements
                 if (!mGoogleApiClient.isConnecting()) {
                     // If Google Play services resolved the issue with a dialog then
                     // onStart is not called so we need to re-attempt connection here.
-                  //  Log.i("Wenwen","88");
+                   Log.i("Wenwen","88");
                     mGoogleApiClient.connect();
                 }
                 break;
+            case STATE_SIGN_IN:
+
+
+                if  (mGoogleApiClient.isConnected()) {
+//
+               //
+                   Plus.AccountApi.clearDefaultAccount(mGoogleApiClient);
+
+                    mGoogleApiClient.disconnect();
+                    Log.d("wenwen", "activity result");
+                }
+
+
+                onSignedOut();
+                email = null;
+                Toast.makeText(getApplicationContext(), "You are now signed out", Toast.LENGTH_SHORT).show();
+                login_msg_shown = false;
+
+
         }
     }
 
     private void onSignedOut() {
         // Update the UI to reflect that the user is signed out.
-        Homepage.login = false;
+
         mSignInButton.setEnabled(true);
         mSignOutButton.setEnabled(false);
         mRevokeButton.setEnabled(false);
@@ -437,6 +523,8 @@ public class Homepage extends ActionBarActivity implements
         // We call connect() to attempt to re-establish the connection or get a
         // ConnectionResult that we can attempt to resolve.
         mGoogleApiClient.connect();
+//        Homepage.login = true;
+//        Log.i(TAG, "55555");
     }
 
     private boolean servicesConnected() {
@@ -461,26 +549,5 @@ public class Homepage extends ActionBarActivity implements
     }
 
 
-    public void viewAllImages(View view){
-        Intent intent= new Intent(this, DisplayImages.class);
-        Log.d("WENWENWENWEN","msg send");
-        //if(Homepage.login)
-        String[] msg = new String[3];
-
-
-        Log.d("WENWENWENWEN", mLatitudeText);
-        Log.d("WENWENWENWEN", mLongitudeText);
-      //  System.out.print(Homepage.email);
-        //System.out.print(mLatitudeText);
-        //System.out.print(mLongitudeText);
-
-        msg[0] = Homepage.email;
-     //   msg[1] = mLatitudeText;
-     //   msg[2] = mLongitudeText;
-
-        intent.putExtra(EXTRA_MESSAGE, msg);
-
-        startActivity(intent);
-    }
 
 }

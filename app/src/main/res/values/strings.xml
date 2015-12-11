@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="app_name">Connexus!</string>
+    <string name="app_name">Free Lunch!</string>
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
     <string name="welcome">Welcome to share with us!</string>
@@ -45,5 +45,200 @@
     <string name="nearby_pictures">Nearby Pictures</string>
     <string name="more">More</string>
     <string name="title_activity_nearby_photos">NearbyPhotos</string>
+    <string name="server_client_id">141461113394-9ounji69lbd2gq7d86p1i978jm51f4qm.apps.googleusercontent.com</string>
+
+
+    <string-array name="planets_array">
+        <item>Events</item>
+        <item>Map</item>
+        <item>Calender</item>
+        <item>Crowdworkers</item>
+    </string-array>
+    <string name="drawer_open">Open navigation drawer</string>
+    <string name="drawer_close">Close navigation drawer</string>
+    <string name="action_websearch">Web search</string>
+    <string name="app_not_available">Sorry, there\'s no web browser available</string>
+
+
+
+    <string name="title_activity_main">Be a Crowdworker</string>
+    <string name="selected_time">The time you picked will be shown here.</string>
+    <string name="selected_date">The date you picked will be shown here.</string>
+    <string name="pick_time">Pick Time</string>
+    <string name="pick_date">Pick Date</string>
+    <string name="mode_24_hours">Use 24 hour mode</string>
+
+    <string-array name="buildings_array">
+        <item>PAR</item>
+        <item>FNT</item>
+        <item>PAT</item>
+        <item>BOT</item>
+        <item>CPE</item>
+        <item>GSB</item>
+        <item>CCJ</item>
+        <item>PAI</item>
+        <item>CCG</item>
+        <item>CCF</item>
+        <item>LTH</item>
+        <item>SAC</item>
+        <item>BWY</item>
+        <item>SAG</item>
+        <item>UIL</item>
+        <item>HSM</item>
+        <item>LBJ</item>
+        <item>DCP</item>
+        <item>LLE</item>
+        <item>UA9</item>
+        <item>EPS</item>
+        <item>TTC</item>
+        <item>MRH</item>
+        <item>HRH</item>
+        <item>LLB</item>
+        <item>WMB</item>
+        <item>HRC</item>
+        <item>NMS</item>
+        <item>IPF</item>
+        <item>AHG</item>
+        <item>CS5</item>
+        <item>HMA</item>
+        <item>PAC</item>
+        <item>KIN</item>
+        <item>MAG</item>
+        <item>MAI</item>
+        <item>PHR</item>
+        <item>UNB</item>
+        <item>RHD</item>
+        <item>CML</item>
+        <item>BEN</item>
+        <item>BEL</item>
+        <item>FDF</item>
+        <item>FDH</item>
+        <item>CMB</item>
+        <item>CMA</item>
+        <item>CRB</item>
+        <item>CRD</item>
+        <item>CRH</item>
+        <item>PHD</item>
+        <item>BMC</item>
+        <item>CEE</item>
+        <item>BMA</item>
+        <item>BME</item>
+        <item>BUR</item>
+        <item>LDH</item>
+        <item>GEB</item>
+        <item>GEA</item>
+        <item>LLC</item>
+        <item>CS4</item>
+        <item>LLA</item>
+        <item>MNC</item>
+        <item>LLF</item>
+        <item>CS3</item>
+        <item>LLD</item>
+        <item>JGB</item>
+        <item>UPB</item>
+        <item>TRG</item>
+        <item>TCC</item>
+        <item>ENS</item>
+        <item>BLD</item>
+        <item>AFP</item>
+        <item>UTC</item>
+        <item>AND</item>
+        <item>CBA</item>
+        <item>ANB</item>
+        <item>INT</item>
+        <item>SSW</item>
+        <item>NOA</item>
+        <item>GRE</item>
+        <item>BTL</item>
+        <item>WWH</item>
+        <item>LCH</item>
+        <item>SSB</item>
+        <item>ACA</item>
+        <item>GWB</item>
+        <item>LFH</item>
+        <item>ETC</item>
+        <item>ATT</item>
+        <item>SUT</item>
+        <item>NEZ</item>
+        <item>GUG</item>
+        <item>COM</item>
+        <item>TMM</item>
+        <item>SER</item>
+        <item>NUR</item>
+        <item>ECJ</item>
+        <item>SEA</item>
+        <item>TSG</item>
+        <item>FC1</item>
+        <item>FC2</item>
+        <item>FC3</item>
+        <item>FC4</item>
+        <item>FC5</item>
+        <item>FC6</item>
+        <item>CLK</item>
+        <item>FC8</item>
+        <item>SRH</item>
+        <item>SZB</item>
+        <item>CLA</item>
+        <item>TSC</item>
+        <item>SJH</item>
+        <item>DEV</item>
+        <item>LTD</item>
+        <item>MHD</item>
+        <item>DFF</item>
+        <item>DFA</item>
+        <item>SJG</item>
+        <item>ADH</item>
+        <item>RLM</item>
+        <item>SBS</item>
+        <item>CDA</item>
+        <item>CDL</item>
+        <item>WIN</item>
+        <item>MMS</item>
+        <item>GDC</item>
+        <item>JON</item>
+        <item>BRG</item>
+        <item>BRB</item>
+        <item>MEZ</item>
+        <item>BAT</item>
+        <item>PCL</item>
+        <item>JES</item>
+        <item>JHH</item>
+        <item>ERC</item>
+        <item>SWG</item>
+        <item>CAL</item>
+        <item>MSB</item>
+        <item>BIO</item>
+        <item>PPA</item>
+        <item>PPE</item>
+        <item>NHB</item>
+        <item>FC7</item>
+        <item>GAR</item>
+        <item>MBB</item>
+        <item>PPL</item>
+        <item>WAG</item>
+        <item>FAC</item>
+        <item>EAS</item>
+        <item>POB</item>
+        <item>STD</item>
+        <item>GOL</item>
+        <item>UTA</item>
+        <item>ESS</item>
+        <item>FPC</item>
+        <item>PPB</item>
+        <item>JCD</item>
+        <item>WCH</item>
+        <item>UTX</item>
+        <item>WEL</item>
+        <item>TNH</item>
+        <item>ART</item>
+        <item>WRW</item>
+        <item>BHD</item>
+        <item>RSC</item>
+        <item>MFH</item>
+        <item>ARC</item>
+        <item>SW7</item>
+
+    </string-array>
+
 
 </resources>

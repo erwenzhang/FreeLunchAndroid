@@ -1,0 +1,465 @@
+package com.application.Kevin_Wenwen.FreeLunch;
+
+import android.app.Activity;
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.SignInButton;
+import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.common.GooglePlayServicesUtil;
+
+
+import android.database.Cursor;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.location.Location;
+import android.net.Uri;
+import android.os.Bundle;
+import android.provider.MediaStore;
+import android.util.Base64;
+import android.util.Log;
+import android.widget.AutoCompleteTextView;
+import android.widget.EditText;
+import android.widget.TextView;
+import android.os.Bundle;
+import android.view.View;
+import android.support.v4.view.GravityCompat;
+import android.support.v4.widget.DrawerLayout;
+
+
+import android.view.Menu;
+import android.view.MenuItem;
+import android.view.MenuInflater;
+import com.google.android.gms.location.LocationListener;
+import  com.google.android.gms.location.LocationServices;
+
+//import com.google.android.gms.location.LocationClient;
+import com.google.android.gms.common.api.GoogleApiClient.ConnectionCallbacks;
+import com.google.android.gms.common.api.GoogleApiClient.OnConnectionFailedListener;
+import com.google.android.gms.plus.Plus;
+import com.google.android.gms.plus.model.people.Person;
+
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.util.Calendar;
+import java.util.Locale;
+
+import android.app.Activity;
+import android.app.Fragment;
+import android.app.FragmentManager;
+import android.app.SearchManager;
+import android.content.Intent;
+import android.content.res.Configuration;
+import android.os.Bundle;
+import android.support.v4.app.ActionBarDrawerToggle;
+import android.support.v4.view.GravityCompat;
+import android.support.v4.widget.DrawerLayout;
+import android.view.LayoutInflater;
+import android.view.Menu;
+
+import android.view.MenuItem;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.ImageView;
+import android.widget.ListView;
+import android.widget.Toast;
+import android.app.PendingIntent;
+import android.content.Context;
+import android.app.Activity;
+import android.content.Intent;
+import android.content.IntentSender.SendIntentException;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
+import android.support.v7.app.ActionBarActivity;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.Toast;
+import android.app.Activity;
+import android.support.v7.app.ActionBarActivity;
+import android.support.v7.app.ActionBar;
+import android.content.Context;
+import android.os.Build;
+import android.os.Bundle;
+import android.view.Gravity;
+import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuItem;
+import android.view.View;
+import android.view.ViewGroup;
+import android.support.v4.widget.DrawerLayout;
+import android.widget.ArrayAdapter;
+import android.widget.TextView;
+import android.content.DialogInterface;
+import android.graphics.Color;
+import android.os.Bundle;
+
+import android.util.Log;
+import android.view.View;
+import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.TextView;
+import android.support.v7.app.AppCompatActivity;
+
+import com.loopj.android.http.AsyncHttpClient;
+import com.loopj.android.http.AsyncHttpResponseHandler;
+import com.loopj.android.http.RequestParams;
+import com.wdullaer.materialdatetimepicker.Utils;
+import com.wdullaer.materialdatetimepicker.date.DatePickerDialog;
+import com.wdullaer.materialdatetimepicker.time.RadialPickerLayout;
+import com.wdullaer.materialdatetimepicker.time.TimePickerDialog;
+
+import org.apache.http.Header;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+/**
+ * Created by wenwen on 12/9/15.
+ */
+public class AddEvent extends AppCompatActivity implements DatePickerDialog.OnDateSetListener,TimePickerDialog.OnTimeSetListener{
+
+    Context context = this;
+    private TextView timeTextView;
+    private TextView dateTextView;
+    private CheckBox mode24Hours;
+    private String hourString1;
+    private String minuteString1;
+    private String hourString2 ;
+    private String minuteString2 ;
+    private boolean flag = true;
+    private String day;
+    private String month;
+    private String year;
+
+    private AutoCompleteTextView locationView;
+    private EditText eventView;
+    private EditText detailView;
+    private ImageView uploadView;
+
+    private Bitmap bitmapImage;
+
+
+
+    private String TAG  = "Add Event";
+    private String email;
+    private String[] msg;
+    public final static String EXTRA_MESSAGE = "MESSAGE IN";
+    private static final int PICK_IMAGE = 1;
+    private static final int USE_CAMERA = 2;
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.add_event);
+        email = getIntent().getStringArrayExtra(EXTRA_MESSAGE)[0];
+
+        timeTextView = (TextView)findViewById(R.id.time_textview);
+        dateTextView = (TextView)findViewById(R.id.date_textview);
+        Button timeButton1 = (Button)findViewById(R.id.time_button1);
+        Button timeButton2 = (Button)findViewById(R.id.time_button2);
+        Button dateButton = (Button)findViewById(R.id.date_button);
+        mode24Hours = (CheckBox)findViewById(R.id.mode_24_hours);
+
+
+        eventView =  (EditText)findViewById(R.id.event_name);
+        detailView = (EditText)findViewById(R.id.details);
+        uploadView =(ImageView) findViewById(R.id.upload_photo);
+        Button chooseFromGallery = (Button)findViewById((R.id.gallery));
+        Button submit = (Button)findViewById(R.id.submit_event);
+
+
+        locationView = (AutoCompleteTextView) findViewById(R.id.location);
+// Get the string array
+        String[] buildings = getResources().getStringArray(R.array.buildings_array);
+// Create the adapter and set it to the AutoCompleteTextView
+        ArrayAdapter<String> adapter =
+                new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, buildings);
+        locationView.setAdapter(adapter);
+
+
+        // Show a timepicker when the timeButton is clicked
+        timeButton1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                flag = true;
+                Calendar now = Calendar.getInstance();
+                TimePickerDialog tpd = TimePickerDialog.newInstance(
+                        AddEvent.this,
+                        now.get(Calendar.HOUR_OF_DAY),
+                        now.get(Calendar.MINUTE),
+                        mode24Hours.isChecked()
+                );
+                tpd.enableSeconds(false);
+                tpd.setOnCancelListener(new DialogInterface.OnCancelListener() {
+                    @Override
+                    public void onCancel(DialogInterface dialogInterface) {
+                        Log.d("TimePicker", "Dialog was cancelled");
+                    }
+                });
+                tpd.show(getFragmentManager(), "Timepickerdialog1");
+            }
+        });
+
+        timeButton2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                flag = false;
+
+                Calendar now = Calendar.getInstance();
+                TimePickerDialog tpd = TimePickerDialog.newInstance(
+                        AddEvent.this,
+                        now.get(Calendar.HOUR_OF_DAY),
+                        now.get(Calendar.MINUTE),
+                        mode24Hours.isChecked()
+                );
+                tpd.enableSeconds(false);
+                tpd.setOnCancelListener(new DialogInterface.OnCancelListener() {
+                    @Override
+                    public void onCancel(DialogInterface dialogInterface) {
+                        Log.d("TimePicker", "Dialog was cancelled");
+                    }
+                });
+                tpd.show(getFragmentManager(), "Timepickerdialog2");
+            }
+        });
+
+        // Show a datepicker when the dateButton is clicked
+        dateButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Calendar now = Calendar.getInstance();
+                DatePickerDialog dpd = DatePickerDialog.newInstance(
+                        AddEvent.this,
+                        now.get(Calendar.YEAR),
+                        now.get(Calendar.MONTH),
+                        now.get(Calendar.DAY_OF_MONTH)
+                );
+                dpd.show(getFragmentManager(), "Datepickerdialog");
+            }
+        });
+
+        chooseFromGallery.setOnClickListener(
+                new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+
+                        // To do this, go to AndroidManifest.xml to add permission
+                        Intent galleryIntent = new Intent(Intent.ACTION_PICK,
+                                android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                        // Start the Intent
+                        startActivityForResult(galleryIntent, PICK_IMAGE);
+                    }
+                }
+        );
+
+        submit.setOnClickListener(new View.OnClickListener(){
+            public void onClick(View v){
+                String details = detailView.getText().toString().trim();
+                String event_name = eventView.getText().toString().trim();
+                String location = locationView.getText().toString().trim();
+                if(hourString2==null||hourString1==null||day==null||month==null||year==null||details==null||event_name==null||location==null){
+                    Toast.makeText(context, "You have not filled in all the needed infomation. ", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                else {
+
+                String date_time1 = year+" "+month+" "+" "+day+" "+hourString1+" "+minuteString1;
+                    String date_time2 = year+" "+month+" "+" "+day+" "+hourString2+" "+minuteString2;
+                    ByteArrayOutputStream baos = new ByteArrayOutputStream();
+                    bitmapImage.compress(Bitmap.CompressFormat.JPEG, 50, baos);
+                    byte[] b = baos.toByteArray();
+                    byte[] encodedImage = Base64.encode(b, Base64.DEFAULT);
+                    String encodedImageStr = encodedImage.toString();
+
+                    getUploadURL(b,details,event_name,location,date_time1,date_time2 );
+
+                }
+
+
+            }
+
+        });
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.add_event, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+        int id = item.getItemId();
+        if (id == R.id.sign_out_button) {
+            Intent intent = new Intent(context,Homepage.class);
+//            String[] msg_out = new String[4];
+//            msg_out[0] = email;
+//            intent.putExtra(EXTRA_MESSAGE, msg_out);
+            // catch event that there's no activity to handle intent
+
+            startActivity(intent);
+            return true;
+
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        TimePickerDialog tpd1 = (TimePickerDialog) getFragmentManager().findFragmentByTag("Timepickerdialog1");
+        TimePickerDialog tpd2 = (TimePickerDialog) getFragmentManager().findFragmentByTag("Timepickerdialog2");
+        DatePickerDialog dpd = (DatePickerDialog) getFragmentManager().findFragmentByTag("Datepickerdialog");
+
+        if(tpd1 != null) tpd1.setOnTimeSetListener(this);
+        if(tpd2 != null) tpd2.setOnTimeSetListener(this);
+        if(dpd != null) dpd.setOnDateSetListener(this);
+    }
+
+    @Override
+    public void onTimeSet(RadialPickerLayout view, int hourOfDay, int minute, int second) {
+        if(flag){
+        hourString1 = hourOfDay < 10 ? "0"+hourOfDay : ""+hourOfDay;
+        minuteString1 = minute < 10 ? "0"+minute : ""+minute;
+        }
+        else{
+            hourString2 = hourOfDay < 10 ? "0"+hourOfDay : ""+hourOfDay;
+            minuteString2 = minute < 10 ? "0"+minute : ""+minute;
+
+        }
+
+        if(hourString2!=null){
+        String time = "You picked the following time: "+hourString1+"h"+minuteString1+"m ~ "+hourString2+"h"+minuteString2+"m";
+        timeTextView.setText(time);
+        }
+
+    }
+
+    @Override
+    public void onDateSet(DatePickerDialog view, int theyear, int monthOfYear, int dayOfMonth) {
+        day = Integer.toString(dayOfMonth);
+        month = Integer.toString(dayOfMonth);
+        year = Integer.toString(theyear);
+
+        String date = "You picked the following date: "+dayOfMonth+"/"+(++monthOfYear)+"/"+theyear;
+        dateTextView.setText(date);
+    }
+
+    public void useCamera(View view){
+        Intent cameraIntent = new Intent(context, CameraActivity.class);
+        cameraIntent.putExtra(EXTRA_MESSAGE, msg);
+        startActivityForResult(cameraIntent, USE_CAMERA);
+    }
+
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == PICK_IMAGE && data != null && data.getData() != null) {
+            Uri selectedImage = data.getData();
+
+            // User had pick an image.
+
+            String[] filePathColumn = {MediaStore.Images.ImageColumns.DATA};
+            Cursor cursor = getContentResolver().query(selectedImage, filePathColumn, null, null, null);
+            cursor.moveToFirst();
+
+            // Link to the image
+
+            int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
+            String imageFilePath = cursor.getString(columnIndex);
+            cursor.close();
+
+            // Bitmap imaged created and show thumbnail
+
+            ImageView imgView = (ImageView) findViewById(R.id.upload_photo);
+            final Bitmap bitmapImage = BitmapFactory.decodeFile(imageFilePath);
+            imgView.setImageBitmap(bitmapImage);
+
+            // Enable the upload button once image has been uploaded
+
+
+        } else if (requestCode == USE_CAMERA && resultCode == RESULT_OK && data != null      /*&& data.getData() != null*/) {
+
+            String imageFilePath;
+            String[] msg_from_camera = data.getStringArrayExtra(EXTRA_MESSAGE);
+            imageFilePath = msg_from_camera[1];
+            //  if(extras == null) {
+            //    imageFilePath = null;
+            //} else {
+            //  imageFilePath = extras.getString("image_path");
+            //}
+            Log.d("TAGTAGTAG upload",msg[0]);
+            Log.d("TAGTAGTAG upload", msg[1]);
+
+            // Bitmap imaged created and show thumbnail
+
+            ImageView imgView = (ImageView) findViewById(R.id.upload_photo);
+            bitmapImage = BitmapFactory.decodeFile(imageFilePath);
+            imgView.setImageBitmap(bitmapImage);
+
+            // Enable the upload button once image has been uploaded
+
+
+        }
+    }
+
+    private void getUploadURL(final byte[] encodedImage, String details,String event_name,String location,String date_time1,String date_time2){
+        AsyncHttpClient httpClient = new AsyncHttpClient();
+        String request_url="http://freelunchforyou.appspot.com/getUploadURL";
+        //System.out.println(request_url);
+        httpClient.get(request_url, new AsyncHttpResponseHandler() {
+            String upload_url;
+
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, byte[] response) {
+
+                try {
+                    JSONObject jObject = new JSONObject(new String(response));
+
+                    upload_url = jObject.getString("upload_url");
+                    postToServer(encodedImage, photoCaption, upload_url);
+
+                } catch (JSONException j) {
+                    System.out.println("JSON Error");
+                }
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, byte[] errorResponse, Throwable e) {
+                Log.e("Get_serving_url", "There was a problem in retrieving the url : " + e.toString());
+            }
+        });
+    }
+
+    private void postToServer(byte[] encodedImage,String photoCaption, String upload_url){
+
+        RequestParams params = new RequestParams();
+        params.put("file",new ByteArrayInputStream(encodedImage));
+        params.put("photoCaption",photoCaption);
+        params.put("email", email);
+
+
+        AsyncHttpClient client = new AsyncHttpClient();
+        client.post(upload_url, params, new AsyncHttpResponseHandler() {
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, byte[] response) {
+                Log.w("async", "success!!!!");
+                Toast.makeText(context, "Upload Successful", Toast.LENGTH_SHORT).show();
+
+                Intent intent = new Intent(context, viewSingleStream.class);
+                intent.putExtra(EXTRA_MESSAGE, msg);
+                startActivity(intent);
+
+
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, byte[] errorResponse, Throwable e) {
+                Log.e("Posting_to_blob", "There was a problem in retrieving the url : " + e.toString());
+            }
+        });
+    }
+
+}

@@ -31,26 +31,12 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="com.application.Kevin_Wenwen.FreeLunch.DisplayImages"
-            android:label="@string/title_activity_display_images" >
-        </activity>
-        <activity
-            android:name="com.application.Kevin_Wenwen.FreeLunch.ImageUpload"
-            android:label="@string/title_activity_image_upload" >
-        </activity>
-        <activity
-            android:name="com.application.Kevin_Wenwen.FreeLunch.DisplayMySubscribe"
-            android:label="@string/title_activity_display_mysubscribe" >
-        </activity>
-
-        <activity
-            android:name="com.application.Kevin_Wenwen.FreeLunch.viewSingleStream"
-            android:label="@string/title_activity_view_singlestream" >
-        </activity>
-
-        <activity
-            android:name="com.application.Kevin_Wenwen.FreeLunch.Search"
-            android:label="Search Results" >
+            android:name="com.application.Kevin_Wenwen.FreeLunch.Events"
+            android:label="Free Lunch"
+            android:parentActivityName="com.application.Kevin_Wenwen.FreeLunch.Homepage">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.application.Kevin_Wenwen.FreeLunch.Homepage" />
         </activity>
 
 
