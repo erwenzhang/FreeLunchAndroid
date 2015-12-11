@@ -1,11 +1,5 @@
 package com.application.Kevin_Wenwen.FreeLunch;
 
-import android.app.Activity;
-import com.google.android.gms.common.ConnectionResult;
-import com.google.android.gms.common.SignInButton;
-import com.google.android.gms.common.api.GoogleApiClient;
-import com.google.android.gms.common.GooglePlayServicesUtil;
-
 
 import android.database.Cursor;
 import android.graphics.Bitmap;
@@ -18,90 +12,31 @@ import android.util.Log;
 import android.widget.AutoCompleteTextView;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.os.Bundle;
 import android.view.View;
-import android.support.v4.view.GravityCompat;
-import android.support.v4.widget.DrawerLayout;
 
 
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.MenuInflater;
-
-import com.google.android.gms.common.api.GoogleApiClient.ConnectionCallbacks;
-import com.google.android.gms.common.api.GoogleApiClient.OnConnectionFailedListener;
-import com.google.android.gms.plus.Plus;
-import com.google.android.gms.plus.model.people.Person;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.util.Calendar;
-import java.util.Locale;
 
-import android.app.Activity;
-import android.app.Fragment;
-import android.app.FragmentManager;
-import android.app.SearchManager;
 import android.content.Intent;
-import android.content.res.Configuration;
-import android.os.Bundle;
-import android.support.v4.app.ActionBarDrawerToggle;
-import android.support.v4.view.GravityCompat;
-import android.support.v4.widget.DrawerLayout;
-import android.view.LayoutInflater;
-import android.view.Menu;
 
-import android.view.MenuItem;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
-import android.widget.ListView;
 import android.widget.Toast;
-import android.app.PendingIntent;
 import android.content.Context;
-import android.app.Activity;
-import android.content.Intent;
-import android.content.IntentSender.SendIntentException;
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
-import android.support.v7.app.ActionBarActivity;
-import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.ImageView;
-import android.widget.Toast;
-import android.app.Activity;
-import android.support.v7.app.ActionBarActivity;
-import android.support.v7.app.ActionBar;
-import android.content.Context;
-import android.os.Build;
-import android.os.Bundle;
-import android.view.Gravity;
-import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuItem;
-import android.view.View;
-import android.view.ViewGroup;
-import android.support.v4.widget.DrawerLayout;
-import android.widget.ArrayAdapter;
-import android.widget.TextView;
 import android.content.DialogInterface;
-import android.graphics.Color;
-import android.os.Bundle;
 
-import android.util.Log;
-import android.view.View;
-import android.widget.Button;
 import android.widget.CheckBox;
-import android.widget.TextView;
 import android.support.v7.app.AppCompatActivity;
 
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
-import com.wdullaer.materialdatetimepicker.Utils;
 import com.wdullaer.materialdatetimepicker.date.DatePickerDialog;
 import com.wdullaer.materialdatetimepicker.time.RadialPickerLayout;
 import com.wdullaer.materialdatetimepicker.time.TimePickerDialog;
@@ -467,7 +402,7 @@ public class AddEvent extends AppCompatActivity implements DatePickerDialog.OnDa
             public void onSuccess(int statusCode, Header[] headers, byte[] response) {
                 Log.i("async", "success!!!!");
                 Toast.makeText(context, "Upload Successfully", Toast.LENGTH_SHORT).show();
-                Intent intent = new Intent(context, Events.class);
+                Intent intent = new Intent(context, FreeLunchList.class);
 
                intent.putExtra(EXTRA_MESSAGE, msg);
                 startActivity(intent);

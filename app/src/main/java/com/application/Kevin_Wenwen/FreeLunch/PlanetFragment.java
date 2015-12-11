@@ -1,41 +1,19 @@
 package com.application.Kevin_Wenwen.FreeLunch;
 
 import android.app.Fragment;
-import android.content.DialogInterface;
-import android.preference.PreferenceActivity;
-import android.support.v7.app.ActionBarActivity;
-import android.app.Dialog;
-import android.content.Context;
 
 import android.content.Intent;
 import android.os.Bundle;
 //import android.support.v7.app.AppCompatActivity;
-import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.Window;
 import android.widget.AdapterView;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.GridView;
-import android.widget.ImageButton;
-import android.widget.ImageView;
 import android.widget.ListView;
-import android.widget.TextView;
-import android.widget.Toast;
-import android.app.FragmentManager;
-import android.app.FragmentTransaction;
-import android.content.res.Configuration;
-import android.view.WindowManager;
 
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
-import com.loopj.android.http.RequestParams;
-import com.squareup.picasso.Picasso;
 
 import org.apache.http.Header;
 import org.json.JSONArray;
@@ -62,7 +40,7 @@ public class PlanetFragment extends Fragment {
         switch (i){
             case 0:
                 Log.d("1111"," events");
-                rootView = getView();
+                rootView = inflater.inflate(R.layout.clistview,container,false);
                 break;
 
             case 1:
@@ -74,6 +52,8 @@ public class PlanetFragment extends Fragment {
 
             case 2:
                 Log.d("333","calendar");
+                Intent intent = new Intent(getActivity(),mCalendar.class);
+                startActivity(intent);
                 rootView = inflater.inflate(R.layout.calendar, container, false);
                 rootView = load_calendar(rootView);
                 break;

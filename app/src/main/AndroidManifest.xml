@@ -31,7 +31,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="com.application.Kevin_Wenwen.FreeLunch.Events"
+            android:name=".FreeLunchList"
             android:label="Free Lunch"
             android:parentActivityName="com.application.Kevin_Wenwen.FreeLunch.Homepage">
             <meta-data
@@ -49,6 +49,9 @@
 
 
         <meta-data android:name="com.google.android.gms.version" android:value="@integer/google_play_services_version" />
+        <meta-data
+            android:name="com.google.android.gms.version"
+            android:value="@integer/google_play_services_version" />
     </application>
 
 </manifest>
