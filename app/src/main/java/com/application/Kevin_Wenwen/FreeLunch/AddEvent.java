@@ -10,7 +10,6 @@ import com.google.android.gms.common.GooglePlayServicesUtil;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.location.Location;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -28,10 +27,7 @@ import android.support.v4.widget.DrawerLayout;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MenuInflater;
-import com.google.android.gms.location.LocationListener;
-import  com.google.android.gms.location.LocationServices;
 
-//import com.google.android.gms.location.LocationClient;
 import com.google.android.gms.common.api.GoogleApiClient.ConnectionCallbacks;
 import com.google.android.gms.common.api.GoogleApiClient.OnConnectionFailedListener;
 import com.google.android.gms.plus.Plus;
@@ -135,7 +131,8 @@ public class AddEvent extends AppCompatActivity implements DatePickerDialog.OnDa
     private AutoCompleteTextView locationView;
     private EditText eventView;
     private EditText detailView;
-    private ImageView uploadView;
+   // private ImageView uploadView;
+    private EditText roomView;
 
     private Bitmap bitmapImage;
 
@@ -150,7 +147,8 @@ public class AddEvent extends AppCompatActivity implements DatePickerDialog.OnDa
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.add_event);
-        email = getIntent().getStringArrayExtra(EXTRA_MESSAGE)[0];
+        msg = getIntent().getStringArrayExtra(EXTRA_MESSAGE);
+        email = msg[0];
 
         timeTextView = (TextView)findViewById(R.id.time_textview);
         dateTextView = (TextView)findViewById(R.id.date_textview);
@@ -162,12 +160,13 @@ public class AddEvent extends AppCompatActivity implements DatePickerDialog.OnDa
 
         eventView =  (EditText)findViewById(R.id.event_name);
         detailView = (EditText)findViewById(R.id.details);
-        uploadView =(ImageView) findViewById(R.id.upload_photo);
+        //uploadView =(ImageView) findViewById(R.id.upload_photo);
         Button chooseFromGallery = (Button)findViewById((R.id.gallery));
         Button submit = (Button)findViewById(R.id.submit_event);
-
-
+        Button clear = (Button)findViewById(R.id.clear);
+        roomView =(EditText)findViewById(R.id.room);
         locationView = (AutoCompleteTextView) findViewById(R.id.location);
+
 // Get the string array
         String[] buildings = getResources().getStringArray(R.array.buildings_array);
 // Create the adapter and set it to the AutoCompleteTextView
@@ -251,12 +250,16 @@ public class AddEvent extends AppCompatActivity implements DatePickerDialog.OnDa
                 }
         );
 
+
+
         submit.setOnClickListener(new View.OnClickListener(){
             public void onClick(View v){
                 String details = detailView.getText().toString().trim();
                 String event_name = eventView.getText().toString().trim();
-                String location = locationView.getText().toString().trim();
-                if(hourString2==null||hourString1==null||day==null||month==null||year==null||details==null||event_name==null||location==null){
+                String building = locationView.getText().toString().trim();
+                String room = roomView.getText().toString().trim();
+
+                if(hourString2==null||hourString1==null||day==null||month==null||year==null||details==null||event_name==null||building==null){
                     Toast.makeText(context, "You have not filled in all the needed infomation. ", Toast.LENGTH_SHORT).show();
                     return;
                 }
@@ -270,10 +273,22 @@ public class AddEvent extends AppCompatActivity implements DatePickerDialog.OnDa
                     byte[] encodedImage = Base64.encode(b, Base64.DEFAULT);
                     String encodedImageStr = encodedImage.toString();
 
-                    getUploadURL(b,details,event_name,location,date_time1,date_time2 );
+                    getUploadURL(b,details,event_name,building,room,date_time1,date_time2 );
 
                 }
 
+
+            }
+
+        });
+
+        clear.setOnClickListener(new View.OnClickListener(){
+            public void onClick(View v){
+
+            detailView.setText("");
+                eventView.setText("");
+                locationView.setText("");
+                roomView.setText("");
 
             }
 
@@ -405,9 +420,9 @@ public class AddEvent extends AppCompatActivity implements DatePickerDialog.OnDa
         }
     }
 
-    private void getUploadURL(final byte[] encodedImage, String details,String event_name,String location,String date_time1,String date_time2){
+    private void getUploadURL(final byte[] encodedImage, final String details, final String event_name, final String building,final String room, final String date_time1, final String date_time2){
         AsyncHttpClient httpClient = new AsyncHttpClient();
-        String request_url="http://freelunchforyou.appspot.com/getUploadURL";
+        String request_url="http://freelunchforyou.appspot.com/GetUploadURL";
         //System.out.println(request_url);
         httpClient.get(request_url, new AsyncHttpResponseHandler() {
             String upload_url;
@@ -419,7 +434,7 @@ public class AddEvent extends AppCompatActivity implements DatePickerDialog.OnDa
                     JSONObject jObject = new JSONObject(new String(response));
 
                     upload_url = jObject.getString("upload_url");
-                    postToServer(encodedImage, photoCaption, upload_url);
+                    postToServer(encodedImage, details,event_name,building,room,date_time1,date_time2, upload_url);
 
                 } catch (JSONException j) {
                     System.out.println("JSON Error");
@@ -433,25 +448,29 @@ public class AddEvent extends AppCompatActivity implements DatePickerDialog.OnDa
         });
     }
 
-    private void postToServer(byte[] encodedImage,String photoCaption, String upload_url){
+    private void postToServer(byte[] encodedImage,String details,final String event_name, final String building,final String room, final String date_time1, final String date_time2, String upload_url){
 
         RequestParams params = new RequestParams();
         params.put("file",new ByteArrayInputStream(encodedImage));
-        params.put("photoCaption",photoCaption);
-        params.put("email", email);
+        params.put("details",details);
+        params.put("worker_name", email);
+        params.put("event_name",event_name);
+        params.put("building",building);
+        params.put("room",room);
+        params.put("date_time1",date_time1);
+        params.put("data_time2",date_time2);
 
 
         AsyncHttpClient client = new AsyncHttpClient();
         client.post(upload_url, params, new AsyncHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, byte[] response) {
-                Log.w("async", "success!!!!");
-                Toast.makeText(context, "Upload Successful", Toast.LENGTH_SHORT).show();
+                Log.i("async", "success!!!!");
+                Toast.makeText(context, "Upload Successfully", Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(context, Events.class);
 
-                Intent intent = new Intent(context, viewSingleStream.class);
-                intent.putExtra(EXTRA_MESSAGE, msg);
+               intent.putExtra(EXTRA_MESSAGE, msg);
                 startActivity(intent);
-
 
             }
 

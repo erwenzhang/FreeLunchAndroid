@@ -61,12 +61,25 @@
         <TextView
             style="@style/CodeFont"
             android:text="Location" />
+        <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" >
 
         <AutoCompleteTextView
             android:id="@+id/location"
-            android:layout_width="fill_parent"
+            android:layout_width="200dp"
+            android:hint="Building"
             android:layout_height="wrap_content"
             android:inputType="textEmailAddress"/>
+            <EditText
+                android:id="@+id/room"
+                android:layout_width="240dp"
+                android:layout_height="wrap_content"
+                android:hint="Room"
+                android:layout_toRightOf="@+id/location"
+                />
+        </RelativeLayout>
+
 
         <TextView
             style="@style/CodeFont"
@@ -108,12 +121,21 @@
             android:adjustViewBounds="true"
             />
 
-
+        <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" >
         <Button
             android:id="@+id/submit_event"
-            android:layout_width="wrap_content"
+            android:layout_width="120dp"
             android:layout_height="wrap_content"
             android:text="Submit"/>
+            <Button
+                android:id="@+id/clear"
+                android:layout_width="120dp"
+                android:layout_height="wrap_content"
+                android:text="clear"
+                android:layout_toRightOf="@+id/submit_event"/>
+        </RelativeLayout>
 
     </LinearLayout>
 </ScrollView>

@@ -160,8 +160,7 @@ public class Homepage extends Activity implements
 
         // Button listeners
         mSignInButton.setOnClickListener(this);
-        mSignOutButton.setOnClickListener(this);
-        mRevokeButton.setOnClickListener(this);
+
 
         if (savedInstanceState != null) {
             mSignInProgress = savedInstanceState
@@ -313,9 +312,7 @@ public class Homepage extends Activity implements
 
 
         // Update the user interface to reflect that the user is signed in.
-        mSignInButton.setEnabled(false);
-        mSignOutButton.setEnabled(true);
-        mRevokeButton.setEnabled(true);
+
 
         //location_api
      //   mLocationRequest = LocationRequest.create();
@@ -504,8 +501,7 @@ public class Homepage extends Activity implements
         // Update the UI to reflect that the user is signed out.
 
         mSignInButton.setEnabled(true);
-        mSignOutButton.setEnabled(false);
-        mRevokeButton.setEnabled(false);
+
 
         mStatus.setText("Signed out");
       //  Button uploadButton = (Button) findViewById(R.id.open_image_upload_page);

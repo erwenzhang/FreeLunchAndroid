@@ -13,6 +13,7 @@ import android.app.ListActivity;
 import android.location.Location;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Window;
 import android.widget.TextView;
 import android.os.Bundle;
 import android.view.View;
@@ -84,7 +85,7 @@ import android.support.v4.widget.DrawerLayout;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
-public class Events extends ListActivity {
+public class Events extends  ListActivity {
     private DrawerLayout mDrawerLayout;
     private ListView mDrawerList;
     private ActionBarDrawerToggle mDrawerToggle;
@@ -99,8 +100,11 @@ public class Events extends ListActivity {
      @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.events);
+         getWindow().requestFeature(Window.FEATURE_ACTION_BAR);
+         setContentView(R.layout.events);
+       // setContentView(R.layout.events);
         email = getIntent().getStringArrayExtra(EXTRA_MESSAGE)[0];
+
 
         mTitle = mDrawerTitle = getTitle();
         mPlanetTitles = getResources().getStringArray(R.array.planets_array);
@@ -114,8 +118,8 @@ public class Events extends ListActivity {
         mDrawerList.setOnItemClickListener(new DrawerItemClickListener());
 
         // enable ActionBar app icon to behave as action to toggle nav drawer
-        getActionBar().setDisplayHomeAsUpEnabled(true);
-        getActionBar().setHomeButtonEnabled(true);
+        this.getActionBar().setDisplayHomeAsUpEnabled(true);
+        this.getActionBar().setHomeButtonEnabled(true);
 
         // ActionBarDrawerToggle ties together the the proper interactions
         // between the sliding drawer and the action bar app icon
