@@ -75,7 +75,7 @@ public class DisplayOneWorker extends ListActivity {
     Context context = this;
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.clistview_one_worker);
+        setContentView(R.layout.list_one_worker);
 
         Intent intent = getIntent();
         msg = intent.getStringArrayExtra(EXTRA_MESSAGE);
@@ -110,7 +110,7 @@ public class DisplayOneWorker extends ListActivity {
                     SimpleAdapter adapter = new SimpleAdapter(
                             context,
                             list,
-                            R.layout.crowview,
+                            R.layout.list_one_worker_item,
                             new String[] {"dt_start", "name", "building"},
                             new int[] {R.id.text1, R.id.text2, R.id.text3}
                     );
