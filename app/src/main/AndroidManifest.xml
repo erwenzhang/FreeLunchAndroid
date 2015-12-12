@@ -22,7 +22,7 @@
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
         <activity
-            android:name="com.application.Kevin_Wenwen.FreeLunch.DisplayAllEvents"
+            android:name="com.application.Kevin_Wenwen.FreeLunch.DisplayAllWorkers"
             android:label="@string/app_name" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -33,6 +33,16 @@
         <activity
             android:name="com.application.Kevin_Wenwen.FreeLunch.DisplayOneEvent"
             android:label="view one event" >
+        </activity>
+
+        <activity
+            android:name="com.application.Kevin_Wenwen.FreeLunch.DisplayOneWorker"
+            android:label="view one worker" >
+        </activity>
+
+        <activity
+            android:name="com.application.Kevin_Wenwen.FreeLunch.DisplayAllEvents"
+            android:label="view all events" >
         </activity>
 
 

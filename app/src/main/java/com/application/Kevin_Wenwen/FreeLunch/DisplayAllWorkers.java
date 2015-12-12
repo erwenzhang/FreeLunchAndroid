@@ -29,7 +29,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 
-public class DisplayAllEvents extends ListActivity {
+public class DisplayAllWorkers extends ListActivity {
 
     static ArrayList<HashMap<String,String>> list;
 
@@ -41,8 +41,7 @@ public class DisplayAllEvents extends ListActivity {
     public final static String EXTRA_MESSAGE1 = "com.displayimages.MESSAGE";
 
     ArrayList<String> namesList = null;
-    ArrayList<String> dtsStartList = null;
-    ArrayList<String> buildingsList = null;
+    ArrayList<String> ratingsList = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,24 +57,20 @@ public class DisplayAllEvents extends ListActivity {
 
 //        email = msg[0];
 
-        final String request_url = "http://freelunch-test1.appspot.com/ViewAllEvents";
+        final String request_url = "http://freelunch-test1.appspot.com/ViewAllWorkers";
         AsyncHttpClient httpClient = new AsyncHttpClient();
         httpClient.get(request_url, new AsyncHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, byte[] response) {
-                dtsStartList = new ArrayList<String>();
                 namesList = new ArrayList<String>();
-                buildingsList = new ArrayList<String>();
+                ratingsList = new ArrayList<String>();
                 try {
                     JSONObject jObject = new JSONObject(new String(response));
-                    JSONArray dts_start = jObject.getJSONArray("dts_start");
                     JSONArray names = jObject.getJSONArray("names");
-                    JSONArray buildings = jObject.getJSONArray("buildings");
-                    for (int i = 0; i < dts_start.length(); i++) {
-                        dtsStartList.add(dts_start.getString(i));
+                    JSONArray ratings = jObject.getJSONArray("ratings");
+                    for (int i = 0; i < names.length(); i++) {
                         namesList.add(names.getString(i));
-                        buildingsList.add(buildings.getString(i));
-                        System.out.println(dts_start.getString(i));
+                        ratingsList.add(ratings.getString(i));
                     }
 
                     list = new ArrayList<HashMap<String,String>>();
@@ -84,15 +79,15 @@ public class DisplayAllEvents extends ListActivity {
                             context,
                             list,
                             R.layout.crowview,
-                            new String[] {"dt_start", "name", "building"},
-                            new int[] {R.id.text1, R.id.text2, R.id.text3}
+                            new String[] {"name", "rating"},
+                            new int[] {R.id.text2, R.id.text3}
                     );
                     populateList();
                     setListAdapter(adapter);
 
                     // to change to table view
 //                    GridView gridview = (GridView) findViewById(R.id.gridview);
-//                    gridview.setAdapter(new ImageAdapter(context, dtsStartList, buildingsList));
+//                    gridview.setAdapter(new ImageAdapter(context, dtsStartList, ratingsList));
 //                    gridview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 //                        @Override
 //                        public void onItemClick(AdapterView<?> parent, View v,
@@ -120,11 +115,10 @@ public class DisplayAllEvents extends ListActivity {
     }
 
     private void populateList() {
-        for (int i = 0; i < dtsStartList.size(); i++) {
+        for (int i = 0; i < namesList.size(); i++) {
             HashMap<String, String> map = new HashMap<String, String>();
-            map.put("dt_start", dtsStartList.get(i));
             map.put("name", namesList.get(i));
-            map.put("building", buildingsList.get(i));
+            map.put("rating", ratingsList.get(i));
             list.add(map);
         }
     }
@@ -133,7 +127,7 @@ public class DisplayAllEvents extends ListActivity {
     protected void onListItemClick(ListView l, View v, int position, long id) {
 //		TextView t = (TextView) v.findViewById(R.id.text2);
 //		t.setText("Tweet Clicked");
-        Intent intent = new Intent(context, DisplayOneEvent.class);
+        Intent intent = new Intent(context, DisplayOneWorker.class);
         String[] msg_out = new String[4];
 //        msg_out[0] = email;
         msg_out[1] = namesList.get(position);
