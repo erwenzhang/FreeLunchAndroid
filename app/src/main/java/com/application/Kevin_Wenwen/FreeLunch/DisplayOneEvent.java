@@ -115,7 +115,7 @@ public class DisplayOneEvent extends ActionBarActivity {
                     System.out.println("Setting image");
 //
                     if (rating == "null") {
-                        rating = "4.5";
+                        rating = "3.5";
                     }
                     float ratingValue = Float.parseFloat(rating);
                     RatingBar ratingBar = (RatingBar) findViewById(R.id.ratingBar);
