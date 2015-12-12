@@ -4,36 +4,41 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="80dp"
-    app:clickToClose="true">
+    android:layout_height="wrap_content"
+    app:clickToClose="true"
+    android:padding="10dp">
 
     <LinearLayout
-        android:tag="Bottom1"
-        android:background="#66ddff00"
-        android:id="@+id/bottom_wrapper"
-        android:layout_width="160dp"
-        android:weightSum="1"
-        android:layout_height="match_parent">
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:background="#FF5534"
+        android:gravity="center"
+        android:tag="Bottom3"
+        android:weightSum="10">
+
+        <ImageView
+            android:id="@+id/trash"
+            android:layout_width="27dp"
+            android:layout_height="30dp"
+            android:layout_weight="1"
+            android:src="@drawable/trash" />
 
         <TextView
-            android:id="@+id/archive"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="5"
+            android:text="Delete Item?"
             android:textColor="#fff"
-            android:text="Archive"
-            android:layout_weight="0.5"
-            android:gravity="center"
-            android:clickable="true"
-            android:background="@drawable/red"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent" />
+            android:textSize="17sp" />
 
-        <TextView
+        <Button
             android:id="@+id/delete"
-            android:text="Delete"
-            android:background="#C7C7CC"
-            android:gravity="center"
-            android:layout_weight="0.5"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent" />
+            android:layout_width="0dp"
+            android:layout_height="40dp"
+            android:layout_weight="4"
+            android:background="@drawable/white"
+            android:text="Yes,Delete"
+            android:textColor="#FF5534" />
     </LinearLayout>
 
     <LinearLayout
@@ -91,19 +96,27 @@
         </RelativeLayout>
     </LinearLayout>
 
-    <TextView android:id="@+id/text1"
-        android:textSize="18sp"
-        android:layout_width="100dip"
-        android:layout_height="match_parent"/>
-    <TextView android:id="@+id/text2"
-        android:textSize="18sp"
-        android:layout_width="110dip"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_weight="1"/>
-    <TextView android:id="@+id/text3"
-        android:textSize="14sp"
-        android:layout_width="40dip"
-        android:layout_height="match_parent"
-        android:layout_weight="1"/>
+        android:background="@drawable/item_selector"
+        android:padding="10dp">
+
+        <TextView android:id="@+id/text1"
+            android:textSize="18sp"
+            android:layout_width="100dip"
+            android:layout_height="match_parent"/>
+        <TextView android:id="@+id/text2"
+            android:textSize="18sp"
+            android:layout_width="110dip"
+            android:layout_height="match_parent"
+            android:layout_weight="1"/>
+        <TextView android:id="@+id/text3"
+            android:textSize="18sp"
+            android:layout_width="40dip"
+            android:layout_height="match_parent"
+            android:layout_weight="1"/>
+    </LinearLayout>
+
 
 </com.daimajia.swipe.SwipeLayout>

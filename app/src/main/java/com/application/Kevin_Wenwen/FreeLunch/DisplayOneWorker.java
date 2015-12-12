@@ -9,6 +9,7 @@ import android.graphics.BitmapFactory;
 import android.os.Bundle;
 //import android.support.v7.app.AppCompatActivity;
 import android.support.v7.app.ActionBarActivity;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -41,7 +42,7 @@ import java.util.HashMap;
 /**
  * Created by wenwen on 10/21/15.
  */
-public class DisplayOneWorker extends ListActivity {
+public class DisplayOneWorker extends AppCompatActivity {
 
     static ArrayList<HashMap<String,String>> list;
     private String[] msg;
@@ -110,13 +111,28 @@ public class DisplayOneWorker extends ListActivity {
                     SimpleAdapter adapter = new SimpleAdapter(
                             context,
                             list,
-                            R.layout.list_one_worker_item,
+                            R.layout.sample1,
                             new String[] {"dt_start", "name", "building"},
                             new int[] {R.id.text1, R.id.text2, R.id.text3}
                     );
                     populateList();
-                    setListAdapter(adapter);
+                    ListView myList=(ListView)findViewById(android.R.id.list);
 
+                    myList.setAdapter(adapter);
+//                    setListAdapter(adapter);
+                    myList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                        @Override
+                        public void onItemClick(AdapterView<?> parent, View view, int position,
+                                                long id) {
+
+                            Intent intent = new Intent(context, DisplayOneEvent.class);
+                            String[] msg_out = new String[4];
+                    //        msg_out[0] = email;
+                            msg_out[1] = namesList.get(position);
+                            intent.putExtra(EXTRA_MESSAGE, msg_out);
+                            startActivity(intent);
+                        }
+                    });
 
                 } catch (Exception e) {
                     System.out.println("!!!Got an exception!!!" + e.toString());
@@ -143,17 +159,18 @@ public class DisplayOneWorker extends ListActivity {
         }
     }
 
-    @Override
-    protected void onListItemClick(ListView l, View v, int position, long id) {
-//      TextView t = (TextView) v.findViewById(R.id.text2);
-//      t.setText("Tweet Clicked");
-        Intent intent = new Intent(context, DisplayOneEvent.class);
-        String[] msg_out = new String[4];
-//        msg_out[0] = email;
-        msg_out[1] = namesList.get(position);
-        intent.putExtra(EXTRA_MESSAGE, msg_out);
-        startActivity(intent);
-    }
+//    @Override
+//    protected void onListItemClick(ListView l, View v, int position, long id) {
+////      TextView t = (TextView) v.findViewById(R.id.text2);
+////      t.setText("Tweet Clicked");
+//        Intent intent = new Intent(context, DisplayOneEvent.class);
+//        String[] msg_out = new String[4];
+////        msg_out[0] = email;
+//        msg_out[1] = namesList.get(position);
+//        intent.putExtra(EXTRA_MESSAGE, msg_out);
+//        startActivity(intent);
+//    }
+
 
 //    @Override
 //    public boolean onCreateOptionsMenu(Menu menu) {
