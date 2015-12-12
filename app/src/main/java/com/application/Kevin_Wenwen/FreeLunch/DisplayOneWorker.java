@@ -47,6 +47,7 @@ public class DisplayOneWorker extends AppCompatActivity {
     static ArrayList<HashMap<String,String>> list;
     private String[] msg;
     private String workerName;
+    private String delEventName;
 
     private String TAG  = "Display one event";
     public final static String EXTRA_MESSAGE = "MESSAGE IN";
@@ -85,7 +86,12 @@ public class DisplayOneWorker extends AppCompatActivity {
         AsyncHttpClient httpClient = new AsyncHttpClient();
         RequestParams params = new RequestParams();
         workerName = msg[1];
+        delEventName = msg[2];
+
         params.put("worker_name", workerName);
+        if (delEventName != null) {
+            params.put("delete_item", delEventName);
+        }
 
         httpClient.get(request_url, params, new AsyncHttpResponseHandler() {
             @Override
@@ -111,7 +117,7 @@ public class DisplayOneWorker extends AppCompatActivity {
                     SimpleAdapter adapter = new SimpleAdapter(
                             context,
                             list,
-                            R.layout.sample1,
+                            R.layout.list_one_worker_item,
                             new String[] {"dt_start", "name", "building"},
                             new int[] {R.id.text1, R.id.text2, R.id.text3}
                     );
@@ -133,6 +139,17 @@ public class DisplayOneWorker extends AppCompatActivity {
                             startActivity(intent);
                         }
                     });
+
+//                    sample1.findViewById(R.id.trash2).setOnClickListener(new View.OnClickListener() {
+//                        @Override
+//                        public void onClick(View v) {
+//                            Intent intent = new Intent(context, DisplayOneEvent.class);
+//                            String[] msg_out = new String[4];
+//                            //        msg_out[0] = email;
+//                            msg_out[1] = namesList.get(position);
+//                            intent.putExtra(EXTRA_MESSAGE, msg_out);
+//                            startActivity(intent);}
+//                    });
 
                 } catch (Exception e) {
                     System.out.println("!!!Got an exception!!!" + e.toString());
@@ -158,6 +175,7 @@ public class DisplayOneWorker extends AppCompatActivity {
             list.add(map);
         }
     }
+
 
 //    @Override
 //    protected void onListItemClick(ListView l, View v, int position, long id) {
