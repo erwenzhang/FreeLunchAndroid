@@ -257,6 +257,17 @@ public class AddEvent extends AppCompatActivity implements DatePickerDialog.OnDa
             return true;
 
         }
+        else if(id == R.id.myEvent){
+            Intent intent = new Intent(context,DisplayOneWorker.class);
+           String[] msg_out = new String[4];
+            msg_out[1] = email;
+            intent.putExtra(EXTRA_MESSAGE, msg_out);
+            // catch event that there's no activity to handle intent
+
+            startActivity(intent);
+            return true;
+
+        }
         return super.onOptionsItemSelected(item);
     }
 

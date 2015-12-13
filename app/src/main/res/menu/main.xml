@@ -2,11 +2,15 @@
 
     <item android:id="@+id/addEvent"
         android:icon="@drawable/plus48"
-        android:title="add an event"
+        android:title="Add An Event"
         android:showAsAction="ifRoom"
         />
     <item android:id="@+id/sign_out_button"
-        android:title="@string/sign_out_button_name"
+        android:title="Sign Out"
+        android:showAsAction="ifRoom"
+        />
+    <item android:id="@+id/myEvent"
+        android:title="My Events"
         android:showAsAction="ifRoom"
         />
 </menu>

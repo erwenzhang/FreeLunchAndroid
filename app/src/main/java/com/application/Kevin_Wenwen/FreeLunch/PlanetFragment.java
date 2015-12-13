@@ -163,7 +163,7 @@ public class PlanetFragment extends Fragment {
                         @Override
                         public void onItemClick(AdapterView<?> parent, View v,
                                                 int position, long id) {
-                            Intent intent= new Intent(v.getContext(),OneWorker.class);
+                            Intent intent= new Intent(v.getContext(),DisplayOneWorker.class);
                             String[] msg_out = new String[4];
                             msg_out[0] = names.get(position);
                           //  intent.putExtra(EXTRA_MESSAGE, msg_out);

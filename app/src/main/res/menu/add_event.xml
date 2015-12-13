@@ -5,4 +5,8 @@
         android:title="@string/sign_out_button_name"
         android:showAsAction="ifRoom"
         />
+    <item android:id="@+id/myEvent"
+        android:title="My Events"
+        android:showAsAction="ifRoom"
+        />
 </menu>

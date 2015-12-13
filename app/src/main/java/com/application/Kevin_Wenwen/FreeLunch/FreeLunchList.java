@@ -94,19 +94,10 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.support.v4.widget.DrawerLayout;
-import android.widget.ArrayAdapter;
-import android.widget.TextView;
-import android.annotation.SuppressLint;
-import android.os.Bundle;
-import android.support.v4.app.FragmentTransaction;
-import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
-import android.view.View;
-import android.view.View.OnClickListener;
-import android.widget.Button;
-import android.widget.TextView;
-import android.widget.Toast;
+
+import com.wdullaer.materialdatetimepicker.date.DatePickerDialog;
+import com.wdullaer.materialdatetimepicker.time.RadialPickerLayout;
+import com.wdullaer.materialdatetimepicker.time.TimePickerDialog;
 
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
@@ -124,7 +115,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 
-public class FreeLunchList extends  AppCompatActivity  implements OnMapReadyCallback {
+public class FreeLunchList extends  AppCompatActivity  implements OnMapReadyCallback,DatePickerDialog.OnDateSetListener {
     private DrawerLayout mDrawerLayout;
     private ListView mDrawerList;
     private ActionBarDrawerToggle mDrawerToggle;
@@ -136,6 +127,12 @@ public class FreeLunchList extends  AppCompatActivity  implements OnMapReadyCall
     Context context = this;
     public final static String EXTRA_MESSAGE = "MESSAGE IN";
 
+
+    private String day;
+    private String month;
+    private String year;
+    JSONArray display_name;
+    JSONArray display_date;
 
     private CaldroidFragment caldroidFragment;
 
@@ -188,6 +185,8 @@ public class FreeLunchList extends  AppCompatActivity  implements OnMapReadyCall
         if (savedInstanceState == null) {
             selectItem(0);
         }
+         getCalendarData();
+
     }
 
     @Override
@@ -233,7 +232,18 @@ public class FreeLunchList extends  AppCompatActivity  implements OnMapReadyCall
 //                String[] msg_out = new String[4];
 //                msg_out[0] = "hi wenwen";
 //                intent_2.putExtra(EXTRA_MESSAGE,msg_out);
-//        	    startActivity(intent_2);
+//        	    startActivityintent_2);
+            case R.id.myEvent:
+                Intent intent1 = new Intent(context,DisplayOneWorker.class);
+                String[] msg_out1 = new String[4];
+                msg_out1[1] = email;
+                intent1.putExtra(EXTRA_MESSAGE, msg_out1);
+                // catch event that there's no activity to handle intent
+
+                startActivity(intent1);
+                return true;
+
+
 
         default:
             return super.onOptionsItemSelected(item);
@@ -298,6 +308,7 @@ public class FreeLunchList extends  AppCompatActivity  implements OnMapReadyCall
                     String text = "month: " + month + " year: " + year;
                     Toast.makeText(getApplicationContext(), text,
                             Toast.LENGTH_SHORT).show();
+
                 }
 
                 @Override
@@ -329,14 +340,19 @@ public class FreeLunchList extends  AppCompatActivity  implements OnMapReadyCall
 //            SupportMapFragment mapFragment =
 //                    (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.content_frame);
 //            mapFragment.getMapAsync(this);
-            Intent intent = new Intent(context,MapView.class);
-            String[] msg = new String[3];
+            /**
+             * for date filter at map view
+             */
+            Calendar now = Calendar.getInstance();
+            DatePickerDialog dpd = DatePickerDialog.newInstance(
+                    FreeLunchList.this,
+                    now.get(Calendar.YEAR),
+                    now.get(Calendar.MONTH),
+                    now.get(Calendar.DAY_OF_MONTH)
+            );
+            dpd.show(getFragmentManager(), "Datepickerdialog");
 
 
-            msg[0] = email;
-            intent.putExtra(EXTRA_MESSAGE, msg);
-            finish();
-           startActivity(intent);
 
         }
       else  {
@@ -361,6 +377,7 @@ public class FreeLunchList extends  AppCompatActivity  implements OnMapReadyCall
         getSupportActionBar().setTitle(mTitle);
     }
 
+
     /**
      * When using the ActionBarDrawerToggle, you must call it during
      * onPostCreate() and onConfigurationChanged()...
@@ -384,8 +401,36 @@ public class FreeLunchList extends  AppCompatActivity  implements OnMapReadyCall
      * Fragment that appears in the "content_frame", shows a planet
      */
 
-    private void setCustomResourceForDates() {
+    /**
+     * for calender view
+     */
+    private void setCustomResourceForDates(){
+        getCalendarData();
         final SimpleDateFormat mformatter = new SimpleDateFormat("yyyy-MM-dd");
+        try {
+        for (int i = 0; i < display_date.length(); i++) {
+            String tmp_str = display_date.getString(i).substring(0, 10);
+            Log.d("time1  ", tmp_str);
+            try {
+                Date tmp_date = mformatter.parse(tmp_str);
+                caldroidFragment.setBackgroundResourceForDate(R.color.light_blue_900,
+                        tmp_date);
+                caldroidFragment.setTextColorForDate(R.color.white, tmp_date);
+
+            } catch (ParseException e) {
+                Log.e("wenwenwen ", " parse exception");
+
+            }
+
+
+        }
+        } catch (JSONException j) {
+            System.out.println("JSON Error");
+        }
+    }
+
+    private void getCalendarData() {
+
         final String request_url = "http://freelunchforyou.appspot.com/CalendarView";
         AsyncHttpClient httpClient = new AsyncHttpClient();
         httpClient.get(request_url, new AsyncHttpResponseHandler() {
@@ -397,26 +442,10 @@ public class FreeLunchList extends  AppCompatActivity  implements OnMapReadyCall
 
                 try {
                     JSONObject jObject = new JSONObject(new String(response));
-                    JSONArray display_date = jObject.getJSONArray("display_date");
-                    JSONArray display_name = jObject.getJSONArray("display_name");
+                    display_date = jObject.getJSONArray("display_date");
+                    display_name = jObject.getJSONArray("display_name");
                     // Log.d("wenwen TAG", "json successful");
-                    for (int i = 0; i < display_date.length(); i++) {
-                        String tmp_str = display_date.getString(i).substring(0, 10);
-                        Log.d("time1  ", tmp_str);
-                        try {
-                            Date tmp_date = mformatter.parse(tmp_str);
-                            caldroidFragment.setBackgroundResourceForDate(R.color.blue,
-                                    tmp_date);
-                            caldroidFragment.setTextColorForDate(R.color.white, tmp_date);
 
-                        } catch (ParseException e) {
-                            Log.e("wenwenwen ", " parse exception");
-
-                        }
-                        event_date.add(tmp_str);
-                        event_name.add(display_name.getString(i));
-
-                    }
 
 
                 } catch (JSONException j) {
@@ -434,6 +463,36 @@ public class FreeLunchList extends  AppCompatActivity  implements OnMapReadyCall
 
     }
 
+    public void onDateSet(DatePickerDialog view, int theyear, int monthOfYear, int dayOfMonth) {
+        day = Integer.toString(dayOfMonth);
+        month = Integer.toString(monthOfYear+1);
+        year = Integer.toString(theyear);
+
+        Intent intent = new Intent(context,MapView.class);
+        String[] msg = new String[4];
+
+
+        msg[0] = email;
+        msg[1] = year;
+        msg[2] = month;
+        msg[3] = day;
+
+        intent.putExtra(EXTRA_MESSAGE, msg);
+        //finish();
+        startActivity(intent);
+
+        String date = "You picked the following date: "+dayOfMonth+"/"+(++monthOfYear)+"/"+theyear;
+       // dateTextView.setText(date);
+    }
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        DatePickerDialog dpd = (DatePickerDialog) getFragmentManager().findFragmentByTag("Datepickerdialog");
+
+
+        if(dpd != null) dpd.setOnDateSetListener(this);
+    }
     public void onMapReady(GoogleMap map) {
         map.addMarker(new MarkerOptions().position(new LatLng(0, 0)).title("Marker"));
     }

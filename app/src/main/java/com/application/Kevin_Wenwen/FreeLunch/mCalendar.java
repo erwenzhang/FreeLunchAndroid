@@ -52,7 +52,7 @@ public class mCalendar extends AppCompatActivity {
                         String tmp_str = display_date.getString(i).substring(0,10);
                         try{
                         Date tmp_date = formatter.parse(tmp_str);
-                            caldroidFragment.setBackgroundResourceForDate(R.color.blue,
+                            caldroidFragment.setBackgroundResourceForDate(R.color.light_blue_900,
                                     tmp_date);
                             caldroidFragment.setTextColorForDate(R.color.white, tmp_date);
 

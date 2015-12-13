@@ -23,7 +23,7 @@
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
-        android:theme="@android:style/Theme.Holo.Light.DarkActionBar" >
+        android:theme="@style/AppTheme" >
         <activity
             android:name="com.application.Kevin_Wenwen.FreeLunch.Homepage"
             android:label="@string/app_name">
@@ -65,6 +65,28 @@
         </activity>
         <activity
             android:name="com.application.Kevin_Wenwen.FreeLunch.MapView"
+            android:label="Free Lunch"
+            android:theme="@style/AppTheme"
+            >
+
+        </activity>
+
+        <activity
+            android:name="com.application.Kevin_Wenwen.FreeLunch.DisplayOneEvent"
+            android:label="Free Lunch"
+            android:theme="@style/AppTheme"
+            >
+
+        </activity>
+        <activity
+            android:name="com.application.Kevin_Wenwen.FreeLunch.DisplayOneWorker"
+            android:label="Free Lunch"
+            android:theme="@style/AppTheme"
+            >
+
+        </activity>
+        <activity
+            android:name="com.application.Kevin_Wenwen.FreeLunch.Feedback"
             android:label="Free Lunch"
             android:theme="@style/AppTheme"
             >

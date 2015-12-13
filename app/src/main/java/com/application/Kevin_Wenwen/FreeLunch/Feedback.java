@@ -9,6 +9,7 @@ import android.content.Intent;
 import android.os.Bundle;
 //import android.support.v7.app.AppCompatActivity;
 import android.support.v7.app.ActionBarActivity;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -45,12 +46,13 @@ import java.util.ArrayList;
 /**
  * Created by wenwen on 12/9/15.
  */
-public class Feedback extends ActionBarActivity implements View.OnClickListener {
+public class Feedback extends AppCompatActivity implements View.OnClickListener {
     Context context = this;
     private String TAG  = "Display One Worker";
+    private String event_name;
     private String email;
     private String[] msg;
-    private TextView event_name;
+    private TextView event;
     ImageButton yes;
     ImageButton no;
     String feedback;
@@ -61,7 +63,7 @@ public class Feedback extends ActionBarActivity implements View.OnClickListener 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.feedback);
 
-        event_name = (TextView) findViewById(R.id.event_name);
+        event = (TextView) findViewById(R.id.event_name);
         yes = (ImageButton)findViewById(R.id.yes);
         no = (ImageButton)findViewById(R.id.no);
         yes.setEnabled(true);
@@ -72,8 +74,8 @@ public class Feedback extends ActionBarActivity implements View.OnClickListener 
 
         Intent intent = getIntent();
         msg = intent.getStringArrayExtra(EXTRA_MESSAGE);
-        author_name = msg[0];
-        event_name.setText("Is "+ msg[1]+" real?");
+        event_name = msg[1];
+        event.setText("Is "+ msg[1]+" real?");
 
         setTitle("Feedback");
 
@@ -99,7 +101,7 @@ public class Feedback extends ActionBarActivity implements View.OnClickListener 
         AsyncHttpClient httpClient = new AsyncHttpClient();
         RequestParams params = new RequestParams();
         params.put("feedback",feedback);
-        params.put("author_name",author_name);
+        params.put("event_name",event_name);
         httpClient.get(request_url, new AsyncHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, byte[] response) {
@@ -114,6 +116,53 @@ public class Feedback extends ActionBarActivity implements View.OnClickListener 
         });
 
 
+
+
+
+    }
+
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.main, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle item selection
+        switch(item.getItemId()) {
+            case R.id.addEvent:
+                // create intent to perform web search for this planet
+                Intent intent = new Intent(context,AddEvent.class);
+                String[] msg_out = new String[4];
+                msg_out[0] = email;
+                intent.putExtra(EXTRA_MESSAGE, msg_out);
+                // catch event that there's no activity to handle intent
+
+                startActivity(intent);
+                return true;
+
+            case R.id.sign_out_button:
+                Intent intent1 = new Intent(context,Homepage.class);
+
+
+                startActivity(intent1);
+                return true;
+
+            case R.id.myEvent:
+                Intent intent2 = new Intent(context,DisplayOneWorker.class);
+                String[] msg_out1 = new String[4];
+                msg_out1[1] = email;
+                intent2.putExtra(EXTRA_MESSAGE, msg_out1);
+                // catch event that there's no activity to handle intent
+
+                startActivity(intent2);
+                return true;
+
+
+            default:
+                return super.onOptionsItemSelected(item);
+        }
 
     }
 

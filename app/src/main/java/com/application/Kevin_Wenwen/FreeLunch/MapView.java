@@ -6,16 +6,21 @@ package com.application.Kevin_Wenwen.FreeLunch;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
+import com.loopj.android.http.RequestParams;
 
 import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.SystemClock;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
@@ -23,12 +28,15 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.animation.BounceInterpolator;
+import android.view.animation.Interpolator;
 
 import org.apache.http.Header;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.ByteArrayInputStream;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -36,10 +44,11 @@ import java.util.List;
 /**
  * This shows how to create a simple activity with a map and a marker on the map.
  */
-public class MapView extends AppCompatActivity implements OnMapReadyCallback,ActivityCompat.OnRequestPermissionsResultCallback {
+public class MapView extends AppCompatActivity implements OnMapReadyCallback,ActivityCompat.OnRequestPermissionsResultCallback,GoogleMap.OnMarkerClickListener {
     Context context = this;
     public final static String EXTRA_MESSAGE = "MESSAGE IN";
     private String email = null;
+    private String date = null;
     private static final int LOCATION_PERMISSION_REQUEST_CODE = 1;
     private boolean mPermissionDenied = false;
 
@@ -50,6 +59,11 @@ public class MapView extends AppCompatActivity implements OnMapReadyCallback,Act
         setContentView(R.layout.map_view);
 
         email = getIntent().getStringArrayExtra(EXTRA_MESSAGE)[0];
+        String year = getIntent().getStringArrayExtra(EXTRA_MESSAGE)[1];
+        String month = getIntent().getStringArrayExtra(EXTRA_MESSAGE)[2];
+        String day = getIntent().getStringArrayExtra(EXTRA_MESSAGE)[3];
+        date = year+" "+month+" "+day;
+
 
         SupportMapFragment mapFragment =
                 (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
@@ -83,6 +97,16 @@ public class MapView extends AppCompatActivity implements OnMapReadyCallback,Act
                 startActivity(intent1);
                 return true;
 
+            case R.id.myEvent:
+                Intent intent2 = new Intent(context,DisplayOneWorker.class);
+                String[] msg_out1 = new String[4];
+                msg_out1[1] = email;
+                intent2.putExtra(EXTRA_MESSAGE, msg_out1);
+                // catch event that there's no activity to handle intent
+
+                startActivity(intent2);
+                return true;
+
 
             default:
                 return super.onOptionsItemSelected(item);
@@ -101,9 +125,12 @@ public class MapView extends AppCompatActivity implements OnMapReadyCallback,Act
         mMap = map;
 
         enableMyLocation();
+        RequestParams params = new RequestParams();
+
+        params.put("date", date);
 
         AsyncHttpClient httpClient = new AsyncHttpClient();
-        httpClient.get(request_url, new AsyncHttpResponseHandler() {
+        httpClient.get(request_url, params,new AsyncHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, byte[] response) {
                 final ArrayList<String> location = new ArrayList<String>();
@@ -140,6 +167,59 @@ public class MapView extends AppCompatActivity implements OnMapReadyCallback,Act
         });
 
     }
+
+    public boolean onMarkerClick(final Marker marker) {
+        String building = marker.getTitle();
+        final String request_url = "http://freelunchforyou.appspot.com/ViewOnebuildingEvents";
+
+
+
+        RequestParams params = new RequestParams();
+
+        params.put("building", building);
+
+        AsyncHttpClient httpClient = new AsyncHttpClient();
+        httpClient.get(request_url, params,new AsyncHttpResponseHandler() {
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, byte[] response) {
+                final ArrayList<String> location = new ArrayList<String>();
+                final ArrayList<String> building = new ArrayList<String>();
+                try {
+                    JSONObject jObject = new JSONObject(new String(response));
+                    JSONArray display_location = jObject.getJSONArray("display_location");
+                    JSONArray display_building = jObject.getJSONArray("display_building");
+
+
+                    // Log.d("wenwen TAG", "json successful");
+                    for (int i = 0; i < display_building.length(); i++) {
+
+                        building.add(display_building.getString(i));
+                        location.add(display_location.getString(i));
+                        String tmp_loc = display_location.getString(i);
+                        String tmp_building = display_building.getString(i);
+                        List<String> locList = Arrays.asList(tmp_loc.split(","));
+                        mMap.addMarker(new MarkerOptions().position(new LatLng(Float.parseFloat(locList.get(0)), Float.parseFloat(locList.get(1)))).title(tmp_building));
+
+                    }
+
+
+                } catch (JSONException j) {
+                    System.out.println("JSON Error");
+                }
+
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, byte[] errorResponse, Throwable e) {
+                Log.e("wq", "There was a problem in retrieving the url : " + e.toString());
+            }
+        });
+
+        return true;
+
+    }
+
+
     private void enableMyLocation() {
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
                 != PackageManager.PERMISSION_GRANTED) {
