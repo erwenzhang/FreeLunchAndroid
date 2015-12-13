@@ -38,7 +38,8 @@
             android:layout_weight="4"
             android:background="@drawable/white"
             android:text="Yes,Delete"
-            android:textColor="#FF5534" />
+            android:textColor="#FF5534"
+            android:onClick="deleteMyEvent" />
     </LinearLayout>
 
     <LinearLayout
@@ -76,7 +77,7 @@
     </LinearLayout>
 
     <LinearLayout
-        android:tag="Bottom3"
+        android:tag="Bottom2"
         android:id="@+id/starbott"
         android:layout_width="match_parent"
         android:layout_height="match_parent">

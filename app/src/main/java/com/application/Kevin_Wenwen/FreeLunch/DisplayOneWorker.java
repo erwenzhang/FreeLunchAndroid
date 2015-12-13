@@ -122,7 +122,7 @@ public class DisplayOneWorker extends AppCompatActivity {
                             new int[] {R.id.text1, R.id.text2, R.id.text3}
                     );
                     populateList();
-                    ListView myList=(ListView)findViewById(android.R.id.list);
+                    final ListView myList=(ListView)findViewById(android.R.id.list);
 
                     myList.setAdapter(adapter);
 //                    setListAdapter(adapter);
@@ -140,15 +140,18 @@ public class DisplayOneWorker extends AppCompatActivity {
                         }
                     });
 
-//                    sample1.findViewById(R.id.trash2).setOnClickListener(new View.OnClickListener() {
+//                    myList.findViewById(R.id.delete).setOnClickListener(new View.OnClickListener() {
 //                        @Override
 //                        public void onClick(View v) {
 //                            Intent intent = new Intent(context, DisplayOneEvent.class);
 //                            String[] msg_out = new String[4];
 //                            //        msg_out[0] = email;
-//                            msg_out[1] = namesList.get(position);
+//                            msg_out[1] = workerName;
+//                            int position = myList.getPositionForView(v);
+//                            msg_out[2] = namesList.get(position);
 //                            intent.putExtra(EXTRA_MESSAGE, msg_out);
-//                            startActivity(intent);}
+//                            startActivity(intent);
+//                        }
 //                    });
 
                 } catch (Exception e) {
@@ -176,7 +179,17 @@ public class DisplayOneWorker extends AppCompatActivity {
         }
     }
 
-
+    public void deleteMyEvent(View v) {
+        View parent = (View)v.getParent().getParent();
+        Intent intent = new Intent(context, DisplayOneWorker.class);
+        String[] msg_out = new String[4];
+        // msg_out[0] = email;
+        msg_out[1] = workerName;
+        msg_out[2] = ((TextView) parent.findViewById(R.id.text2)).getText().toString();
+        System.out.println(msg_out[1] + "'s event to delete: " + msg_out[2]);
+        intent.putExtra(EXTRA_MESSAGE, msg_out);
+        startActivity(intent);
+    }
 //    @Override
 //    protected void onListItemClick(ListView l, View v, int position, long id) {
 ////      TextView t = (TextView) v.findViewById(R.id.text2);
