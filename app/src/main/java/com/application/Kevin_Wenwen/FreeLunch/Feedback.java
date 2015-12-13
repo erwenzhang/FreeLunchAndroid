@@ -106,6 +106,11 @@ public class Feedback extends AppCompatActivity implements View.OnClickListener 
             @Override
             public void onSuccess(int statusCode, Header[] headers, byte[] response) {
                 Log.i("LOAD WORKERS ", "Successfully give feedbacks");
+                Toast.makeText(getApplicationContext(),"Give feedbacks successfully ",Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(context, FreeLunchList.class);
+                intent.putExtra(EXTRA_MESSAGE, msg);
+                startActivity(intent);
+
 
             }
 

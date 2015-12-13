@@ -30,6 +30,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.animation.BounceInterpolator;
 import android.view.animation.Interpolator;
+import android.widget.Toast;
 
 import org.apache.http.Header;
 import org.json.JSONArray;
@@ -44,7 +45,8 @@ import java.util.List;
 /**
  * This shows how to create a simple activity with a map and a marker on the map.
  */
-public class MapView extends AppCompatActivity implements OnMapReadyCallback,ActivityCompat.OnRequestPermissionsResultCallback,GoogleMap.OnMarkerClickListener {
+public class MapView extends AppCompatActivity implements OnMapReadyCallback,ActivityCompat.OnRequestPermissionsResultCallback,
+        GoogleMap.OnInfoWindowClickListener {
     Context context = this;
     public final static String EXTRA_MESSAGE = "MESSAGE IN";
     private String email = null;
@@ -124,6 +126,7 @@ public class MapView extends AppCompatActivity implements OnMapReadyCallback,Act
         final String request_url = "http://freelunchforyou.appspot.com/MapView";
         mMap = map;
 
+        mMap.setOnInfoWindowClickListener(this);
         enableMyLocation();
         RequestParams params = new RequestParams();
 
@@ -170,53 +173,27 @@ public class MapView extends AppCompatActivity implements OnMapReadyCallback,Act
 
     public boolean onMarkerClick(final Marker marker) {
         String building = marker.getTitle();
-        final String request_url = "http://freelunchforyou.appspot.com/ViewOnebuildingEvents";
-
-
-
-        RequestParams params = new RequestParams();
-
-        params.put("building", building);
-
-        AsyncHttpClient httpClient = new AsyncHttpClient();
-        httpClient.get(request_url, params,new AsyncHttpResponseHandler() {
-            @Override
-            public void onSuccess(int statusCode, Header[] headers, byte[] response) {
-                final ArrayList<String> location = new ArrayList<String>();
-                final ArrayList<String> building = new ArrayList<String>();
-                try {
-                    JSONObject jObject = new JSONObject(new String(response));
-                    JSONArray display_location = jObject.getJSONArray("display_location");
-                    JSONArray display_building = jObject.getJSONArray("display_building");
-
-
-                    // Log.d("wenwen TAG", "json successful");
-                    for (int i = 0; i < display_building.length(); i++) {
-
-                        building.add(display_building.getString(i));
-                        location.add(display_location.getString(i));
-                        String tmp_loc = display_location.getString(i);
-                        String tmp_building = display_building.getString(i);
-                        List<String> locList = Arrays.asList(tmp_loc.split(","));
-                        mMap.addMarker(new MarkerOptions().position(new LatLng(Float.parseFloat(locList.get(0)), Float.parseFloat(locList.get(1)))).title(tmp_building));
-
-                    }
-
-
-                } catch (JSONException j) {
-                    System.out.println("JSON Error");
-                }
-
-            }
-
-            @Override
-            public void onFailure(int statusCode, Header[] headers, byte[] errorResponse, Throwable e) {
-                Log.e("wq", "There was a problem in retrieving the url : " + e.toString());
-            }
-        });
+        Intent intent = new Intent(context,DisplayOnebuildingEvent.class);
+        String[] msg = new String[3];
+        msg[0] = building;
+        Log.d("the building-->", building);
+        msg[1] = email;
+        intent.putExtra(EXTRA_MESSAGE, msg);
+        startActivity(intent);
 
         return true;
 
+    }
+    public void onInfoWindowClick(Marker marker) {
+        Toast.makeText(this, "Click Info Window", Toast.LENGTH_SHORT).show();
+        String building = marker.getTitle();
+        Intent intent = new Intent(context,DisplayOnebuildingEvent.class);
+        String[] msg = new String[3];
+        msg[0] = building;
+        Log.d("the building-->", building);
+        msg[1] = email;
+        intent.putExtra(EXTRA_MESSAGE, msg);
+        startActivity(intent);
     }
 
 
