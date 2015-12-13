@@ -1,6 +1,5 @@
 package com.application.Kevin_Wenwen.FreeLunch;
 
-import com.crashlytics.android.Crashlytics;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.SignInButton;
 import com.google.android.gms.common.api.GoogleApiClient;
@@ -33,7 +32,6 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Toast;
-import io.fabric.sdk.android.Fabric;
 
 public class Homepage extends ActionBarActivity implements
         ConnectionCallbacks, OnConnectionFailedListener, View.OnClickListener,
@@ -107,7 +105,6 @@ public class Homepage extends ActionBarActivity implements
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Fabric.with(this, new Crashlytics());
         setContentView(R.layout.activity_homepage);
 
         mSignInButton = (SignInButton) findViewById(R.id.sign_in_button);

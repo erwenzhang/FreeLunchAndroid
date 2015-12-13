@@ -46,7 +46,7 @@ public class DisplayAllWorkers extends ListActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.clistview_workers);
+        setContentView(R.layout.list_all_workers);
 
         Log.d("WENWENresulte ","back1");
 
@@ -78,9 +78,9 @@ public class DisplayAllWorkers extends ListActivity {
                     SimpleAdapter adapter = new SimpleAdapter(
                             context,
                             list,
-                            R.layout.crowview_workers,
+                            R.layout.list_all_workers_item,
                             new String[] {"name", "rating"},
-                            new int[] {R.id.text2, R.id.text3}
+                            new int[] {R.id.text1, R.id.text2}
                     );
                     populateList();
                     setListAdapter(adapter);
