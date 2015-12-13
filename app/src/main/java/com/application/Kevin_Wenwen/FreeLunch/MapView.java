@@ -190,7 +190,6 @@ public class MapView extends AppCompatActivity implements OnMapReadyCallback,Act
         Intent intent = new Intent(context,DisplayOnebuildingEvent.class);
         String[] msg = new String[3];
         msg[0] = building;
-        Log.d("the building-->", building);
         msg[1] = email;
         intent.putExtra(EXTRA_MESSAGE, msg);
         startActivity(intent);
