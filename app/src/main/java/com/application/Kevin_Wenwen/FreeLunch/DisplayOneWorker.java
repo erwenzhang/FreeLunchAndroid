@@ -181,15 +181,74 @@ public class DisplayOneWorker extends AppCompatActivity {
     }
 
     public void deleteMyEvent(View v) {
-//        View parent = (View)v.getParent().getParent();
-//        Intent intent = new Intent(context, DisplayOneWorker.class);
-//        String[] msg_out = new String[4];
-//        // msg_out[0] = email;
-//        msg_out[1] = workerName;
-//        msg_out[2] = ((TextView) parent.findViewById(R.id.text2)).getText().toString();
-//        System.out.println(msg_out[1] + "'s event to delete: " + msg_out[2]);
-//        intent.putExtra(EXTRA_MESSAGE, msg_out);
-//        startActivity(intent);
+        View parent = (View)v.getParent().getParent();
+        String eventToDel = ((TextView) parent.findViewById(R.id.text2)).getText().toString();
+
+        final String request_url = "http://freelunch-test1.appspot.com/ViewOneWorker";
+        AsyncHttpClient httpClient = new AsyncHttpClient();
+        RequestParams params = new RequestParams();
+
+        params.put("worker_name", workerName);
+        params.put("delete_item", eventToDel);
+
+        httpClient.get(request_url, params, new AsyncHttpResponseHandler() {
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, byte[] response) {
+                dtsStartList = new ArrayList<String>();
+                namesList = new ArrayList<String>();
+                buildingsList = new ArrayList<String>();
+
+                try {
+                    JSONObject jObject = new JSONObject(new String(response));
+                    JSONArray dts_start = jObject.getJSONArray("events_dt_start");
+                    JSONArray names = jObject.getJSONArray("events_name");
+                    JSONArray buildings = jObject.getJSONArray("events_build");
+                    for (int i = 0; i < dts_start.length(); i++) {
+                        dtsStartList.add(dts_start.getString(i));
+                        namesList.add(names.getString(i));
+                        buildingsList.add(buildings.getString(i));
+                        System.out.println(dts_start.getString(i));
+                    }
+
+                    list = new ArrayList<HashMap<String,String>>();
+
+                    SimpleAdapter adapter = new SimpleAdapter(
+                            context,
+                            list,
+                            R.layout.list_one_worker_item,
+                            new String[] {"dt_start", "name", "building"},
+                            new int[] {R.id.text1, R.id.text2, R.id.text3}
+                    );
+                    populateList();
+                    final ListView myList=(ListView)findViewById(android.R.id.list);
+
+                    myList.setAdapter(adapter);
+                    myList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                        @Override
+                        public void onItemClick(AdapterView<?> parent, View view, int position,
+                                                long id) {
+
+                            Intent intent = new Intent(context, DisplayOneEvent.class);
+                            String[] msg_out = new String[4];
+                            //        msg_out[0] = email;
+                            msg_out[1] = namesList.get(position);
+                            intent.putExtra(EXTRA_MESSAGE, msg_out);
+                            startActivity(intent);
+                        }
+                    });
+                } catch (Exception e) {
+                    System.out.println("!!!Got an exception!!!" + e.toString());
+                }
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, byte[] errorResponse, Throwable e) {
+                Log.e(TAG, "There was a problem in retrieving the url : " + e.toString());
+            }
+        });
+
+
+
         setContentView(R.layout.list_one_worker);
         list = new ArrayList<HashMap<String,String>>();
         dtsStartList = new ArrayList<>();
@@ -222,6 +281,8 @@ public class DisplayOneWorker extends AppCompatActivity {
             }
         });
     }
+
+
 //    @Override
 //    protected void onListItemClick(ListView l, View v, int position, long id) {
 ////      TextView t = (TextView) v.findViewById(R.id.text2);
