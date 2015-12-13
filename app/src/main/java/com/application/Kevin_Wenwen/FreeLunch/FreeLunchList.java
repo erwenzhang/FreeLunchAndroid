@@ -43,6 +43,7 @@ import com.google.android.gms.plus.model.people.Person;
 import com.roomorama.caldroid.CaldroidFragment;
 import com.roomorama.caldroid.CaldroidListener;
 
+import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
@@ -316,6 +317,7 @@ public class FreeLunchList extends  AppCompatActivity  implements OnMapReadyCall
                     Toast.makeText(getApplicationContext(),
                             "Long click " + formatter.format(date),
                             Toast.LENGTH_SHORT).show();
+
                     displayOnedayEvents(date);
                 }
 
@@ -498,6 +500,20 @@ public class FreeLunchList extends  AppCompatActivity  implements OnMapReadyCall
     }
 
     private void displayOnedayEvents(Date date){
+        Intent intent = new Intent(context,DisplayOnedayEvent.class);
+        String[] msg = new String[3];
+
+        final SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+//        Log.d("markermarker","eee");
+//        System.out.print(date);
+
+        msg[0]= df.format(date);
+//        Log.d("markermarker",msg[0]);
+
+        msg[1] = email;
+        intent.putExtra(EXTRA_MESSAGE,msg);
+        startActivity(intent);
+
 
 
 

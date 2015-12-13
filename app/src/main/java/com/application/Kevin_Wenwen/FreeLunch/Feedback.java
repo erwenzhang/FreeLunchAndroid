@@ -102,7 +102,7 @@ public class Feedback extends AppCompatActivity implements View.OnClickListener 
         RequestParams params = new RequestParams();
         params.put("feedback",feedback);
         params.put("event_name",event_name);
-        httpClient.get(request_url, new AsyncHttpResponseHandler() {
+        httpClient.get(request_url, params,new AsyncHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, byte[] response) {
                 Log.i("LOAD WORKERS ", "Successfully give feedbacks");
