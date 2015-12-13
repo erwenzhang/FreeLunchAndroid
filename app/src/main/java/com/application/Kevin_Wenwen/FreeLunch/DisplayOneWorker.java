@@ -247,39 +247,39 @@ public class DisplayOneWorker extends AppCompatActivity {
             }
         });
 
-
-
-        setContentView(R.layout.list_one_worker);
-        list = new ArrayList<HashMap<String,String>>();
-        dtsStartList = new ArrayList<>();
-        namesList = new ArrayList<>();
-        buildingsList = new ArrayList<>();
-        dtsStartList.add("test str");
-        namesList.add("ECE Seminar");
-        buildingsList.add("test str");
-        SimpleAdapter adapter = new SimpleAdapter(
-                context,
-                list,
-                R.layout.list_one_worker_item,
-                new String[] {"dt_start", "name", "building"},
-                new int[] {R.id.text1, R.id.text2, R.id.text3}
-        );
-        populateList();
-        final ListView myList=(ListView)findViewById(android.R.id.list);
-        myList.setAdapter(adapter);
-        myList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position,
-                                    long id) {
-
-                Intent intent = new Intent(context, DisplayOneEvent.class);
-                String[] msg_out = new String[4];
-                //        msg_out[0] = email;
-                msg_out[1] = namesList.get(position);
-                intent.putExtra(EXTRA_MESSAGE, msg_out);
-                startActivity(intent);
-            }
-        });
+//
+//
+//        setContentView(R.layout.list_one_worker);
+//        list = new ArrayList<HashMap<String,String>>();
+//        dtsStartList = new ArrayList<>();
+//        namesList = new ArrayList<>();
+//        buildingsList = new ArrayList<>();
+//        dtsStartList.add("test str");
+//        namesList.add("ECE Seminar");
+//        buildingsList.add("test str");
+//        SimpleAdapter adapter = new SimpleAdapter(
+//                context,
+//                list,
+//                R.layout.list_one_worker_item,
+//                new String[] {"dt_start", "name", "building"},
+//                new int[] {R.id.text1, R.id.text2, R.id.text3}
+//        );
+//        populateList();
+//        final ListView myList=(ListView)findViewById(android.R.id.list);
+//        myList.setAdapter(adapter);
+//        myList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+//            @Override
+//            public void onItemClick(AdapterView<?> parent, View view, int position,
+//                                    long id) {
+//
+//                Intent intent = new Intent(context, DisplayOneEvent.class);
+//                String[] msg_out = new String[4];
+//                //        msg_out[0] = email;
+//                msg_out[1] = namesList.get(position);
+//                intent.putExtra(EXTRA_MESSAGE, msg_out);
+//                startActivity(intent);
+//            }
+//        });
     }
 
 
