@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/background_material_light">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:layout_marginBottom="8dp"
+        android:elevation="4dp">
+
+        <com.ftinc.kit.widget.AspectRatioImageView
+            android:id="@+id/cover"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            />
+
+        <TextView
+            android:id="@+id/title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingLeft="76dp"
+            android:paddingBottom="16dp"
+
+            tools:text="Test title"
+            android:textColor="#FFFFFF"
+            android:textSize="34sp"
+
+            android:layout_alignParentBottom="true"
+            />
+
+
+    </RelativeLayout>
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        >
+
+        <TextView
+            android:id="@+id/author_name"
+            android:layout_width="80dp"
+            android:layout_height="48dp"
+            android:gravity="center_vertical"
+            android:layout_marginLeft="16dp"
+
+            android:fontFamily="sans-serif-medium"
+            tools:text="Left"
+            android:textSize="16sp"
+            android:textColor="#000000"
+            />
+
+        <RatingBar
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/ratingBar"
+            android:layout_toRightOf="@+id/author_name" />
+
+    </RelativeLayout>
+
+    <android.support.v7.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        android:layout_marginBottom="8dp"
+        app:cardElevation="4dp"
+        app:cardCornerRadius="2dp"
+        >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="16dp"
+            >
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:padding="16dp"
+                >
+
+                <TextView
+                    android:id="@+id/dt_start"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/placeholder_lorem_ipsum"
+                    android:textColor="@color/textPrimary"
+                    android:textSize="16sp"
+                    android:gravity="center_horizontal"
+                    />
+
+                <TextView
+                    android:id="@+id/dt_end"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/placeholder_lorem_ipsum"
+                    android:textColor="@color/textPrimary"
+                    android:textSize="16sp"
+                    android:gravity="center_horizontal"
+                    />
+
+                <TextView
+                    android:id="@+id/building"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/placeholder_lorem_ipsum"
+                    android:textColor="@color/textPrimary"
+                    android:textSize="16sp"
+                    android:gravity="center_horizontal"
+                    />
+
+                <TextView
+                    android:id="@+id/room"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/placeholder_lorem_ipsum"
+                    android:textColor="@color/textPrimary"
+                    android:textSize="16sp"
+                    android:gravity="center_horizontal"
+                    />
+
+                <TextView
+                    android:id="@+id/link"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/placeholder_lorem_ipsum"
+                    android:textColor="@color/textPrimary"
+                    android:textSize="16sp"
+                    android:gravity="center_horizontal"
+                    />
+
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="#000000"
+                />
+
+            <TextView
+                android:id="@+id/description"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/placeholder_lorem_ipsum"
+                android:textColor="@color/textPrimary"
+                android:layout_marginTop="8dp"
+                />
+
+        </LinearLayout>
+
+    </android.support.v7.widget.CardView>
+
+</LinearLayout>
