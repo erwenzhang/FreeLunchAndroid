@@ -21,6 +21,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+
 /**
  * Created by wenwen on 12/9/15.
  */
@@ -50,13 +51,7 @@ public class PlanetFragment extends Fragment {
                 break;
 
 
-            case 2:
-                Log.d("333","calendar");
-                Intent intent = new Intent(getActivity(),mCalendar.class);
-                startActivity(intent);
-                rootView = inflater.inflate(R.layout.calendar, container, false);
-                rootView = load_calendar(rootView);
-                break;
+
 
             default:
                 Log.d("444"," crowdworker");
@@ -106,42 +101,42 @@ public class PlanetFragment extends Fragment {
         });
         return rootView;
     }
-    public View load_calendar(View rootView){
-        final String request_url = "http://freelunchforyou.appspot.com/CalendarView";
-        AsyncHttpClient httpClient = new AsyncHttpClient();
-        httpClient.get(request_url, new AsyncHttpResponseHandler() {
-            @Override
-            public void onSuccess(int statusCode, Header[] headers, byte[] response) {
-                final ArrayList<String> coverURLs = new ArrayList<String>();
-                final ArrayList<String> streams = new ArrayList<String>();
-                try {
-                    JSONObject jObject = new JSONObject(new String(response));
-                    JSONArray displayCovers = jObject.getJSONArray("displayCovers");
-                    JSONArray streamList = jObject.getJSONArray("streamList");
-                    // Log.d("wenwen TAG", "json successful");
-                    for(int i=0;i<displayCovers.length();i++) {
-
-                        coverURLs.add(displayCovers.getString(i));
-                        streams.add(streamList.getString(i));
-                        System.out.println(displayCovers.getString(i));
-                    }
-
-
-                }
-                catch(JSONException j){
-                    System.out.println("JSON Error");
-                }
-
-            }
-
-            @Override
-            public void onFailure(int statusCode, Header[] headers, byte[] errorResponse, Throwable e) {
-                Log.e("wq", "There was a problem in retrieving the url : " + e.toString());
-            }
-        });
-        return rootView;
-
-    }
+//    public View load_calendar(View rootView){
+//        final String request_url = "http://freelunchforyou.appspot.com/CalendarView";
+//        AsyncHttpClient httpClient = new AsyncHttpClient();
+//        httpClient.get(request_url, new AsyncHttpResponseHandler() {
+//            @Override
+//            public void onSuccess(int statusCode, Header[] headers, byte[] response) {
+//                final ArrayList<String> coverURLs = new ArrayList<String>();
+//                final ArrayList<String> streams = new ArrayList<String>();
+//                try {
+//                    JSONObject jObject = new JSONObject(new String(response));
+//                    JSONArray displayCovers = jObject.getJSONArray("displayCovers");
+//                    JSONArray streamList = jObject.getJSONArray("streamList");
+//                    // Log.d("wenwen TAG", "json successful");
+//                    for(int i=0;i<displayCovers.length();i++) {
+//
+//                        coverURLs.add(displayCovers.getString(i));
+//                        streams.add(streamList.getString(i));
+//                        System.out.println(displayCovers.getString(i));
+//                    }
+//
+//
+//                }
+//                catch(JSONException j){
+//                    System.out.println("JSON Error");
+//                }
+//
+//            }
+//
+//            @Override
+//            public void onFailure(int statusCode, Header[] headers, byte[] errorResponse, Throwable e) {
+//                Log.e("wq", "There was a problem in retrieving the url : " + e.toString());
+//            }
+//        });
+//        return rootView;
+//
+//    }
 
     public View load_woker(final View rootView){
         final String request_url = "http://freelunchforyou.appspot.com/ViewAllWorkers";
@@ -171,8 +166,8 @@ public class PlanetFragment extends Fragment {
                             Intent intent= new Intent(v.getContext(),OneWorker.class);
                             String[] msg_out = new String[4];
                             msg_out[0] = names.get(position);
-                            intent.putExtra(EXTRA_MESSAGE, msg_out);
-                            getActivity().startActivity(intent);
+                          //  intent.putExtra(EXTRA_MESSAGE, msg_out);
+                          //  getActivity().startActivity(intent);
 
                         }
                     });

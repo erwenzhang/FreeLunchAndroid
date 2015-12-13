@@ -200,8 +200,11 @@ public class AddEvent extends AppCompatActivity implements DatePickerDialog.OnDa
                 }
                 else {
 
-                String date_time1 = year+" "+month+" "+" "+day+" "+hourString1+" "+minuteString1;
-                    String date_time2 = year+" "+month+" "+" "+day+" "+hourString2+" "+minuteString2;
+                String date_time1 = year+" "+month+" "+day+" "+hourString1+" "+minuteString1;
+                    String date_time2 = year+" "+month+" "+day+" "+hourString2+" "+minuteString2;
+                    Log.d("day1",date_time1);
+                    Log.d("month1",date_time2);
+
                     ByteArrayOutputStream baos = new ByteArrayOutputStream();
                     bitmapImage.compress(Bitmap.CompressFormat.JPEG, 50, baos);
                     byte[] b = baos.toByteArray();
@@ -291,8 +294,10 @@ public class AddEvent extends AppCompatActivity implements DatePickerDialog.OnDa
     @Override
     public void onDateSet(DatePickerDialog view, int theyear, int monthOfYear, int dayOfMonth) {
         day = Integer.toString(dayOfMonth);
-        month = Integer.toString(dayOfMonth);
+        month = Integer.toString(monthOfYear+1);
         year = Integer.toString(theyear);
+        Log.d("day",day);
+        Log.d("month", month);
 
         String date = "You picked the following date: "+dayOfMonth+"/"+(++monthOfYear)+"/"+theyear;
         dateTextView.setText(date);
@@ -309,22 +314,27 @@ public class AddEvent extends AppCompatActivity implements DatePickerDialog.OnDa
         if (requestCode == PICK_IMAGE && data != null && data.getData() != null) {
             Uri selectedImage = data.getData();
 
+            Log.i("photophoto:",selectedImage.toString());
             // User had pick an image.
-
+            String imageFilePath="";
             String[] filePathColumn = {MediaStore.Images.ImageColumns.DATA};
             Cursor cursor = getContentResolver().query(selectedImage, filePathColumn, null, null, null);
-            cursor.moveToFirst();
+            if(cursor.moveToFirst()){
+                int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
+                imageFilePath = cursor.getString(columnIndex);
+            }
+           // cursor.moveToFirst();
 
             // Link to the image
 
-            int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
-            String imageFilePath = cursor.getString(columnIndex);
+
+
             cursor.close();
 
             // Bitmap imaged created and show thumbnail
 
             ImageView imgView = (ImageView) findViewById(R.id.upload_photo);
-            final Bitmap bitmapImage = BitmapFactory.decodeFile(imageFilePath);
+            bitmapImage = BitmapFactory.decodeFile(imageFilePath);
             imgView.setImageBitmap(bitmapImage);
 
             // Enable the upload button once image has been uploaded
@@ -340,8 +350,8 @@ public class AddEvent extends AppCompatActivity implements DatePickerDialog.OnDa
             //} else {
             //  imageFilePath = extras.getString("image_path");
             //}
-            Log.d("TAGTAGTAG upload",msg[0]);
-            Log.d("TAGTAGTAG upload", msg[1]);
+          //  Log.d("TAGTAGTAG upload",msg[0]);
+         //   Log.d("TAGTAGTAG upload", msg[1]);
 
             // Bitmap imaged created and show thumbnail
 
@@ -369,7 +379,8 @@ public class AddEvent extends AppCompatActivity implements DatePickerDialog.OnDa
                     JSONObject jObject = new JSONObject(new String(response));
 
                     upload_url = jObject.getString("upload_url");
-                    postToServer(encodedImage, details,event_name,building,room,date_time1,date_time2, upload_url);
+                    postToServer(encodedImage, details, event_name, building, room, date_time1, date_time2, upload_url);
+
 
                 } catch (JSONException j) {
                     System.out.println("JSON Error");
@@ -389,11 +400,12 @@ public class AddEvent extends AppCompatActivity implements DatePickerDialog.OnDa
         params.put("file",new ByteArrayInputStream(encodedImage));
         params.put("details",details);
         params.put("worker_name", email);
-        params.put("event_name",event_name);
-        params.put("building",building);
-        params.put("room",room);
-        params.put("date_time1",date_time1);
-        params.put("data_time2",date_time2);
+        params.put("event_name", event_name);
+        params.put("building", building);
+        params.put("room", room);
+        params.put("date_time1", date_time1);
+        params.put("date_time2", date_time2);
+
 
 
         AsyncHttpClient client = new AsyncHttpClient();

@@ -14,6 +14,9 @@
     <uses-permission android:name="android.permission.USE_CREDENTIALS" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission
+        android:name="android.permission.READ_EXTERNAL_STORAGE"
+        android:maxSdkVersion="22" />
 
 
     <application
@@ -33,10 +36,9 @@
         <activity
             android:name=".FreeLunchList"
             android:label="Free Lunch"
-            android:parentActivityName="com.application.Kevin_Wenwen.FreeLunch.Homepage">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.application.Kevin_Wenwen.FreeLunch.AddEvent" />
+            android:parentActivityName="com.application.Kevin_Wenwen.FreeLunch.Homepage"
+            android:theme="@style/AppTheme" >
+
         </activity>
 
         <activity
@@ -47,11 +49,33 @@
 
         </activity>
 
+        <activity
+            android:name="com.application.Kevin_Wenwen.FreeLunch.mCalendar"
+            android:label="Free Lunch"
+            android:theme="@style/AppTheme"
+            >
+
+        </activity>
+        <activity
+            android:name="com.application.Kevin_Wenwen.FreeLunch.CameraActivity"
+            android:label="Free Lunch"
+            android:theme="@style/AppTheme"
+            >
+
+        </activity>
+        <activity
+            android:name="com.application.Kevin_Wenwen.FreeLunch.MapView"
+            android:label="Free Lunch"
+            android:theme="@style/AppTheme"
+            >
+
+        </activity>
+
 
         <meta-data android:name="com.google.android.gms.version" android:value="@integer/google_play_services_version" />
         <meta-data
-            android:name="com.google.android.gms.version"
-            android:value="@integer/google_play_services_version" />
+            android:name="com.google.android.geo.API_KEY"
+            android:value="@string/google_maps_key" />
     </application>
 
 </manifest>

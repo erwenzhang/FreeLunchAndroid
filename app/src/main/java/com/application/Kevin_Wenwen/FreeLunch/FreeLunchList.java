@@ -12,6 +12,9 @@ import com.google.android.gms.common.GooglePlayServicesUtil;
 import android.app.ListActivity;
 import android.location.Location;
 import android.os.Bundle;
+import android.support.v4.app.FragmentTransaction;
+import android.support.v4.app.FragmentTransaction;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Window;
 import android.widget.TextView;
@@ -30,9 +33,19 @@ import  com.google.android.gms.location.LocationServices;
 //import com.google.android.gms.location.LocationClient;
 import com.google.android.gms.common.api.GoogleApiClient.ConnectionCallbacks;
 import com.google.android.gms.common.api.GoogleApiClient.OnConnectionFailedListener;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.plus.Plus;
 import com.google.android.gms.plus.model.people.Person;
+import com.roomorama.caldroid.CaldroidFragment;
+import com.roomorama.caldroid.CaldroidListener;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.Locale;
 
 import android.app.Activity;
@@ -84,8 +97,34 @@ import android.view.ViewGroup;
 import android.support.v4.widget.DrawerLayout;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
+import android.annotation.SuppressLint;
+import android.os.Bundle;
+import android.support.v4.app.FragmentTransaction;
+import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.widget.Button;
+import android.widget.TextView;
+import android.widget.Toast;
 
-public class FreeLunchList extends  Activity {
+import com.loopj.android.http.AsyncHttpClient;
+import com.loopj.android.http.AsyncHttpResponseHandler;
+import com.roomorama.caldroid.CaldroidFragment;
+import com.roomorama.caldroid.CaldroidListener;
+
+import org.apache.http.Header;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+
+public class FreeLunchList extends  AppCompatActivity  implements OnMapReadyCallback {
     private DrawerLayout mDrawerLayout;
     private ListView mDrawerList;
     private ActionBarDrawerToggle mDrawerToggle;
@@ -97,10 +136,14 @@ public class FreeLunchList extends  Activity {
     Context context = this;
     public final static String EXTRA_MESSAGE = "MESSAGE IN";
 
+
+    private CaldroidFragment caldroidFragment;
+
+
      @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-         getWindow().requestFeature(Window.FEATURE_ACTION_BAR);
+//         getWindow().requestFeature(Window.FEATURE_ACTION_BAR);
          setContentView(R.layout.events);
        // setContentView(R.layout.events);
         email = getIntent().getStringArrayExtra(EXTRA_MESSAGE)[0];
@@ -118,8 +161,8 @@ public class FreeLunchList extends  Activity {
         mDrawerList.setOnItemClickListener(new DrawerItemClickListener());
 
         // enable ActionBar app icon to behave as action to toggle nav drawer
-        this.getActionBar().setDisplayHomeAsUpEnabled(true);
-        this.getActionBar().setHomeButtonEnabled(true);
+        this.getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        this.getSupportActionBar().setHomeButtonEnabled(true);
 
         // ActionBarDrawerToggle ties together the the proper interactions
         // between the sliding drawer and the action bar app icon
@@ -131,12 +174,12 @@ public class FreeLunchList extends  Activity {
                 R.string.drawer_close  /* "close drawer" description for accessibility */
                 ) {
             public void onDrawerClosed(View view) {
-                getActionBar().setTitle(mTitle);
+                getSupportActionBar().setTitle(mTitle);
                 invalidateOptionsMenu(); // creates call to onPrepareOptionsMenu()
             }
 
             public void onDrawerOpened(View drawerView) {
-                getActionBar().setTitle(mDrawerTitle);
+                getSupportActionBar().setTitle(mDrawerTitle);
                 invalidateOptionsMenu(); // creates call to onPrepareOptionsMenu()
             }
         };
@@ -207,6 +250,96 @@ public class FreeLunchList extends  Activity {
 
     private void selectItem(int position) {
         // update the main content by replacing fragments
+        if(position == 2){
+           // super.onCreate(savedInstanceState);
+        //    setContentView(R.layout.mcalendar);
+
+            final SimpleDateFormat formatter = new SimpleDateFormat("yyyy MM dd");
+
+            // Setup caldroid fragment
+            // **** If you want normal CaldroidFragment, use below line ****
+            caldroidFragment = new CaldroidFragment();
+                Bundle args = new Bundle();
+                Calendar cal = Calendar.getInstance();
+                args.putInt(CaldroidFragment.MONTH, cal.get(Calendar.MONTH) + 1);
+                args.putInt(CaldroidFragment.YEAR, cal.get(Calendar.YEAR));
+                args.putBoolean(CaldroidFragment.ENABLE_SWIPE, true);
+                args.putBoolean(CaldroidFragment.SIX_WEEKS_IN_CALENDAR, true);
+
+
+                caldroidFragment.setArguments(args);
+
+            setCustomResourceForDates();
+
+            // Attach to the activity
+            FragmentTransaction t = getSupportFragmentManager().beginTransaction();
+            t.replace(R.id.content_frame, caldroidFragment);
+            t.commit();
+
+
+
+            // update selected item and title, then close the drawer
+            mDrawerList.setItemChecked(position, true);
+            setTitle(mPlanetTitles[position]);
+            mDrawerLayout.closeDrawer(mDrawerList);
+
+            // Setup listener
+            final CaldroidListener listener = new CaldroidListener() {
+
+                @Override
+                public void onSelectDate(Date date, View view) {
+                    Toast.makeText(getApplicationContext(), formatter.format(date),
+                            Toast.LENGTH_SHORT).show();
+
+                }
+
+                @Override
+                public void onChangeMonth(int month, int year) {
+                    String text = "month: " + month + " year: " + year;
+                    Toast.makeText(getApplicationContext(), text,
+                            Toast.LENGTH_SHORT).show();
+                }
+
+                @Override
+                public void onLongClickDate(Date date, View view) {
+                    Toast.makeText(getApplicationContext(),
+                            "Long click " + formatter.format(date),
+                            Toast.LENGTH_SHORT).show();
+                    displayOnedayEvents(date);
+                }
+
+
+//                public void onCaldroidViewCreated() {
+//                    if (caldroidFragment.getLeftArrowButton() != null) {
+//                        Toast.makeText(getApplicationContext(),
+//                                "Caldroid view is created", Toast.LENGTH_SHORT)
+//                                .show();
+//                    }
+//                }
+
+            };
+
+            // Setup Caldroid
+            caldroidFragment.setCaldroidListener(listener);
+
+
+        }
+        else if(position == 1){
+            Log.d("11111 new "," map");
+//            SupportMapFragment mapFragment =
+//                    (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.content_frame);
+//            mapFragment.getMapAsync(this);
+            Intent intent = new Intent(context,MapView.class);
+            String[] msg = new String[3];
+
+
+            msg[0] = email;
+            intent.putExtra(EXTRA_MESSAGE, msg);
+            finish();
+           startActivity(intent);
+
+        }
+      else  {
         Fragment fragment = new PlanetFragment();
         Bundle args = new Bundle();
         args.putInt(PlanetFragment.ARG_PLANET_NUMBER, position);
@@ -219,12 +352,13 @@ public class FreeLunchList extends  Activity {
         mDrawerList.setItemChecked(position, true);
         setTitle(mPlanetTitles[position]);
         mDrawerLayout.closeDrawer(mDrawerList);
+        }
     }
 
     @Override
     public void setTitle(CharSequence title) {
         mTitle = title;
-        getActionBar().setTitle(mTitle);
+        getSupportActionBar().setTitle(mTitle);
     }
 
     /**
@@ -249,5 +383,66 @@ public class FreeLunchList extends  Activity {
     /**
      * Fragment that appears in the "content_frame", shows a planet
      */
+
+    private void setCustomResourceForDates() {
+        final SimpleDateFormat mformatter = new SimpleDateFormat("yyyy-MM-dd");
+        final String request_url = "http://freelunchforyou.appspot.com/CalendarView";
+        AsyncHttpClient httpClient = new AsyncHttpClient();
+        httpClient.get(request_url, new AsyncHttpResponseHandler() {
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, byte[] response) {
+                final ArrayList<String> event_date = new ArrayList<String>();
+                final ArrayList<String> event_name = new ArrayList<String>();
+                final ArrayList<Date> event_date_formal = new ArrayList<Date>();
+
+                try {
+                    JSONObject jObject = new JSONObject(new String(response));
+                    JSONArray display_date = jObject.getJSONArray("display_date");
+                    JSONArray display_name = jObject.getJSONArray("display_name");
+                    // Log.d("wenwen TAG", "json successful");
+                    for (int i = 0; i < display_date.length(); i++) {
+                        String tmp_str = display_date.getString(i).substring(0, 10);
+                        Log.d("time1  ", tmp_str);
+                        try {
+                            Date tmp_date = mformatter.parse(tmp_str);
+                            caldroidFragment.setBackgroundResourceForDate(R.color.blue,
+                                    tmp_date);
+                            caldroidFragment.setTextColorForDate(R.color.white, tmp_date);
+
+                        } catch (ParseException e) {
+                            Log.e("wenwenwen ", " parse exception");
+
+                        }
+                        event_date.add(tmp_str);
+                        event_name.add(display_name.getString(i));
+
+                    }
+
+
+                } catch (JSONException j) {
+                    System.out.println("JSON Error");
+                }
+
+
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, byte[] errorResponse, Throwable e) {
+                Log.e("wq", "There was a problem in retrieving the url : " + e.toString());
+            }
+        });
+
+    }
+
+    public void onMapReady(GoogleMap map) {
+        map.addMarker(new MarkerOptions().position(new LatLng(0, 0)).title("Marker"));
+    }
+
+    private void displayOnedayEvents(Date date){
+
+
+
+
+    }
 
 }

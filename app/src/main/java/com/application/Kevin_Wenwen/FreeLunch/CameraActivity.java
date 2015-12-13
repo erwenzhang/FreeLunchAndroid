@@ -210,11 +210,11 @@ public class CameraActivity extends Activity {
 
                 Log.d("TAGTAGTAG", "2");
                 String[] msg = getIntent().getStringArrayExtra(EXTRA_MESSAGE);
-                String streamName = msg[1];
+                //String streamName = msg[1];
                 String[] msg_out = new String[2];
                 Log.d("TAGTAGTAG", "3");
                 Log.d("TAGTAGTAG0", savedPhotoAbsolutePath);
-                msg_out[0] = streamName;
+               // msg_out[0] = streamName;
                 msg_out[1] = savedPhotoAbsolutePath;
                 Log.d("TAGTAGTAG", savedPhotoAbsolutePath);
                 //  returnIntent.putExtra("stream_name", streamName);
