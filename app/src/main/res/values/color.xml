@@ -13,6 +13,10 @@
     <color name="textPrimary">#212121</color>
     <color name="textSecondary">#727272</color>
     <color name="divider">#B6B6B6</color>
+    <color name="item_background">#FFF</color>
+    <color name="secondary">#FF4081</color>
+
+    <color name="icons">#FFF</color>
 
     <!-- From: file:/Users/r0adkll/Documents/Developer/Work%20Projects/android-52Kit/library/src/main/res/values/material_colors.xml -->
     <eat-comment/>

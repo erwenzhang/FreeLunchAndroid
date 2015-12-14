@@ -44,4 +44,6 @@ dependencies {
     compile 'com.roomorama:caldroid:2.3.1'
     compile 'com.wdullaer:materialdatetimepicker:2.1.0'
     compile "com.daimajia.swipelayout:library:1.2.0@aar"
+
+    compile 'com.beardedhen:androidbootstrap:2.0.1'
 }

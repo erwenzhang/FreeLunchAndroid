@@ -9,22 +9,23 @@
         android:gravity="center"
         android:textSize="40sp"
         android:paddingBottom = "40sp"
+        android:layout_above="@+id/yes"
         />
 
     <ImageButton
     android:id="@+id/yes"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:src="@drawable/thumbs_up48"
-        android:layout_above="@+id/no"
+    android:src="@drawable/thunbs_up96"
+
         android:layout_centerInParent="true"
     />
     <ImageButton
         android:id="@+id/no"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:src="@drawable/thumbs_down96"
-
+        android:src="@drawable/thunbs_down96"
+        android:layout_toRightOf="@+id/yes"
         android:layout_centerInParent="true"
         />
 </RelativeLayout>

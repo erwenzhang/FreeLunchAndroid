@@ -109,6 +109,7 @@ public class AddEvent extends AppCompatActivity implements DatePickerDialog.OnDa
                 new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, buildings);
         locationView.setAdapter(adapter);
 
+        getSupportActionBar().setTitle("Be a Crowdworker");
 
         // Show a timepicker when the timeButton is clicked
         timeButton1.setOnClickListener(new View.OnClickListener() {
@@ -260,6 +261,7 @@ public class AddEvent extends AppCompatActivity implements DatePickerDialog.OnDa
         else if(id == R.id.myEvent){
             Intent intent = new Intent(context,DisplayOneWorker.class);
            String[] msg_out = new String[4];
+            msg_out[0] = email;
             msg_out[1] = email;
             intent.putExtra(EXTRA_MESSAGE, msg_out);
             // catch event that there's no activity to handle intent

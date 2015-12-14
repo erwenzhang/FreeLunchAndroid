@@ -158,6 +158,7 @@ public class Feedback extends AppCompatActivity implements View.OnClickListener 
                 Intent intent2 = new Intent(context,DisplayOneWorker.class);
                 String[] msg_out1 = new String[4];
                 msg_out1[1] = email;
+                msg_out1[0] = email;
                 intent2.putExtra(EXTRA_MESSAGE, msg_out1);
                 // catch event that there's no activity to handle intent
 

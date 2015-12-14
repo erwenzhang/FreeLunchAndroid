@@ -11,6 +11,7 @@ package com.application.Kevin_Wenwen.FreeLunch;
         import android.os.Bundle;
 //import android.support.v7.app.AppCompatActivity;
         import android.support.v7.app.ActionBarActivity;
+        import android.support.v7.app.AppCompatActivity;
         import android.util.Log;
         import android.view.Menu;
         import android.view.MenuItem;
@@ -34,7 +35,7 @@ package com.application.Kevin_Wenwen.FreeLunch;
         import java.util.HashMap;
 
 
-public class DisplayAllEvents extends ListActivity {
+public class DisplayAllEvents extends AppCompatActivity {
 
     static ArrayList<HashMap<String,String>> list;
 
@@ -54,7 +55,6 @@ public class DisplayAllEvents extends ListActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.clistview);
 
-        Log.d("WENWENresulte ","back1");
 
         Intent intent = getIntent();
         intent.getClass();
@@ -83,17 +83,31 @@ public class DisplayAllEvents extends ListActivity {
                         System.out.println(dts_start.getString(i));
                     }
 
-                    list = new ArrayList<HashMap<String,String>>();
+                    list = new ArrayList<HashMap<String, String>>();
 
                     SimpleAdapter adapter = new SimpleAdapter(
                             context,
                             list,
                             R.layout.crowview,
-                            new String[] {"dt_start", "name", "building"},
-                            new int[] {R.id.text1, R.id.text2, R.id.text3}
+                            new String[]{"dt_start", "name", "building"},
+                            new int[]{R.id.text1, R.id.text2, R.id.text3}
                     );
                     populateList();
-                    setListAdapter(adapter);
+
+                    final ListView myList = (ListView) findViewById(android.R.id.list);
+                    myList.setAdapter(adapter);
+                    myList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                        @Override
+                        public void onItemClick(AdapterView<?> parent, View view, int position,
+                                                long id) {
+
+                            Intent intent = new Intent(context, DisplayOneEvent.class);
+                            String[] msg_out = new String[4];
+                            msg_out[1] = namesList.get(position);
+                            intent.putExtra(EXTRA_MESSAGE, msg_out);
+                            startActivity(intent);
+                        }
+                    });
 
                     // to change to table view
 //                    GridView gridview = (GridView) findViewById(R.id.gridview);
@@ -134,17 +148,17 @@ public class DisplayAllEvents extends ListActivity {
         }
     }
 
-    @Override
-    protected void onListItemClick(ListView l, View v, int position, long id) {
-//		TextView t = (TextView) v.findViewById(R.id.text2);
-//		t.setText("Tweet Clicked");
-        Intent intent = new Intent(context, DisplayOneEvent.class);
-        String[] msg_out = new String[4];
-//        msg_out[0] = email;
-        msg_out[1] = namesList.get(position);
-        intent.putExtra(EXTRA_MESSAGE, msg_out);
-        startActivity(intent);
-    }
+//    @Override
+//    protected void onListItemClick(ListView l, View v, int position, long id) {
+////		TextView t = (TextView) v.findViewById(R.id.text2);
+////		t.setText("Tweet Clicked");
+//        Intent intent = new Intent(context, DisplayOneEvent.class);
+//        String[] msg_out = new String[4];
+////        msg_out[0] = email;
+//        msg_out[1] = namesList.get(position);
+//        intent.putExtra(EXTRA_MESSAGE, msg_out);
+//        startActivity(intent);
+//    }
 
 
 

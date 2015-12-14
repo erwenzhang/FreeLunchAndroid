@@ -37,7 +37,9 @@ import org.json.JSONObject;
 
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 
 /**
  * Created by wenwen on 10/21/15.
@@ -48,6 +50,7 @@ public class DisplayOneWorker extends AppCompatActivity {
     private String[] msg;
     private String workerName;
     private String delEventName;
+    private String email;
 
     private String TAG  = "Display one event";
     public final static String EXTRA_MESSAGE = "MESSAGE IN";
@@ -66,12 +69,18 @@ public class DisplayOneWorker extends AppCompatActivity {
         Intent intent = getIntent();
         msg = intent.getStringArrayExtra(EXTRA_MESSAGE);
 
+
+
         final String request_url = "http://freelunchforyou.appspot.com/ViewOneWorker";
         AsyncHttpClient httpClient = new AsyncHttpClient();
         RequestParams params = new RequestParams();
         workerName = msg[1];
+        email = msg[0];
+        List<String> elephantList = Arrays.asList(workerName.split("@"));
 
-//        delEventName = msg[2];
+        getSupportActionBar().setTitle(elephantList.get(0)+"'s events");
+
+
 
         params.put("worker_name", workerName);
 //        if (delEventName != null) {
@@ -118,7 +127,7 @@ public class DisplayOneWorker extends AppCompatActivity {
 
                             Intent intent = new Intent(context, DisplayOneEvent.class);
                             String[] msg_out = new String[4];
-                                    msg_out[0] = workerName;
+                            msg_out[0] = email;
                             msg_out[1] = namesList.get(position);
                             intent.putExtra(EXTRA_MESSAGE, msg_out);
                             startActivity(intent);

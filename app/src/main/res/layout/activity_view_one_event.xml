@@ -10,9 +10,10 @@
 
     <ImageView
         android:id="@+id/imgview"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
-        android:background="@drawable/ic_launcher"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:adjustViewBounds="true"
+        android:scaleType="centerCrop"
         />
 
     <LinearLayout

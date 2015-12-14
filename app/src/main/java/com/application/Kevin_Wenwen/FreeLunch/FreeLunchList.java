@@ -9,6 +9,7 @@ import com.google.android.gms.common.SignInButton;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.common.GooglePlayServicesUtil;
 
+import android.app.DialogFragment;
 import android.app.ListActivity;
 import android.location.Location;
 import android.os.Bundle;
@@ -17,6 +18,8 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Window;
+import android.widget.LinearLayout;
+import android.widget.SimpleAdapter;
 import android.widget.TextView;
 import android.os.Bundle;
 import android.view.View;
@@ -47,6 +50,7 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.Locale;
 
 import android.app.Activity;
@@ -116,7 +120,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 
-public class FreeLunchList extends  AppCompatActivity  implements OnMapReadyCallback,DatePickerDialog.OnDateSetListener {
+public class FreeLunchList extends  AppCompatActivity  implements DatePickerDialog.OnDateSetListener {
     private DrawerLayout mDrawerLayout;
     private ListView mDrawerList;
     private ActionBarDrawerToggle mDrawerToggle;
@@ -136,6 +140,15 @@ public class FreeLunchList extends  AppCompatActivity  implements OnMapReadyCall
     JSONArray display_date;
 
     private CaldroidFragment caldroidFragment;
+
+
+    /**
+     *
+     *for display all workers
+     */
+    ArrayList<String> allworkers_namesList = null;
+    ArrayList<String> allworkers_ratingsList = null;
+    static ArrayList<HashMap<String,String>> allworkers_list;
 
 
      @Override
@@ -237,6 +250,7 @@ public class FreeLunchList extends  AppCompatActivity  implements OnMapReadyCall
             case R.id.myEvent:
                 Intent intent1 = new Intent(context,DisplayOneWorker.class);
                 String[] msg_out1 = new String[4];
+                msg_out1[0] = email;
                 msg_out1[1] = email;
                 intent1.putExtra(EXTRA_MESSAGE, msg_out1);
                 // catch event that there's no activity to handle intent
@@ -357,16 +371,31 @@ public class FreeLunchList extends  AppCompatActivity  implements OnMapReadyCall
 
 
         }
+        else if(position == 3){
+
+            mDrawerList.setItemChecked(position, true);
+            setTitle(mPlanetTitles[position]);
+            mDrawerLayout.closeDrawer(mDrawerList);
+
+           PlanetFragment fragment = new PlanetFragment();
+            Bundle args = new Bundle();
+            args.putString(PlanetFragment.ARG_PLANET_NUMBER, email);
+            fragment.setArguments(args);
+
+            getSupportFragmentManager().beginTransaction().replace(R.id.content_frame, fragment).commit();
+
+
+        }
       else  {
-        Fragment fragment = new PlanetFragment();
+        ViewAllEventsFragment fragment = new ViewAllEventsFragment();
         Bundle args = new Bundle();
-        args.putInt(PlanetFragment.ARG_PLANET_NUMBER, position);
+        args.putString(ViewAllEventsFragment.ARG_PLANET_NUMBER, email);
         fragment.setArguments(args);
 
-        FragmentManager fragmentManager = getFragmentManager();
-        fragmentManager.beginTransaction().replace(R.id.content_frame, fragment).commit();
 
-        // update selected item and title, then close the drawer
+        getSupportFragmentManager().beginTransaction().replace(R.id.content_frame, fragment).commit();
+
+
         mDrawerList.setItemChecked(position, true);
         setTitle(mPlanetTitles[position]);
         mDrawerLayout.closeDrawer(mDrawerList);
@@ -495,9 +524,7 @@ public class FreeLunchList extends  AppCompatActivity  implements OnMapReadyCall
 
         if(dpd != null) dpd.setOnDateSetListener(this);
     }
-    public void onMapReady(GoogleMap map) {
-        map.addMarker(new MarkerOptions().position(new LatLng(0, 0)).title("Marker"));
-    }
+
 
     private void displayOnedayEvents(Date date){
         Intent intent = new Intent(context,DisplayOnedayEvent.class);
@@ -511,13 +538,22 @@ public class FreeLunchList extends  AppCompatActivity  implements OnMapReadyCall
 //        Log.d("markermarker",msg[0]);
 
         msg[1] = email;
-        intent.putExtra(EXTRA_MESSAGE,msg);
+        intent.putExtra(EXTRA_MESSAGE, msg);
         startActivity(intent);
 
 
 
 
 
+    }
+
+    private void allworkers_populateList() {
+        for (int i = 0; i < allworkers_namesList.size(); i++) {
+            HashMap<String, String> map = new HashMap<String, String>();
+            map.put("name", allworkers_namesList.get(i));
+            map.put("rating", allworkers_ratingsList.get(i));
+            allworkers_list.add(map);
+        }
     }
 
 }

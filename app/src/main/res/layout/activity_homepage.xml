@@ -23,6 +23,8 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
+        android:background="@drawable/welcome_background"
+        android:alpha="1.0"
         >
 
         <LinearLayout
@@ -31,33 +33,20 @@
             android:orientation="horizontal"
             android:padding="2dip">
 
+
             <com.google.android.gms.common.SignInButton
                 android:id="@+id/sign_in_button"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="30dip"
-                android:enabled="false" />
-
+                android:text="Sign In"/>
 
 
         </LinearLayout>
 
 
-        <TextView
-            android:id="@+id/sign_in_status"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="20dip"
-            android:text="@string/status_signed_out" />
 
-        <TextView
-            android:text="Enjoy Free Lunch"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:textSize="40sp"
-            android:paddingBottom = "40sp"
-            />
+
+
 
 
 

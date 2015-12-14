@@ -91,9 +91,7 @@ public class Homepage extends Activity implements
     // so there would be nowhere to send the code.
 
     private SignInButton mSignInButton;
-    private Button mSignOutButton;
-    private Button mRevokeButton;
-    private TextView mStatus;
+
 
     //location variable
     private String mLatitudeText = "0";
@@ -109,7 +107,7 @@ public class Homepage extends Activity implements
         setContentView(R.layout.activity_homepage);
         
         mSignInButton = (SignInButton) findViewById(R.id.sign_in_button);
-        mStatus = (TextView) findViewById(R.id.sign_in_status);
+
 
         setGooglePlusButtonText(mSignInButton, "Sign in        ");
 
@@ -294,7 +292,7 @@ public class Homepage extends Activity implements
         mSignInProgress = STATE_DEFAULT;
 
 
-        mStatus.setText(email + " is currently Signed In");
+
 
 
      //   msg[1] = mLatitudeText;
@@ -458,7 +456,7 @@ public class Homepage extends Activity implements
         mSignInButton.setEnabled(true);
 
 
-        mStatus.setText("Signed out");
+
       //  Button uploadButton = (Button) findViewById(R.id.open_image_upload_page);
       //  uploadButton.setClickable(false);
 
