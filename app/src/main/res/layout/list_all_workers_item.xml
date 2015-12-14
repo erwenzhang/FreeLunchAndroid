@@ -80,7 +80,7 @@
         android:layout_height="match_parent">
         <RelativeLayout
             android:id="@+id/bottom_wrapper_child1"
-            android:background="@drawable/dark_gray"
+            android:background="#10FFFFFF"
             android:clickable="true"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
@@ -97,7 +97,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@drawable/item_selector"
+        android:background="#80FFFFFF"
         android:padding="10dp">
 
         <TextView android:id="@+id/text1"

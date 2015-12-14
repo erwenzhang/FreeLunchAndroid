@@ -313,16 +313,16 @@ public class FreeLunchList extends  AppCompatActivity  implements DatePickerDial
 
                 @Override
                 public void onSelectDate(Date date, View view) {
-                    Toast.makeText(getApplicationContext(), formatter.format(date),
-                            Toast.LENGTH_SHORT).show();
+//                    Toast.makeText(getApplicationContext(), formatter.format(date),
+//                            Toast.LENGTH_SHORT).show();
 
                 }
 
                 @Override
                 public void onChangeMonth(int month, int year) {
                     String text = "month: " + month + " year: " + year;
-                    Toast.makeText(getApplicationContext(), text,
-                            Toast.LENGTH_SHORT).show();
+//                    Toast.makeText(getApplicationContext(), text,
+//                            Toast.LENGTH_SHORT).show();
 
                 }
 
@@ -444,7 +444,7 @@ public class FreeLunchList extends  AppCompatActivity  implements DatePickerDial
             Log.d("time1  ", tmp_str);
             try {
                 Date tmp_date = mformatter.parse(tmp_str);
-                caldroidFragment.setBackgroundResourceForDate(R.color.light_blue_900,
+                caldroidFragment.setBackgroundResourceForDate(R.color.pink_400,
                         tmp_date);
                 caldroidFragment.setTextColorForDate(R.color.white, tmp_date);
 

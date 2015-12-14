@@ -96,7 +96,7 @@ public class AddEvent extends AppCompatActivity implements DatePickerDialog.OnDa
         eventView =  (EditText)findViewById(R.id.event_name);
         detailView = (EditText)findViewById(R.id.details);
         //uploadView =(ImageView) findViewById(R.id.upload_photo);
-        Button chooseFromGallery = (Button)findViewById((R.id.gallery));
+
         Button submit = (Button)findViewById(R.id.submit_event);
         Button clear = (Button)findViewById(R.id.clear);
         roomView =(EditText)findViewById(R.id.room);
@@ -172,19 +172,7 @@ public class AddEvent extends AppCompatActivity implements DatePickerDialog.OnDa
             }
         });
 
-        chooseFromGallery.setOnClickListener(
-                new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
 
-                        // To do this, go to AndroidManifest.xml to add permission
-                        Intent galleryIntent = new Intent(Intent.ACTION_PICK,
-                                android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-                        // Start the Intent
-                        startActivityForResult(galleryIntent, PICK_IMAGE);
-                    }
-                }
-        );
 
 
 

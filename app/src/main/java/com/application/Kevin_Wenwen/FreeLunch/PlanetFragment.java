@@ -23,7 +23,9 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 
 /**
  * Created by wenwen on 12/9/15.
@@ -116,6 +118,9 @@ public class PlanetFragment extends DialogFragment {
         for (int i = 0; i < allworkers_namesList.size(); i++) {
             HashMap<String, String> map = new HashMap<String, String>();
             map.put("name", allworkers_namesList.get(i));
+            List<String> elephantList = Arrays.asList(allworkers_namesList.get(i).split("@"));
+            //Log.d("now   ",elephantList.get(0));
+            map.put("name", elephantList.get(0));
             map.put("rating", allworkers_ratingsList.get(i).substring(0,3));
             allworkers_list.add(map);
         }

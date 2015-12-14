@@ -2,7 +2,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/background"
+    android:background="@drawable/background4"
 
     >
 
@@ -31,13 +31,23 @@
             android:layout_width="120dp"
             android:layout_height="wrap_content"
             android:text="Start time"
-            android:layout_alignParentLeft="true"/>
+            android:background="#80FFFFFF"
+            android:layout_alignParentLeft="true"
+            android:color="@color/pink_700"/>
+            <View
+                android:id="@+id/space"
+                android:layout_centerInParent="true"
+                android:layout_width="30dp"
+                android:layout_height="match_parent"
+                android:layout_toRightOf="@+id/time_button1"
+                android:layout_weight="1"/>
         <Button
             android:id="@+id/time_button2"
             android:layout_width="120dp"
             android:layout_height="wrap_content"
             android:text="end time"
-            android:layout_toRightOf="@+id/time_button1"/>
+            android:background="#80FFFFFF"
+            android:layout_toRightOf="@+id/space"/>
         </RelativeLayout>
 
         <CheckBox
@@ -53,17 +63,21 @@
             android:id="@+id/date_textview"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+
             android:text="@string/selected_date"/>
 
         <Button
             android:id="@+id/date_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:background="#80FFFFFF"
+
             android:text="@string/pick_date"/>
 
 
         <TextView
             style="@style/CodeFont"
+            android:textStyle="bold"
             android:text="Location" />
         <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
             android:layout_width="wrap_content"
@@ -86,6 +100,7 @@
 
 
         <TextView
+            android:textStyle="bold"
             style="@style/CodeFont"
             android:text="The Event Name" />
 
@@ -95,6 +110,7 @@
             android:layout_height="wrap_content"
             />
         <TextView
+            android:textStyle="bold"
             style="@style/CodeFont"
             android:text="Details" />
         <EditText
@@ -104,25 +120,43 @@
             android:hint="Food type, Event type, etc"
           />
         <TextView
+            android:textStyle="bold"
             style="@style/CodeFont"
             android:text="Upload Photos" />
 
-        <Button
-            android:id="@+id/gallery"
+
+        <!--<Button-->
+            <!--android:id="@+id/camera"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:text="Use the Camera"-->
+            <!-- -->
+            <!--android:onClick="useCamera" />-->
+        <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Choose From Gallery"/>
-        <Button
+            android:layout_height="wrap_content" >
+            <View
+                android:id="@+id/space2"
+                android:layout_centerInParent="true"
+                android:layout_width="30dp"
+                android:layout_height="match_parent"
+
+                android:layout_weight="1"/>
+        <ImageButton
             android:id="@+id/camera"
+            android:src="@drawable/instagram96"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Use the Camera"
-            android:onClick="useCamera" />
+            android:background="#10FFFFFF"
+            android:layout_toRightOf="@+id/space2"
+            android:onClick="useCamera"/>
+        </RelativeLayout>
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/upload_photo"
             android:adjustViewBounds="true"
+
             />
 
         <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
@@ -132,13 +166,28 @@
             android:id="@+id/submit_event"
             android:layout_width="120dp"
             android:layout_height="wrap_content"
+            android:background="#80FFFFFF"
             android:text="Submit"/>
+            <!--<ImageButton-->
+                <!--android:id="@+id/submit_event"-->
+                <!--android:src="@drawable/upload96"-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content" />-->
+            <View
+                android:id="@+id/space1"
+                android:layout_centerInParent="true"
+                android:layout_width="30dp"
+                android:layout_height="match_parent"
+                android:layout_toRightOf="@+id/submit_event"
+                android:layout_weight="1"/>
             <Button
                 android:id="@+id/clear"
                 android:layout_width="120dp"
                 android:layout_height="wrap_content"
                 android:text="clear"
-                android:layout_toRightOf="@+id/submit_event"/>
+                android:background="#80FFFFFF"
+                android:layout_toRightOf="@+id/space1"/>
+
         </RelativeLayout>
 
     </LinearLayout>

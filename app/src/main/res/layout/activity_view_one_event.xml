@@ -5,7 +5,8 @@
     android:background="#b2b2b2"
     android:gravity="center"
     android:orientation="vertical"
-    android:weightSum="1">
+    android:weightSum="1"
+    >
 
 
     <ImageView

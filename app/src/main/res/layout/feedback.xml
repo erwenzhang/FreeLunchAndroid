@@ -1,13 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@drawable/background4"
+    >
     <TextView
         android:id="@+id/event_name"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
-        android:textSize="40sp"
+        android:textSize="50sp"
+        android:textStyle="bold"
         android:paddingBottom = "40sp"
         android:layout_above="@+id/yes"
         />
@@ -17,15 +20,23 @@
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:src="@drawable/thunbs_up96"
-
+        android:background="#10FFFFFF"
+        android:layout_toLeftOf="@+id/space"
         android:layout_centerInParent="true"
     />
+    <View
+        android:id="@+id/space"
+        android:layout_centerInParent="true"
+        android:layout_width="30dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"/>
     <ImageButton
         android:id="@+id/no"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:src="@drawable/thunbs_down96"
-        android:layout_toRightOf="@+id/yes"
+        android:layout_toRightOf="@+id/space"
         android:layout_centerInParent="true"
+        android:background="#10FFFFFF"
         />
 </RelativeLayout>

@@ -27,7 +27,9 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 
 
 public class DisplayAllWorkers extends AppCompatActivity {
@@ -116,7 +118,9 @@ public class DisplayAllWorkers extends AppCompatActivity {
     private void populateList() {
         for (int i = 0; i < namesList.size(); i++) {
             HashMap<String, String> map = new HashMap<String, String>();
-            map.put("name", namesList.get(i));
+            List<String> elephantList = Arrays.asList(namesList.get(i).split("@"));
+            Log.d("now   ",elephantList.get(0));
+            map.put("name", elephantList.get(0));
             map.put("rating", ratingsList.get(i));
             list.add(map);
         }
