@@ -87,8 +87,10 @@
                 android:layout_height="wrap_content"
                 android:id="@+id/ratingBar"
                 android:layout_gravity="center_horizontal"
-                android:layout_toRightOf="@+id/author"
-                style="?android:attr/ratingBarStyleSmall" />
+                android:layout_below="@+id/author"
+                android:layout_alignLeft="@id/author"
+                style="?android:attr/ratingBarStyleSmall"
+                android:progressTint="#FFEA00" />
 
         </RelativeLayout>
 
