@@ -5,8 +5,7 @@
     android:background="#b2b2b2"
     android:gravity="center"
     android:orientation="vertical"
-    android:weightSum="1"
-    >
+    android:weightSum="1">
 
 
     <ImageView
@@ -28,85 +27,233 @@
         android:padding="10dp"
         android:layout_weight="0.95">
 
-        <RatingBar
+        <RelativeLayout
+            android:tag="front"
+            android:background="@color/item_background"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/ratingBar"
-            android:layout_gravity="center_horizontal" />
+            android:padding="@dimen/view_one_event_padding">
 
-        <TextView
-            android:id="@+id/event_name"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textColor="#181717"
-            android:textSize="19sp"
-            android:textStyle="bold" />
+            <TextView
+                android:id="@+id/label_event_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Event: "
+                android:textColor="#181717"
+                android:textSize="19sp"
+                android:textStyle="bold" />
 
-        <TextView
-            android:id="@+id/author"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textColor="#181717"
-            android:textSize="19sp"
-            android:textStyle="bold" />
+            <TextView
+                android:id="@+id/event_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@+id/label_event_name"
+                android:textColor="#181717"
+                android:textSize="19sp"
+                android:textStyle="bold"
+                android:paddingLeft="10dp" />
 
-        <TextView
-            android:id="@+id/link"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textColor="#181717"
-            android:textSize="19sp"
-            android:textStyle="bold" />
+        </RelativeLayout>
 
-        <TextView
-            android:id="@+id/building"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textColor="#181717"
-            android:textSize="19sp"
-            android:textStyle="bold" />
 
-        <TextView
-            android:id="@+id/description"
-            android:layout_width="match_parent"
+        <RelativeLayout
+            android:tag="front"
+            android:background="@color/item_background"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:layout_marginTop="5dp"
-            android:textColor="#000000"
-            android:textSize="14sp" />
+            android:padding="@dimen/view_one_event_padding">
 
-        <TextView
-            android:id="@+id/dtStart"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:layout_marginTop="5dp"
-            android:textColor="#000000"
-            android:textSize="14sp" />
+            <TextView
+                android:id="@+id/label_author"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Author: "
+                android:textColor="#181717"
+                android:textSize="19sp"
+                android:textStyle="bold" />
 
-        <TextView
-            android:id="@+id/dtEnd"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:layout_marginTop="5dp"
-            android:textColor="#000000"
-            android:textSize="14sp" />
+            <TextView
+                android:id="@+id/author"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="#181717"
+                android:textSize="19sp"
+                android:textStyle="bold"
+                android:layout_toRightOf="@+id/label_author"
+                android:paddingLeft="10dp" />
 
-        <TextView
-            android:id="@+id/room"
-            android:layout_width="match_parent"
+            <RatingBar
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/ratingBar"
+                android:layout_gravity="center_horizontal"
+                android:layout_toRightOf="@+id/author"
+                style="?android:attr/ratingBarStyleSmall" />
+
+        </RelativeLayout>
+
+
+        <RelativeLayout
+            android:tag="front"
+            android:background="@color/item_background"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:layout_marginTop="5dp"
-            android:textColor="#000000"
-            android:textSize="14sp" />
+            android:padding="@dimen/view_one_event_padding" >
+
+            <TextView
+                android:id="@+id/label_link"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Link: "
+                android:textColor="#181717"
+                android:textSize="19sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/link"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="#181717"
+                android:textSize="19sp"
+                android:textStyle="bold"
+                android:layout_toRightOf="@+id/label_link"
+                android:paddingLeft="10dp" />
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:tag="front"
+            android:background="@color/item_background"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/view_one_event_padding" >
+
+            <TextView
+                android:id="@+id/label_place"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Place: "
+                android:textColor="#181717"
+                android:textSize="19sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/building"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="#181717"
+                android:textSize="19sp"
+                android:textStyle="bold"
+                android:layout_toRightOf="@+id/label_place"
+                android:paddingLeft="10dp"/>
+
+            <TextView
+                android:id="@+id/room"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginTop="5dp"
+                android:textColor="#000000"
+                android:textSize="14sp"
+                android:layout_toRightOf="@+id/building" />
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:tag="front"
+            android:background="@color/item_background"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/view_one_event_padding" >
+            <TextView
+                android:id="@+id/label_description"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Description: "
+                android:textColor="#181717"
+                android:textSize="19sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/description"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginTop="5dp"
+                android:textColor="#000000"
+                android:textSize="14sp"
+                android:layout_toRightOf="@+id/label_description"
+                android:paddingLeft="10dp" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:tag="front"
+            android:background="@color/item_background"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/view_one_event_padding" >
+
+            <TextView
+                android:id="@+id/label_time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Start Time: "
+                android:textColor="#181717"
+                android:textSize="19sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/dtStart"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginTop="5dp"
+                android:textColor="#000000"
+                android:textSize="14sp"
+                android:layout_toRightOf="@+id/label_time"
+                android:paddingLeft="10dp" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:tag="front"
+            android:background="@color/item_background"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/view_one_event_padding" >
+
+            <TextView
+                android:id="@+id/label_end_time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="End Time: "
+                android:textColor="#181717"
+                android:textSize="19sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/dtEnd"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginTop="5dp"
+                android:textColor="#000000"
+                android:textSize="14sp"
+                android:layout_toRightOf="@+id/label_end_time"
+                android:paddingLeft="10dp" />
+        </RelativeLayout>
+
+
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Give a Feedback"
             android:id="@+id/feedback"
             android:layout_gravity="right" />
+
+
+
+
+
     </LinearLayout>
 
 </LinearLayout>
