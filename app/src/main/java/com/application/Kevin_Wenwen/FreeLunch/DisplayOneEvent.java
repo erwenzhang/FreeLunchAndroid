@@ -110,6 +110,8 @@ public class DisplayOneEvent extends AppCompatActivity {
 
                     author_name = jObject.getString("author_name");
                     System.out.println("getting author_name " + author_name);
+                    Log.d("wenwenwen0,", link);
+                    Log.d("wenwenwen6,", author_name);
 
                     if(author_name.equals(email)){
                         feedback.setVisibility(View.INVISIBLE);
@@ -147,22 +149,28 @@ public class DisplayOneEvent extends AppCompatActivity {
                     t.setText(room);
                     t = (TextView) findViewById(R.id.description);
                     t.setText(des);
-                    t = (TextView) findViewById(R.id.link);
-
-                    if (link != "null") {
-                        String[] linksplit = link.split("www.");
-                        t.setText(
-                                Html.fromHtml(
-                                        "<a href=\"" + link + "\">" + linksplit[1] + "</a> "));
-                        t.setMovementMethod(LinkMovementMethod.getInstance());
-                    } else {
-                        t.setText(link);
-                    }
-
-
                     t = (TextView) findViewById(R.id.author);
                     String[] author_name_split = author_name.split("@");
                     t.setText(author_name_split[0]);
+                    Log.d("wenwenwen3,", author_name_split[0]);
+                    t = (TextView) findViewById(R.id.link);
+
+                    if (link.equals("null")) {
+                    t.setText(link);
+                        Log.d("wenwenwen1,", link);
+
+                  } else {
+
+
+                      t.setText(
+                               Html.fromHtml(
+                                       "<a href=\"" + link + "\">" + eventName + "</a> "));
+                       t.setMovementMethod(LinkMovementMethod.getInstance());
+
+                  }
+
+
+
                     System.out.println("I'm getting the event's detail!!!");
 
 

@@ -75,7 +75,7 @@ public class Feedback extends AppCompatActivity implements View.OnClickListener 
         Intent intent = getIntent();
         msg = intent.getStringArrayExtra(EXTRA_MESSAGE);
         event_name = msg[1];
-        event.setText("Is "+ msg[1]+" real?");
+        event.setText("Do you like "+ msg[1]+" ?");
 
         setTitle("Feedback");
 
