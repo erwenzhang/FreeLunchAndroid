@@ -73,7 +73,7 @@ public class DisplayOneEvent extends AppCompatActivity {
         RequestParams params = new RequestParams();
         eventName = msg[1];
         email = msg[0];
-       // Log.d("email,:::",email);
+     Log.d("email,:::",email);
         params.put("event_name", eventName);
         feedback = (Button)findViewById(R.id.feedback);
 
