@@ -5,8 +5,11 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 //import android.support.v7.app.AppCompatActivity;
+import android.support.v4.graphics.drawable.DrawableCompat;
 import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
 import android.view.Menu;
@@ -117,6 +120,8 @@ public class DisplayOneEvent extends ActionBarActivity {
                     if (rating == "null") {
                         rating = "3.5";
                     }
+
+
                     float ratingValue = Float.parseFloat(rating);
                     RatingBar ratingBar = (RatingBar) findViewById(R.id.ratingBar);
                     ratingBar.setRating(ratingValue);

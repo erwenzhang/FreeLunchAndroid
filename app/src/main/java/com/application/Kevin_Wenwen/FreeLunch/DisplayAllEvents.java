@@ -84,8 +84,8 @@ public class DisplayAllEvents extends ListActivity {
                             context,
                             list,
                             R.layout.crowview,
-                            new String[] {"dt_start", "name", "building"},
-                            new int[] {R.id.text1, R.id.text2, R.id.text3}
+                            new String[] {"date", "time", "name", "building"},
+                            new int[] {R.id.text1, R.id.text10, R.id.text2, R.id.text3}
                     );
                     populateList();
                     setListAdapter(adapter);
@@ -122,7 +122,9 @@ public class DisplayAllEvents extends ListActivity {
     private void populateList() {
         for (int i = 0; i < dtsStartList.size(); i++) {
             HashMap<String, String> map = new HashMap<String, String>();
-            map.put("dt_start", dtsStartList.get(i));
+            DateTimeProcess dt = new DateTimeProcess(dtsStartList.get(i));
+            map.put("date", dt.date());
+            map.put("time", dt.hourMinute());
             map.put("name", namesList.get(i));
             map.put("building", buildingsList.get(i));
             list.add(map);
