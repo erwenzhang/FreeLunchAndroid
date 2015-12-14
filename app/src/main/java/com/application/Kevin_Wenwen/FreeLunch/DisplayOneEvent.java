@@ -149,12 +149,16 @@ public class DisplayOneEvent extends AppCompatActivity {
                     t.setText(des);
                     t = (TextView) findViewById(R.id.link);
 
-                    String[] linksplit = link.split("www.");
-                    t.setText(
-                            Html.fromHtml(
-                                    "<a href=\"" + link + "\">" + linksplit[1] + "</a> "));
-                    t.setMovementMethod(LinkMovementMethod.getInstance());
-                    
+                    if (link != "null") {
+                        String[] linksplit = link.split("www.");
+                        t.setText(
+                                Html.fromHtml(
+                                        "<a href=\"" + link + "\">" + linksplit[1] + "</a> "));
+                        t.setMovementMethod(LinkMovementMethod.getInstance());
+                    } else {
+                        t.setText(link);
+                    }
+
 
                     t = (TextView) findViewById(R.id.author);
                     String[] author_name_split = author_name.split("@");
