@@ -9,6 +9,8 @@ import android.os.Bundle;
 //import android.support.v7.app.AppCompatActivity;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.AppCompatActivity;
+import android.text.Html;
+import android.text.method.LinkMovementMethod;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -146,7 +148,18 @@ public class DisplayOneEvent extends AppCompatActivity {
                     t = (TextView) findViewById(R.id.description);
                     t.setText(des);
                     t = (TextView) findViewById(R.id.link);
-                    t.setText(link);
+
+                    if (link != "null") {
+                        String[] linksplit = link.split("www.");
+                        t.setText(
+                                Html.fromHtml(
+                                        "<a href=\"" + link + "\">" + linksplit[1] + "</a> "));
+                        t.setMovementMethod(LinkMovementMethod.getInstance());
+                    } else {
+                        t.setText(link);
+                    }
+
+
                     t = (TextView) findViewById(R.id.author);
                     String[] author_name_split = author_name.split("@");
                     t.setText(author_name_split[0]);
