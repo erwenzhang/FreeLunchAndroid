@@ -112,8 +112,8 @@ public class DisplayOneWorker extends AppCompatActivity {
                             context,
                             list,
                             R.layout.list_one_worker_item,
-                            new String[] {"dt_start", "name", "building"},
-                            new int[] {R.id.text1, R.id.text2, R.id.text3}
+                            new String[] {"date", "time", "name", "building"},
+                            new int[] {R.id.text1, R.id.text10, R.id.text2, R.id.text3}
                     );
                     populateList();
                     final ListView myList=(ListView)findViewById(android.R.id.list);
@@ -166,7 +166,9 @@ public class DisplayOneWorker extends AppCompatActivity {
     private void populateList() {
         for (int i = 0; i < dtsStartList.size(); i++) {
             HashMap<String, String> map = new HashMap<String, String>();
-            map.put("dt_start", dtsStartList.get(i));
+            DateTimeProcess dt = new DateTimeProcess(dtsStartList.get(i));
+            map.put("date", dt.date());
+            map.put("time", dt.hourMinute());
             map.put("name", namesList.get(i));
             map.put("building", buildingsList.get(i));
             list.add(map);
@@ -209,8 +211,8 @@ public class DisplayOneWorker extends AppCompatActivity {
                             context,
                             list,
                             R.layout.list_one_worker_item,
-                            new String[] {"dt_start", "name", "building"},
-                            new int[] {R.id.text1, R.id.text2, R.id.text3}
+                            new String[] {"date", "time", "name", "building"},
+                            new int[] {R.id.text1, R.id.text10, R.id.text2, R.id.text3}
                     );
                     populateList();
                     final ListView myList=(ListView)findViewById(android.R.id.list);

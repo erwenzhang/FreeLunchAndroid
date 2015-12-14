@@ -4,6 +4,8 @@ package com.application.Kevin_Wenwen.FreeLunch;
  * Created by xiangkundai on 12/13/15.
  */
 public class DateTimeProcess {
+
+    // !!! for format "2016-01-01 13:33:00" ONLY!!!
     private String datetime;
 
     DateTimeProcess(String s) {

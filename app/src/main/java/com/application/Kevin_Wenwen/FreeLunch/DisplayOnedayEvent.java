@@ -87,9 +87,9 @@ public class DisplayOnedayEvent extends AppCompatActivity {
                     SimpleAdapter adapter = new SimpleAdapter(
                             context,
                             list,
-                            R.layout.list_one_worker_item,
-                            new String[] {"dt_start", "name", "building"},
-                            new int[] {R.id.text1, R.id.text2, R.id.text3}
+                            R.layout.crowview,
+                            new String[] {"date", "time", "name", "building"},
+                            new int[] {R.id.text1, R.id.text10, R.id.text2, R.id.text3}
                     );
                     populateList();
                     final ListView myList=(ListView)findViewById(android.R.id.list);
@@ -142,82 +142,84 @@ public class DisplayOnedayEvent extends AppCompatActivity {
     private void populateList() {
         for (int i = 0; i < dtsStartList.size(); i++) {
             HashMap<String, String> map = new HashMap<String, String>();
-            map.put("dt_start", dtsStartList.get(i));
+            DateTimeProcess dt = new DateTimeProcess(dtsStartList.get(i));
+            map.put("date", dt.date());
+            map.put("time", dt.hourMinute());
             map.put("name", namesList.get(i));
             map.put("building", buildingsList.get(i));
             list.add(map);
         }
     }
 
-    public void deleteMyEvent(View v) {
-        View parent = (View)v.getParent().getParent();
-        String eventToDel = ((TextView) parent.findViewById(R.id.text2)).getText().toString();
-
-        final String request_url = "http://freelunchforyou.appspot.com/ViewOneWorker";
-        AsyncHttpClient httpClient = new AsyncHttpClient();
-        RequestParams params = new RequestParams();
-
-        params.put("worker_name", workerName);
-        params.put("delete_item", eventToDel);
-
-        httpClient.get(request_url, params, new AsyncHttpResponseHandler() {
-            @Override
-            public void onSuccess(int statusCode, Header[] headers, byte[] response) {
-                dtsStartList = new ArrayList<String>();
-                namesList = new ArrayList<String>();
-                buildingsList = new ArrayList<String>();
-
-                try {
-                    JSONObject jObject = new JSONObject(new String(response));
-                    JSONArray dts_start = jObject.getJSONArray("events_dt_start");
-                    JSONArray names = jObject.getJSONArray("events_name");
-                    JSONArray buildings = jObject.getJSONArray("events_build");
-                    for (int i = 0; i < dts_start.length(); i++) {
-                        dtsStartList.add(dts_start.getString(i));
-                        namesList.add(names.getString(i));
-                        buildingsList.add(buildings.getString(i));
-                        System.out.println(dts_start.getString(i));
-                    }
-
-                    list = new ArrayList<HashMap<String,String>>();
-
-                    SimpleAdapter adapter = new SimpleAdapter(
-                            context,
-                            list,
-                            R.layout.list_one_worker_item,
-                            new String[] {"dt_start", "name", "building"},
-                            new int[] {R.id.text1, R.id.text2, R.id.text3}
-                    );
-                    populateList();
-                    final ListView myList=(ListView)findViewById(android.R.id.list);
-
-                    myList.setAdapter(adapter);
-                    myList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                        @Override
-                        public void onItemClick(AdapterView<?> parent, View view, int position,
-                                                long id) {
-
-                            Intent intent = new Intent(context, DisplayOneEvent.class);
-                            String[] msg_out = new String[4];
-                            msg_out[0] = workerName;
-
-                            msg_out[1] = namesList.get(position);
-                            intent.putExtra(EXTRA_MESSAGE, msg_out);
-                            startActivity(intent);
-                        }
-                    });
-                } catch (Exception e) {
-                    System.out.println("!!!Got an exception!!!" + e.toString());
-                }
-            }
-
-            @Override
-            public void onFailure(int statusCode, Header[] headers, byte[] errorResponse, Throwable e) {
-                Log.e(TAG, "There was a problem in retrieving the url : " + e.toString());
-            }
-        });
-
-    }
+//    public void deleteMyEvent(View v) {
+//        View parent = (View)v.getParent().getParent();
+//        String eventToDel = ((TextView) parent.findViewById(R.id.text2)).getText().toString();
+//
+//        final String request_url = "http://freelunchforyou.appspot.com/ViewOneWorker";
+//        AsyncHttpClient httpClient = new AsyncHttpClient();
+//        RequestParams params = new RequestParams();
+//
+//        params.put("worker_name", workerName);
+//        params.put("delete_item", eventToDel);
+//
+//        httpClient.get(request_url, params, new AsyncHttpResponseHandler() {
+//            @Override
+//            public void onSuccess(int statusCode, Header[] headers, byte[] response) {
+//                dtsStartList = new ArrayList<String>();
+//                namesList = new ArrayList<String>();
+//                buildingsList = new ArrayList<String>();
+//
+//                try {
+//                    JSONObject jObject = new JSONObject(new String(response));
+//                    JSONArray dts_start = jObject.getJSONArray("events_dt_start");
+//                    JSONArray names = jObject.getJSONArray("events_name");
+//                    JSONArray buildings = jObject.getJSONArray("events_build");
+//                    for (int i = 0; i < dts_start.length(); i++) {
+//                        dtsStartList.add(dts_start.getString(i));
+//                        namesList.add(names.getString(i));
+//                        buildingsList.add(buildings.getString(i));
+//                        System.out.println(dts_start.getString(i));
+//                    }
+//
+//                    list = new ArrayList<HashMap<String,String>>();
+//
+//                    SimpleAdapter adapter = new SimpleAdapter(
+//                            context,
+//                            list,
+//                            R.layout.list_one_worker_item,
+//                            new String[] {"dt_start", "name", "building"},
+//                            new int[] {R.id.text1, R.id.text2, R.id.text3}
+//                    );
+//                    populateList();
+//                    final ListView myList=(ListView)findViewById(android.R.id.list);
+//
+//                    myList.setAdapter(adapter);
+//                    myList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+//                        @Override
+//                        public void onItemClick(AdapterView<?> parent, View view, int position,
+//                                                long id) {
+//
+//                            Intent intent = new Intent(context, DisplayOneEvent.class);
+//                            String[] msg_out = new String[4];
+//                            msg_out[0] = workerName;
+//
+//                            msg_out[1] = namesList.get(position);
+//                            intent.putExtra(EXTRA_MESSAGE, msg_out);
+//                            startActivity(intent);
+//                        }
+//                    });
+//                } catch (Exception e) {
+//                    System.out.println("!!!Got an exception!!!" + e.toString());
+//                }
+//            }
+//
+//            @Override
+//            public void onFailure(int statusCode, Header[] headers, byte[] errorResponse, Throwable e) {
+//                Log.e(TAG, "There was a problem in retrieving the url : " + e.toString());
+//            }
+//        });
+//
+//    }
 
 
 //    @Override
