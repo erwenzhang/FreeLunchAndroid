@@ -152,12 +152,11 @@
                 android:id="@+id/room"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:layout_marginTop="5dp"
                 android:textColor="#000000"
                 android:textSize="19sp"
                 android:textStyle="bold"
-                android:layout_toRightOf="@+id/building" />
+                android:layout_toRightOf="@+id/building"
+                android:paddingLeft="5dp"/>
 
         </RelativeLayout>
 
