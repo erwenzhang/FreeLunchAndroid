@@ -80,7 +80,7 @@
                 android:textSize="19sp"
                 android:textStyle="bold"
                 android:layout_toRightOf="@+id/label_author"
-                android:paddingLeft="10dp" />
+                />
 
             <RatingBar
                 android:layout_width="wrap_content"
@@ -117,7 +117,6 @@
                 android:layout_height="wrap_content"
                 android:textColor="#181717"
                 android:textSize="19sp"
-                android:textStyle="bold"
                 android:layout_toRightOf="@+id/label_link"
                 android:paddingLeft="10dp" />
 
@@ -156,7 +155,8 @@
                 android:layout_gravity="center_vertical"
                 android:layout_marginTop="5dp"
                 android:textColor="#000000"
-                android:textSize="14sp"
+                android:textSize="19sp"
+                android:textStyle="bold"
                 android:layout_toRightOf="@+id/building" />
 
         </RelativeLayout>

@@ -148,7 +148,8 @@ public class DisplayOneEvent extends AppCompatActivity {
                     t = (TextView) findViewById(R.id.link);
                     t.setText(link);
                     t = (TextView) findViewById(R.id.author);
-                    t.setText(author_name);
+                    String[] author_name_split = author_name.split("@");
+                    t.setText(author_name_split[0]);
                     System.out.println("I'm getting the event's detail!!!");
 
 
