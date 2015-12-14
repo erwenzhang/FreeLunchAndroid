@@ -51,7 +51,7 @@
     <string-array name="planets_array">
         <item>Events</item>
         <item>Map</item>
-        <item>Calender</item>
+        <item>Calendar</item>
         <item>Crowdworkers</item>
     </string-array>
     <string name="drawer_open">Open navigation drawer</string>
