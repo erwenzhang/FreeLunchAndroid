@@ -147,7 +147,7 @@ public class DisplayOneEvent extends AppCompatActivity {
                     ImageView imgView = (ImageView) findViewById(R.id.imgview);
 //                    imgView.setImageBitmap(bmp);
                     Picasso.with(context).load(coverUrl).into(imgView);
-                    System.out.println("Setting image");
+                    System.out.println("Setting this image: " + coverUrl);
 //
                     if (rating == "null") {
                         rating = "3.5";
@@ -216,7 +216,7 @@ public class DisplayOneEvent extends AppCompatActivity {
                         @Override
                         public void onClick(View v) {
                             Intent sharingIntent = new Intent(Intent.ACTION_SEND);
-                            Uri screenshotUri = Uri.parse("android.resource://com.application.Kevin_Wenwen.FreeLunch/*");
+                            Uri screenshotUri = Uri.parse(coverUrl);
 
                             try {
                                 InputStream stream = getContentResolver().openInputStream(screenshotUri);
@@ -228,6 +228,12 @@ public class DisplayOneEvent extends AppCompatActivity {
                             }
 
                             sharingIntent.setType("image/jpeg");
+
+                            String message = eventName + " starts at " + dtStart + " at " + building + " " + room + ". Please check the following link (if any)\n" + link + "\n";
+//                            sharingIntent.setType("text/plain");
+                            sharingIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, "Free food event");
+                            sharingIntent.putExtra(android.content.Intent.EXTRA_TEXT, message);
+
                             sharingIntent.putExtra(Intent.EXTRA_STREAM, screenshotUri);
                             startActivity(Intent.createChooser(sharingIntent, "Share image using"));
                         }
