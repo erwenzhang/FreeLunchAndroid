@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.Bundle;
 //import android.support.v7.app.AppCompatActivity;
 import android.support.v7.app.ActionBarActivity;
@@ -24,6 +25,12 @@ import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.facebook.CallbackManager;
+import com.facebook.FacebookCallback;
+import com.facebook.FacebookSdk;
+import com.facebook.share.Sharer;
+import com.facebook.share.widget.ShareButton;
+import com.facebook.share.widget.ShareDialog;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
@@ -34,6 +41,8 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.FileNotFoundException;
+import java.io.InputStream;
 import java.net.URL;
 import java.util.ArrayList;
 
@@ -42,6 +51,9 @@ import java.util.ArrayList;
  */
 public class DisplayOneEvent extends AppCompatActivity {
     private String TAG  = "Display one event";
+    CallbackManager callbackManager;
+    ShareDialog shareDialog;
+
     public final static String EXTRA_MESSAGE = "MESSAGE IN";
     // to mark which image has been displayed
     private int building = 0;
@@ -63,9 +75,19 @@ public class DisplayOneEvent extends AppCompatActivity {
     private int morePageCount = 0;
 
     Context context = this;
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_view_one_event);
+
+        FacebookSdk.sdkInitialize(getApplicationContext());
+        callbackManager = CallbackManager.Factory.create();
+        shareDialog = new ShareDialog(this);
+//        // this part is optional
+//        shareDialog.registerCallback(callbackManager, new FacebookCallback<Sharer.Result>() {
+//            // ...
+//        });
+
 
         Intent intent = getIntent();
         msg = intent.getStringArrayExtra(EXTRA_MESSAGE);
@@ -167,12 +189,49 @@ public class DisplayOneEvent extends AppCompatActivity {
                                        "<a href=\"" + link + "\">" + eventName + "</a> "));
                        t.setMovementMethod(LinkMovementMethod.getInstance());
 
-                  }
+                    }
 
 
 
                     System.out.println("I'm getting the event's detail!!!");
 
+
+//                    ShareButton shareButton = (ShareButton)findViewById(R.id.fb_share_button);
+//                    shareButton.setShareContent(content);
+//
+//                    if (ShareDialog.canShow(ShareLinkContent.class)) {
+//                        ShareLinkContent linkContent = new ShareLinkContent.Builder()
+//                                .setContentTitle("Hello Facebook")
+//                                .setContentDescription(
+//                                        "The 'Hello Facebook' sample  showcases simple Facebook integration")
+//                                .setContentUrl(Uri.parse("http://developers.facebook.com/android"))
+//                                .build();
+//
+//                        shareDialog.show(linkContent);
+//                    }
+
+                    Button b1=(Button)findViewById(R.id.share);
+
+                    b1.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            Intent sharingIntent = new Intent(Intent.ACTION_SEND);
+                            Uri screenshotUri = Uri.parse("android.resource://com.application.Kevin_Wenwen.FreeLunch/*");
+
+                            try {
+                                InputStream stream = getContentResolver().openInputStream(screenshotUri);
+                            }
+
+                            catch (FileNotFoundException e) {
+                                // TODO Auto-generated catch block
+                                e.printStackTrace();
+                            }
+
+                            sharingIntent.setType("image/jpeg");
+                            sharingIntent.putExtra(Intent.EXTRA_STREAM, screenshotUri);
+                            startActivity(Intent.createChooser(sharingIntent, "Share image using"));
+                        }
+                    });
 
 
                 } catch (Exception e) {

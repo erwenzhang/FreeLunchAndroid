@@ -243,13 +243,29 @@
                 android:paddingLeft="10dp" />
         </RelativeLayout>
 
-
-        <Button
+        <RelativeLayout
+            android:tag="front"
+            android:background="@color/item_background"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Give a Feedback"
-            android:id="@+id/feedback"
-            android:layout_gravity="right" />
+            android:layout_height="wrap_content">
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Share"
+                android:id="@+id/share"
+                android:layout_gravity="right" />
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Give a Feedback"
+                android:id="@+id/feedback"
+                android:layout_gravity="right"
+                android:layout_toRightOf="@+id/share" />
+
+        </RelativeLayout>
+
 
 
 

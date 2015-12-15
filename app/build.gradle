@@ -10,7 +10,7 @@ android {
 
     defaultConfig {
         applicationId "com.application.Kevin_Wenwen.FreeLunch"
-        minSdkVersion 14
+        minSdkVersion 16
         targetSdkVersion 23
         versionCode 1
         versionName "1.0"
@@ -31,6 +31,9 @@ android {
         }
     }
 }
+
+repositories { mavenCentral() }
+
 
 dependencies {
 
@@ -55,4 +58,6 @@ dependencies {
     compile "com.daimajia.swipelayout:library:1.2.0@aar"
 
     compile 'com.beardedhen:androidbootstrap:2.0.1'
+
+    compile 'com.facebook.android:facebook-android-sdk:4.7.0'
 }
